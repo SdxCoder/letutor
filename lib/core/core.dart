@@ -1,0 +1,40 @@
+// routes
+export './routes/routes.dart';
+
+// constants
+export './constants/constants.dart';
+
+// extensions
+export './extensions/extension.dart';
+
+// data models
+export './models/course.dart';
+export './models/current_user.dart';
+export './models/level.dart';
+export './models/base.dart';
+export './models/booking.dart';
+export './models/tutor.dart';
+export './models/user.dart';
+
+
+// shared services export
+export './shared_service/user_service.dart';
+export './shared_service/form_validation_service.dart';
+
+// shared widgets export
+export './shared_widgets/booking_card.dart';
+export './shared_widgets/bottom_navbar.dart';
+export './shared_widgets/category_tile.dart';
+export './shared_widgets/options_horizontal_scroll.dart';
+export './shared_widgets/social_icons.dart';
+export './shared_widgets/top_navbar.dart';
+export './shared_widgets/topic_card.dart';
+export './shared_widgets/tutor_tile.dart';
+export './shared_widgets/upcoming_booking_card.dart';
+export './shared_widgets/dialog.dart';
+export './shared_widgets/button.dart';
+
+// utils
+export './utils/colors.dart';
+export './utils/spacing.dart';
+export './utils/typography.dart';

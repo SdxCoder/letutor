@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "75817358268",
+    "firebase_url": "https://tutor-a6bd6.firebaseio.com",
+    "project_id": "tutor-a6bd6",
+    "storage_bucket": "tutor-a6bd6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75817358268:android:c02007edc7bf1bdce011b9",
+        "android_client_info": {
+          "package_name": "com.example.letutor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "75817358268-lrma6cbgod8q883rjld4nm6on0k9q953.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVfp3FM2xc3NFQ7qrB2mnD4xGJKh9QHZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "75817358268-lrma6cbgod8q883rjld4nm6on0k9q953.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
