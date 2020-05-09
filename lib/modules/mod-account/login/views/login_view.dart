@@ -75,7 +75,7 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
-
+  
   Widget _loginForm(AuthViewModel model) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.32,

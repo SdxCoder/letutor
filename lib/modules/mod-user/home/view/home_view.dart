@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -8,7 +7,7 @@ import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
 import 'package:letutor/modules/mod-user/appointments/views/appointments.dart';
 import 'package:letutor/modules/mod-user/tutorSearch/views/search_tutors.dart';
 import 'package:letutor/modules/mod-user/userprofile/views/user_profile_view.dart';
-
+import 'package:rolling_nav_bar/rolling_nav_bar.dart';
 
 class UserHome extends StatefulWidget {
   @override
@@ -18,63 +17,69 @@ class UserHome extends StatefulWidget {
 class UserHomeState extends State<UserHome> {
   int _currentIndex = 0;
   List<Widget> tabs = [
-     AppointmentsView(),
-     SearchTutorsView()
+    SearchTutorsView(),
+    AppointmentsView(),
   ];
 
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, allowFontScaling: true);
     final currentScreen = tabs[_currentIndex];
-    return  Scaffold(
-        appBar: _buildAppBar(context),
-        bottomNavigationBar: _buildBottomNavBar(),
-        backgroundColor: Color(0xFFF3F6FE),
-        body: currentScreen,
+    return Scaffold(
+      bottomNavigationBar: _buildBottomNavBar(),
+      backgroundColor: Color(0xFFF3F6FE),
+      body: currentScreen,
     );
   }
 
   Widget _buildBottomNavBar() {
     return SizedBox(
-      height: 90.0,
-      child: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            title: Text('Home'),
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            title: Text('Search Tutors'),
-            icon: Icon(Icons.people_outline),
-          )
+      height: ScreenUtil().setHeight(160),
+      child: 
+      RollingNavBar.iconData(
+        animationCurve:
+            Curves.linear, // `linear` is recommended for `shrinkOutIn`
+        animationType: AnimationType.shrinkOutIn,
+        baseAnimationSpeed: 500,
+        activeIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+       iconSize: ScreenUtil().setSp(30),
+        iconData: <IconData>[
+          Icons.people_outline,
+          Icons.calendar_today,
+        ],
+        iconText: <Widget>[
+          Text('Search Tutor',
+              style: TextStyle(color: lightColor, fontSize: ScreenUtil().setSp(30))),
+          Text('Bookings', style: TextStyle(color: lightColor, fontSize: ScreenUtil().setSp(30))),
+        ],
+        indicatorColors: <Color>[
+          Colors.blue,
+          Colors.blue,
         ],
       ),
-    );
-  }
+      // BottomNavigationBar(
+      //   backgroundColor: Colors.white,
+      //   elevation: 0,
+      //   currentIndex: _currentIndex,
+      //   selectedItemColor: Colors.blue,
+      //   onTap: _onItemTapped,
+      //   items: <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       title: Text('Search Tutors'),
+      //       icon: Icon(Icons.people_outline),
+      //     ),
+      //     BottomNavigationBarItem(
+      //       title: Text('Bookings'),
+      //       icon: Icon(Icons.calendar_today),
+      //     ),
 
-  Widget _buildAppBar(BuildContext context) {
-    return AppBar(
-      elevation: 0.0,
-      backgroundColor: Colors.transparent,
-      actions: <Widget>[
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => UserProfileView()));
-            },
-            child: CircleAvatar(
-                backgroundImage: NetworkImage(Modular.get<AuthService>().currentUser.user.photoUrl ?? imageUrl,),
-              ),
-          ),
-        )
-      ],
+      //   ],
+      // ),
     );
   }
 

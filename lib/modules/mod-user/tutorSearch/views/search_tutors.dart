@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:letutor/core/core.dart';
+import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
 import 'package:letutor/modules/mod-user/book_appointment/views/book_course_view.dart';
+import 'package:letutor/modules/mod-user/userprofile/views/user_profile_view.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 
 import '../view_model/searchTutor_view_model.dart';
@@ -11,57 +16,66 @@ class SearchTutorsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => SearchTutorViewModel(),
-      builder: (context, model, child) => SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Find Tutors",
-                    style: TextStyle(
-                        color: Colors.black87.withOpacity(0.8),
-                        fontSize: 30,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  _buildLevelOptions(model),
-                  _buildCourseOptions(model),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Text(
-                    "Tutors",
-                    style: TextStyle(
-                        color: Colors.black87.withOpacity(0.8),
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  _buildTutors(context, model)
-                ]),
-          ),
+      builder: (context, model, child) => Scaffold(
+        body: ResponsiveBuilder(
+          builder:(context, sizingInfo) =>
+                   Container(
+                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                     child: SafeArea(
+                       child: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           children: <Widget>[
+                             findTutorNav(context: context, onTapSearch: (){}),
+                             // Padding(
+                             //   padding: EdgeInsets.only(bottom: ScreenUtil().setSp(20)),
+                             //   child: Text("Welcome Back!",
+                             //       style: headline6.copyWith(color: lightColor)),
+                             // ),
+                             // Text(
+                             //   Modular.get<AuthService>().currentUser.user.name,
+                             //   style: headline5.copyWith(fontWeight: FontWeight.bold),
+                             // ),
+                             // SizedBox(
+                             //   height: 10,
+                             // ),
+                             // Text(
+                             //   "Find Tutors",
+                             //   style: TextStyle(
+                             //       color: Colors.black87.withOpacity(0.8),
+                             //       fontSize: 30,
+                             //       fontWeight: FontWeight.w600),
+                             // ),
+                              SizedBox(height: 16,),
+                             _buildLevelOptions(model),
+                             _buildCourseOptions(model),
+                             SizedBox(
+                               height: 20.0,
+                             ),
+                             Text(
+                               "Tutors",
+                               style: TextStyle(
+                                   color: Colors.black87.withOpacity(0.8),
+                                   fontSize: 25,
+                                   fontWeight: FontWeight.w600),
+                             ),
+                             SizedBox(
+                               height: 20.0,
+                             ),
+                             Expanded(child: _buildTutors(context, model, sizingInfo))
+                           ]),
+                     ),
+                   ),
         ),
       ),
     );
   }
 
-  Widget _buildTutors(BuildContext context, SearchTutorViewModel model) {
+  Widget _buildTutors(BuildContext context, SearchTutorViewModel model,SizingInformation sizingInfo) {
     return Container(
-      height: 400,
-      width: MediaQuery.of(context).size.width,
+      //height: sizingInfo.screenSize.height * 0.3,
+   //   width: MediaQuery.of(context).size.width*0.3,
       child: ListView.builder(
+         scrollDirection: Axis.horizontal,
         itemCount: (model.tutorsList ?? []).length,
         shrinkWrap: true,
         physics: ClampingScrollPhysics(),
@@ -70,7 +84,7 @@ class SearchTutorsView extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 5.0),
             child: TutorTile(
               tutor: model.tutorsList[index],
-              onTapBook: (){
+              onTapBook: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(

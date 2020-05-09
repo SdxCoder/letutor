@@ -98,7 +98,7 @@ class _SignUpViewState extends State<SignUpView> {
       key: _formKey,
       child: FormCard(
         widgets: <Widget>[
-          Text("Resgister",
+          Text("Register",
               style: TextStyle(
                   fontSize: ScreenUtil().setSp(45),
                   fontFamily: "Poppins-Bold",

@@ -9,10 +9,13 @@ const Color commentColor = Color.fromARGB(255, 255, 246, 196);
 const Color buttonColor = Color(0xFF21BFBD);
 const Color lightColor = Color(0xFF7283B5);
 
+TextStyle headline4 = TextStyle(
+  fontSize: ScreenUtil().setSp(80)
+);
+
 TextStyle headline5 = TextStyle(
   fontSize: ScreenUtil().setSp(60)
 );
-
 
 TextStyle headline6 = TextStyle(
   fontSize: ScreenUtil().setSp(45)

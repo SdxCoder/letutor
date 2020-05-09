@@ -36,6 +36,7 @@ class AuthViewModel extends BaseViewModel {
 
   Future signInWithEmailAndPassword(String email, String password) async {
     setBusy(true);
+    await Future.delayed(Duration(seconds: 4));
     var result = await _authService.signInWithEmailPassword(email, password);
     setBusy(false);
     if (result is String) {
@@ -46,8 +47,9 @@ class AuthViewModel extends BaseViewModel {
   }
 
   Future signInWithGoogle() async {
+    setBusy(true);
     var result = await _authService.signInWithGoogle();
-
+    setBusy(false);
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {
@@ -56,8 +58,9 @@ class AuthViewModel extends BaseViewModel {
   }
 
   Future signInWithFacebook() async {
+    setBusy(true);
     var result = await _authService.signInWithFaceBook();
-
+    setBusy(false);
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {
@@ -66,9 +69,9 @@ class AuthViewModel extends BaseViewModel {
   }
 
   Future sendPasswordResetEmail(String email) async {
-    setBusy(true);
+   // setBusy(true);
     var result = await _authService.sendPasswordResetEmail(email);
-    setBusy(false);
+   // setBusy(false);
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {

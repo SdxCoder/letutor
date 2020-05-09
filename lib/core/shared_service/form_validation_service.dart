@@ -18,14 +18,14 @@ class FormValidationService {
     // PatternValidator(r'(^[a-z],[A-Z]$)',
     //     errorText: 'only alphabets allowed')
   ]);
-
+  
   final phoneValidator = MultiValidator([
     _requiredValidator,
     MinLengthValidator(10,
       errorText: 'phone no is less than 10 digits long'),
       MaxLengthValidator(12,
       errorText: 'max 12 digits long in case of country code'),
-    PatternValidator(r'(^(?:[+0]9)?[0-9]{10,12}$)',
+    PatternValidator(r'\(?\+[0-9]{1,3}\)? ?-?[0-9]{1,3} ?-?[0-9]{3,5} ?-?[0-9]{4}( ?-?[0-9]{3})? ?(\w{1,10}\s?\d{1,6})?',
         errorText: 'No space or no characters allowed between digits')
   ]);
 

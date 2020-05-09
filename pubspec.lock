@@ -22,6 +22,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.1"
+  badges:
+    dependency: transitive
+    description:
+      name: badges
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -324,10 +331,24 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  pigment:
+    dependency: transitive
+    description:
+      name: pigment
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   plugin_platform_interface:
     dependency: transitive
     description:
       name: plugin_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
+  polygon_clipper:
+    dependency: transitive
+    description:
+      name: polygon_clipper
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
@@ -352,6 +373,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.7"
+  rolling_nav_bar:
+    dependency: "direct main"
+    description:
+      name: rolling_nav_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   shared_preferences:
     dependency: transitive
     description:
@@ -448,6 +476,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.15"
+  tinycolor:
+    dependency: transitive
+    description:
+      name: tinycolor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   typed_data:
     dependency: transitive
     description:

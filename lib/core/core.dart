@@ -33,6 +33,8 @@ export './shared_widgets/tutor_tile.dart';
 export './shared_widgets/upcoming_booking_card.dart';
 export './shared_widgets/dialog.dart';
 export './shared_widgets/button.dart';
+export './shared_widgets/progress_indicator.dart';
+export './shared_widgets/app_bar.dart';
 
 // utils
 export './utils/colors.dart';

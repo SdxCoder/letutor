@@ -15,7 +15,7 @@ class SplashViewModel extends BaseViewModel{
     final bool loggedIn = await authService.checkUserLoginStatus();
     setBusy(false);
     if(loggedIn){
-      Modular.to.pushNamed(Routes.home);
+      Modular.to.pushReplacementNamed(Routes.home);
     }
     else{
       Modular.to.pushNamed(Routes.login);

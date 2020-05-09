@@ -44,7 +44,7 @@ class AuthView extends StatelessWidget {
         body: Scaffold(
           body: SingleChildScrollView(
             child: Column(
-              mainAxisSize:MainAxisSize.min ,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Container(
                   height: sizingInfo.screenSize.height,
@@ -62,9 +62,6 @@ class AuthView extends StatelessWidget {
                           Image.asset("assets/image_02.png")
                         ],
                       ),
-
-                    
-
                       Padding(
                         padding: EdgeInsets.only(
                             left: 28.0, right: 28.0, top: 55.0, bottom: 16),
@@ -119,7 +116,8 @@ class AuthView extends StatelessWidget {
                                 horizontalLine(),
                                 Text("Social Login",
                                     style: TextStyle(
-                                        fontSize: 16.0, fontFamily: "Poppins-Medium")),
+                                        fontSize: 16.0,
+                                        fontFamily: "Poppins-Medium")),
                                 horizontalLine()
                               ],
                             ),
@@ -166,7 +164,11 @@ class AuthView extends StatelessWidget {
                             navigatorButton,
                           ],
                         ),
-                      )
+                      ),
+  
+                      (model.isBusy) ? 
+                      progressIndicator()
+                      :Offstage()
                     ],
                   ),
                 ),

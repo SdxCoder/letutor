@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/screenutil.dart';
+import 'package:letutor/core/utils/colors.dart';
 
 // placeholder, use state instead
 const selectedCategory = "Chemistry";
@@ -18,10 +20,7 @@ class OptionsHorizontalScroll extends StatelessWidget {
       children: <Widget>[
         Text(
           title,
-          style: TextStyle(
-              color: Colors.black87.withOpacity(0.8),
-              fontSize: 20,
-              fontWeight: FontWeight.w600),
+          style: subtitle1,
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 20.0),
