@@ -9,10 +9,11 @@ import '../core.dart';
 class BookingCard extends StatelessWidget {
   final heroTag;
   final String imageUrl;
+  final List<Widget> actions;
   final Function onTap;
   
   const BookingCard({
-    Key key, this.heroTag, this.onTap, this.imageUrl
+    Key key, this.heroTag, this.onTap, this.imageUrl, this.actions = const []
   }) : super(key: key);
 
   @override
@@ -21,30 +22,33 @@ class BookingCard extends StatelessWidget {
     ScreenUtil.init(context, allowFontScaling: true);
     
  
-    return Container(
-      //  height: MediaQuery.of(context).size.height*0.35,
-         height: ScreenUtil().setHeight(550),
-        width: double.maxFinite,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                offset: Offset(0, 1),
-              ),
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
+    return GestureDetector(
+      onTap: onTap,
+          child: Container(
+        //  height: MediaQuery.of(context).size.height*0.35,
+           height: ScreenUtil().setHeight(600),
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
                   offset: Offset(0, 1),
-                  blurRadius: 10.0)
-            ]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            cardHeader(),
-            cardContent(context),
-          ],
-        ));
+                ),
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    offset: Offset(0, 1),
+                    blurRadius: 10.0)
+              ]),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              cardHeader(),
+              cardContent(context),
+            ],
+          )),
+    );
   }
 
   Widget cardContent(BuildContext context) {
@@ -87,51 +91,29 @@ class BookingCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Row(children: <Widget>[
-                            Text(
-                              "Louis",
-                              style: TextStyle(fontSize: ScreenUtil().setSp(40),),
-                            ),
-                          ]),
-                          Padding(
-                            padding: EdgeInsets.only(top: 5.0),
-                            child: Text(
-                              "Patterson",
-                              style: TextStyle(fontSize: ScreenUtil().setSp(40),),
+                          Text(
+                            "Louis Patterson",
+                            style: bodyText1.copyWith(
+                              fontWeight: FontWeight.bold,
+                            height: 1
+                          ),),
+                          Text(
+                            "M. Phil in Biology",
+                            style: bodyText1.copyWith(
+                              height: 1,
+                              color: Colors.grey
                             ),
                           ),
                         ],
                       )),
                 ),
-                IconButton(
-                  iconSize: ScreenUtil().setSp(60),
-                  icon :Icon(
-                  
-                  Icons.info
-                ), onPressed: onTap,)
               ],
             ),
-            // Padding(
-            //   padding: EdgeInsets.all(ScreenUtil().setSp(10),),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: <Widget>[
-                  
-            //       Container(
-            //         padding: EdgeInsets.symmetric(
-            //          horizontal: ScreenUtil().setSp(20),
-            //           vertical: ScreenUtil().setSp(20),
-            //         ),
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(10.0),
-            //           color: Colors.blue[300],
-            //         ),
-            //         child:
-            //             Text("Confirm", style: TextStyle(color: Colors.white)),
-            //       )
-            //     ],
-            //   ),
-            // )
+            Spacer(),
+            ...actions,
+            
+      
+           
           ],
         ),
       ),

@@ -78,6 +78,13 @@ class AppointmentsView extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: ScreenUtil().setSp(40)),
               child: BookingCard(
+                actions: <Widget>[
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text("Pending", style: bodyText1.copyWith(
+                      color: Colors.blue
+                    ),))
+                ],
                 heroTag: appointmentsHeroTag,
                 imageUrl:
                     Modular.get<AuthService>().currentUser.user.photoUrl ??

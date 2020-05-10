@@ -20,15 +20,15 @@ class OptionsHorizontalScroll extends StatelessWidget {
       children: <Widget>[
         Text(
           title,
-          style: subtitle1,
+          style: subtitle1.copyWith(
+            color: lightColor
+          ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 20.0),
-          child: Container(
-              height: 40,
-              width: MediaQuery.of(context).size.width,
-              child: options),
-        ),
+        SizedBox(height: 8,),
+        Container(
+            height: ScreenUtil().setSp(100),
+            width: MediaQuery.of(context).size.width,
+            child: options),
       ],
     );
   }
