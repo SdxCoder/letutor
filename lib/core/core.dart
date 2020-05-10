@@ -35,6 +35,8 @@ export './shared_widgets/dialog.dart';
 export './shared_widgets/button.dart';
 export './shared_widgets/progress_indicator.dart';
 export './shared_widgets/app_bar.dart';
+export './shared_widgets/rating_bar.dart';
+export './shared_widgets/past_booking_card.dart';
 
 // utils
 export './utils/colors.dart';

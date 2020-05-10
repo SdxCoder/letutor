@@ -23,6 +23,7 @@ class SearchTutorsView extends StatelessWidget {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                   SizedBox(height: 8),
                   findTutorNav(context: context, onTapSearch: () {}),
                   // Padding(
                   //   padding: EdgeInsets.only(bottom: ScreenUtil().setSp(20)),

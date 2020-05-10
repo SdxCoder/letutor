@@ -41,131 +41,146 @@ class AppointmentsView extends StatelessWidget {
                     .user
                     .photoUrl ??
                 Modular.get<AuthService>().currentUser.user.photoPlaceholder),
-        body: TabBarView(children: [
+        body: TabBarView(
+          children: [
           _upcomingBookings(context),
-          Text("paseeeeet"),
+          _pastBookings(context)
         ]),
       ),
     );
   }
 
+  Widget _pastBookings(context) {
+    return ShaderMask(
+      shaderCallback: (rect) {
+        return LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Colors.black, Colors.transparent],
+        ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height * 3));
+      },
+      blendMode: BlendMode.dstIn,
+      child: ListView.builder(
+        itemCount: 5,
+        itemBuilder: (BuildContext context, int index) {
+          return PastBookingCard(
+            onTap: () {
+              String id = "1"; // This id is of unconfirmed booking
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BookingDetailView(
+                          heroTag: index.toString(),
+                        ),
+                    settings: RouteSettings(
+                        name: Routes.bookingDetail.replaceAll(":id", id))),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
   Widget _upcomingBookings(context) {
-    return SafeArea(
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 24.0,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // Padding(
-            //   padding: EdgeInsets.only(bottom: ScreenUtil().setSp(20)),
-            //   child: Text(
-            //     "Welcome Back!",
-            //     style: headline6.copyWith(
-            //       color : lightColor
-            //     )
-            //   ),
-            // ),
-            // Text(
-            //   Modular.get<AuthService>().currentUser.user.name,
-            //   style: headline5.copyWith(
-            //     fontWeight: FontWeight.bold
-            //   ),
-            // ),
-            Padding(
-              padding: EdgeInsets.only(top: ScreenUtil().setSp(40)),
-              child: BookingCard(
-                actions: <Widget>[
-                  Align(
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: 10.0,
+        horizontal: 24.0,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          // Padding(
+          //   padding: EdgeInsets.only(bottom: ScreenUtil().setSp(20)),
+          //   child: Text(
+          //     "Welcome Back!",
+          //     style: headline6.copyWith(
+          //       color : lightColor
+          //     )
+          //   ),
+          // ),
+          // Text(
+          //   Modular.get<AuthService>().currentUser.user.name,
+          //   style: headline5.copyWith(
+          //     fontWeight: FontWeight.bold
+          //   ),
+          // ),
+          Padding(
+            padding: EdgeInsets.only(top: ScreenUtil().setSp(40)),
+            child: BookingCard(
+              actions: <Widget>[
+                Align(
                     alignment: Alignment.centerRight,
-                    child: Text("Pending", style: bodyText1.copyWith(
-                      color: Colors.blue
-                    ),))
-                ],
-                heroTag: appointmentsHeroTag,
-                imageUrl:
-                    Modular.get<AuthService>().currentUser.user.photoUrl ??
-                        imageUrl,
-                onTap: () {
-                  String id = "1"; // This id is of unconfirmed booking
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => BookingDetailView(
-                              heroTag: appointmentsHeroTag,
-                            ),
-                        settings: RouteSettings(
-                            name: Routes.bookingDetail.replaceAll(":id", id))),
-                  );
+                    child: Text(
+                      "Pending",
+                      style: bodyText1.copyWith(color: Colors.blue),
+                    ))
+              ],
+              heroTag: appointmentsHeroTag,
+              imageUrl: Modular.get<AuthService>().currentUser.user.photoUrl ??
+                  imageUrl,
+              onTap: () {
+                String id = "1"; // This id is of unconfirmed booking
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BookingDetailView(
+                            heroTag: appointmentsHeroTag,
+                          ),
+                      settings: RouteSettings(
+                          name: Routes.bookingDetail.replaceAll(":id", id))),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: ScreenUtil().setSp(20)),
+            child: Text("Next lessons",
+                style: subtitle1.copyWith(
+                  color: Color(0xFF7283B5),
+                )),
+          ),
+          Expanded(
+            child: Container(
+              //  height: 300.0,
+              child: ShaderMask(
+                shaderCallback: (rect) {
+                  return LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.black, Colors.transparent],
+                  ).createShader(
+                      Rect.fromLTRB(0, 0, rect.width, rect.height * 3));
                 },
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: ScreenUtil().setSp(20)),
-              child: Text("Next lessons",
-                  style: subtitle1.copyWith(
-                    color: Color(0xFF7283B5),
-                  )),
-            ),
-            Expanded(
-              child: Container(
-                //  height: 300.0,
-                child: ShaderMask(
-                  shaderCallback: (rect) {
-                    return LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Colors.black, Colors.transparent],
-                    ).createShader(
-                        Rect.fromLTRB(0, 0, rect.width, rect.height * 3));
+                blendMode: BlendMode.dstIn,
+                child: ListView.builder(
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return UpcomingBookingCard(
+                      heroTag: index.toString(),
+                      onTap: () {
+                        String id = "1"; // This id is of unconfirmed booking
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BookingDetailView(
+                                    heroTag: index.toString(),
+                                  ),
+                              settings: RouteSettings(
+                                  name: Routes.bookingDetail
+                                      .replaceAll(":id", id))),
+                        );
+                      },
+                    );
                   },
-                  blendMode: BlendMode.dstIn,
-                  child: ListView.builder(
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) {
-                      return UpcomingBookingCard(
-                        heroTag: index.toString(),
-                        onTap: () {
-                          String id = "1"; // This id is of unconfirmed booking
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BookingDetailView(
-                                      heroTag: index.toString(),
-                                    ),
-                                settings: RouteSettings(
-                                    name: Routes.bookingDetail
-                                        .replaceAll(":id", id))),
-                          );
-                        },
-                      );
-                    },
-                  ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
-
-class Choice {
-  const Choice({this.title, this.icon});
-
-  final String title;
-  final IconData icon;
-}
-
-const List<Choice> choices = const <Choice>[
-  const Choice(
-    title: 'Upcoming',
-  ),
-  const Choice(
-    title: 'Past',
-  ),
-];

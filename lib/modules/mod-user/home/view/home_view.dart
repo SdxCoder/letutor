@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -34,52 +36,54 @@ class UserHomeState extends State<UserHome> {
 
   Widget _buildBottomNavBar() {
     return SizedBox(
-      height: ScreenUtil().setHeight(160),
+      height: Platform.isAndroid ? kBottomNavigationBarHeight : 90,
       child: 
-      RollingNavBar.iconData(
-        animationCurve:
-            Curves.linear, // `linear` is recommended for `shrinkOutIn`
-        animationType: AnimationType.shrinkOutIn,
-        baseAnimationSpeed: 500,
-        activeIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-       iconSize: ScreenUtil().setSp(30),
-        iconData: <IconData>[
-          Icons.people_outline,
-          Icons.calendar_today,
-        ],
-        iconText: <Widget>[
-          Text('Search Tutor',
-              style: TextStyle(color: lightColor, fontSize: ScreenUtil().setSp(30))),
-          Text('Bookings', style: TextStyle(color: lightColor, fontSize: ScreenUtil().setSp(30))),
-        ],
-        indicatorColors: <Color>[
-          Colors.blue,
-          Colors.blue,
-        ],
-      ),
-      // BottomNavigationBar(
-      //   backgroundColor: Colors.white,
-      //   elevation: 0,
-      //   currentIndex: _currentIndex,
-      //   selectedItemColor: Colors.blue,
-      //   onTap: _onItemTapped,
-      //   items: <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       title: Text('Search Tutors'),
-      //       icon: Icon(Icons.people_outline),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       title: Text('Bookings'),
-      //       icon: Icon(Icons.calendar_today),
-      //     ),
-
+      // RollingNavBar.iconData(
+      //   animationCurve:
+      //       Curves.linear, // `linear` is recommended for `shrinkOutIn`
+      //   animationType: AnimationType.shrinkOutIn,
+      //   baseAnimationSpeed: 500,
+      //   activeIndex: _currentIndex,
+      //   onTap: (index) {
+      //     setState(() {
+      //       _currentIndex = index;
+      //     });
+      //   },
+      //  iconSize: ScreenUtil().setSp(30),
+      //   iconData: <IconData>[
+      //     Icons.people_outline,
+      //     Icons.calendar_today,
+      //   ],
+      //   iconText: <Widget>[
+      //     Text('Search Tutor',
+      //         style: TextStyle(color: lightColor, fontSize: ScreenUtil().setSp(30))),
+      //     Text('Bookings', style: TextStyle(color: lightColor, fontSize: ScreenUtil().setSp(30))),
+      //   ],
+      //   indicatorColors: <Color>[
+      //     Colors.blue,
+      //     Colors.blue,
       //   ],
       // ),
+      BottomNavigationBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        currentIndex: _currentIndex,
+        iconSize: 16,
+        
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            title: Text('Search Tutors', style: bodyText2,),
+            icon: Icon(Icons.people_outline),
+          ),
+          BottomNavigationBarItem(
+            title: Text('Bookings',  style: bodyText2,),
+            icon: Icon(Icons.calendar_today),
+          ),
+
+        ],
+      ),
     );
   }
 

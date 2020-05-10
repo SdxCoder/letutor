@@ -30,61 +30,109 @@ class TutorTile extends StatelessWidget {
           elevation: 0,
           color: Colors.white,
           child: Container(
-            width: (sizingInfo.screenSize.height > 570) ? sizingInfo.screenSize.width * 0.7 : sizingInfo.screenSize.width * 0.5,
+            width: sizingInfo.screenSize.width * 0.7,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              
               children: <Widget>[
-                Container(
-                  height: sizingInfo.localWidgetSize.height * 0.4,
-                  foregroundDecoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.4),
-                  ),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(imageUrl), fit: BoxFit.cover),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: ScreenUtil().setHeight(16),
-                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    '${tutor.name} ${tutor.lastName}',
-                    style: bodyText1.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            '${tutor.name} ${tutor.lastName}',
+                            style: bodyText1.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Biology',
+                            style: bodyText1.copyWith(
+                              height: 1,
+                              color: lightBlackColor,
+                            ),
+                          ),
+                          ratingBar(
+                              initialRating: 3.5, onRatingUpdate: (rating) {}),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(32),
+                          ),
+                          Text(
+                            'Pricing',
+                            style: bodyText1.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '200 NHL',
+                            style: bodyText1.copyWith(
+                              height: 1,
+                              color: lightBlackColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(imageUrl),
+                      )
+                    ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'M. Phil in Biology',
-                    style: bodyText1.copyWith(
-                      height: 1,
-                      color: lightBlackColor,
-                    ),
-                  ),
-                ),
+                // Container(
+                //   height: sizingInfo.localWidgetSize.height * 0.4,
+                //   foregroundDecoration: BoxDecoration(
+                //     color: Colors.white.withOpacity(0.4),
+                //   ),
+                //   decoration: BoxDecoration(
+                //     image: DecorationImage(
+                //         image: NetworkImage(imageUrl), fit: BoxFit.cover),
+                //     borderRadius: BorderRadius.only(
+                //       topLeft: Radius.circular(20),
+                //       topRight: Radius.circular(20),
+                //     ),
+                //   ),
+                // ),
+
                 Spacer(),
-                ButtonBar(
-                  children: <Widget>[
-                    FlatButton(
-                      onPressed: onTapBook,
+                GestureDetector(
+                  onTap: onTapBook,
+                  child: Container(
+                    width: ScreenUtil().setWidth(300),
+                    height: ScreenUtil().setHeight(150),
+                    alignment: Alignment.centerLeft,
+                    //  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        )),
+                    child: Center(
                       child: Text(
                         "Book",
-                        style: bodyText1.copyWith(
-                          color: Colors.blue
-                        ),
+                        style: bodyText1.copyWith(color: Colors.black),
                       ),
                     ),
-                  ],
+                  ),
                 ),
+
+                // ButtonBar(
+                //   alignment: MainAxisAlignment.start,
+                //   children: <Widget>[
+
+                //     FlatButton(
+                //       onPressed: onTapBook,
+                //       child: Text(
+                //         "Book",
+                //         style: bodyText1.copyWith(color: Colors.blue),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 // SizedBox(
                 //   height: ScreenUtil().setHeight(16),
                 // ),
