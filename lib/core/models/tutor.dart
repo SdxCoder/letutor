@@ -10,12 +10,14 @@ class Tutor {
   final String id;
   final String name;
   final String lastName;
-  Tutor({this.id, this.name, this.lastName});
+  final String email;
+  Tutor( {this.id, this.name, this.lastName, this.email});
 
   factory Tutor.fromDoc(DocumentSnapshot doc) {
     return Tutor(
         id: doc.documentID,
         name: doc.data['name'],
+        email:doc.data['email'],
         lastName: doc.data['last_name']);
   }
 

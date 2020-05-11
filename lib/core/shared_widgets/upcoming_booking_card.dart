@@ -6,11 +6,14 @@ import '../core.dart';
 class UpcomingBookingCard extends StatelessWidget {
   final String heroTag;
   final Function onTap;
-
+  final String title;
+  final String subtitle;
+  final Widget trailing;
+  
   const UpcomingBookingCard({
     Key key,
     this.onTap,
-    this.heroTag,
+    this.heroTag, this.title, this.subtitle, this.trailing,
   }) : super(key: key);
 
   @override
@@ -30,8 +33,9 @@ class UpcomingBookingCard extends StatelessWidget {
                   backgroundImage: NetworkImage(imageUrl),
                 ),
               ),
-          title: Text('Diego Gallegos'),
-          subtitle: Text('09 Jan 2020, 8am - 10am', style: bodyText1,),
+          title: Text(title),
+          subtitle: Text(subtitle, style: bodyText1,),
+          trailing: this.trailing,
           // trailing: Icon(Icons.more_vert),
           onTap: onTap,
         ),

@@ -30,7 +30,7 @@ class AuthViewModel extends BaseViewModel {
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {
-      Modular.to.pushNamed(Routes.home);
+      Modular.to.pushNamed(Routes.userHome);
     }
   }
 
@@ -42,7 +42,7 @@ class AuthViewModel extends BaseViewModel {
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {
-      Modular.to.pushNamed(Routes.home);
+      Modular.to.pushNamed(Routes.userHome);
     }
   }
 
@@ -53,7 +53,7 @@ class AuthViewModel extends BaseViewModel {
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {
-      Modular.to.pushNamed(Routes.home);
+      Modular.to.pushNamed(Routes.userHome);
     }
   }
 
@@ -64,7 +64,7 @@ class AuthViewModel extends BaseViewModel {
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {
-      Modular.to.pushNamed(Routes.home);
+      Modular.to.pushNamed(Routes.userHome);
     }
   }
 

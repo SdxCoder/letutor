@@ -13,7 +13,7 @@ void main() {
   setupLocator();
   runApp(
     DevicePreview(
-      enabled: false,
+      enabled: true,
       builder: (context){
         return ModularApp(module: AppModule(),);
       },
@@ -31,7 +31,7 @@ class App extends StatelessWidget {
           theme: ThemeData(
             fontFamily: "Poppins-Medium",
             primarySwatch: Colors.blue,
-          //  scaffoldBackgroundColor: Colors.blue.withOpacity(0.01),
+           scaffoldBackgroundColor: Color(0xFFF3F6FE),
             inputDecorationTheme: InputDecorationTheme(
               labelStyle: TextStyle(
                 color: Color(0xFF838383),

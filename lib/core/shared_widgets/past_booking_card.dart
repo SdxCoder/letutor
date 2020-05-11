@@ -7,6 +7,7 @@ import '../core.dart';
 class PastBookingCard extends StatelessWidget {
   final Function onTap;
 
+
   const PastBookingCard({Key key, this.onTap}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -15,9 +16,8 @@ class PastBookingCard extends StatelessWidget {
         onTap: onTap,
         child: Card(
           color: Colors.white,
-  elevation: 1,
+          elevation: 1,
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          // shadowColor: Colors.grey.withOpacity(0.9),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
             // side: BorderSide(

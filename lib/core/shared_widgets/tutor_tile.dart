@@ -24,9 +24,11 @@ class TutorTile extends StatelessWidget {
         onTap: onTap,
         child: Card(
           margin: EdgeInsets.only(right: 16),
+          
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
-              side: BorderSide(color: lightBlackBorderColor, width: 1)),
+             // side: BorderSide(color: lightBlackBorderColor, width: 1)
+              ),
           elevation: 0,
           color: Colors.white,
           child: Container(
@@ -106,7 +108,7 @@ class TutorTile extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     //  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     decoration: BoxDecoration(
-                        color: Colors.amber,
+                        color: Colors.blue,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
@@ -114,7 +116,7 @@ class TutorTile extends StatelessWidget {
                     child: Center(
                       child: Text(
                         "Book",
-                        style: bodyText1.copyWith(color: Colors.black),
+                        style: bodyText1.copyWith(color: Colors.white),
                       ),
                     ),
                   ),

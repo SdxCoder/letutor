@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_screenutil/screenutil.dart';
 import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
 import 'package:letutor/modules/mod-user/userprofile/views/user_profile_view.dart';
 import '../utils/colors.dart';
 
-Widget findTutorNav({
-  BuildContext context,
-  Function onTapSearch,
-  List<Widget> actions = const [],
-}) {
-  return SafeArea(
+
+class FindTutorTopNavBar extends StatelessWidget {
+  final List<Widget> actions;
+
+  const FindTutorTopNavBar({Key key,  this.actions = const []}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
       child: Row(
       children: [
         Column(
@@ -51,4 +52,5 @@ Widget findTutorNav({
       ],
     ),
   );
+  }
 }

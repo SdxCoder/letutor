@@ -24,26 +24,7 @@ class SearchTutorsView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                    SizedBox(height: 8),
-                  findTutorNav(context: context, onTapSearch: () {}),
-                  // Padding(
-                  //   padding: EdgeInsets.only(bottom: ScreenUtil().setSp(20)),
-                  //   child: Text("Welcome Back!",
-                  //       style: headline6.copyWith(color: lightColor)),
-                  // ),
-                  // Text(
-                  //   Modular.get<AuthService>().currentUser.user.name,
-                  //   style: headline5.copyWith(fontWeight: FontWeight.bold),
-                  // ),
-                  // SizedBox(
-                  //   height: 10,
-                  // ),
-                  // Text(
-                  //   "Find Tutors",
-                  //   style: TextStyle(
-                  //       color: Colors.black87.withOpacity(0.8),
-                  //       fontSize: 30,
-                  //       fontWeight: FontWeight.w600),
-                  // ),
+                  FindTutorTopNavBar(),
                   SizedBox(height: 16),
                   _buildLevelOptions(model),
                   SizedBox(height: 16),

@@ -37,6 +37,8 @@ export './shared_widgets/progress_indicator.dart';
 export './shared_widgets/app_bar.dart';
 export './shared_widgets/rating_bar.dart';
 export './shared_widgets/past_booking_card.dart';
+export './shared_widgets/bottom_navbar.dart';
+export './shared_widgets/search_bar.dart';
 
 // utils
 export './utils/colors.dart';
