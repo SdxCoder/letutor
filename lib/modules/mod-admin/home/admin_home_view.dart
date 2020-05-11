@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:letutor/core/core.dart';
+import 'package:letutor/modules/mod-admin/bookings/views/bookings_view.dart';
 import '../tutor/views/search_tutor_view.dart';
 
 class AdminHome extends StatefulWidget {
@@ -15,7 +16,7 @@ class _AdminHomeState extends State<AdminHome> {
 
   List<Widget> tabs = [
     SearchTutorView(),
-    SearchTutorView(),
+    BookingsView(),
   ];
 
   @override

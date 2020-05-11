@@ -7,8 +7,9 @@ class SearchBar extends StatefulWidget {
   final TextEditingController controller;
   final Function(String) onChanged;
   final Function(String) onSubmit;
+  final Function onEditingComplete; 
 
-  const SearchBar({Key key, this.controller, this.onChanged, this.onSubmit}) : super(key: key);
+  const SearchBar({Key key, this.controller, this.onChanged, this.onSubmit, this.onEditingComplete}) : super(key: key);
   @override
   _SearchBarState createState() => _SearchBarState();
 }
@@ -35,6 +36,8 @@ class _SearchBarState extends State<SearchBar> {
           ),
           onFieldSubmitted: widget.onSubmit,
           onChanged: widget.onChanged,
+          onEditingComplete: widget.onEditingComplete,
+         
           decoration: InputDecoration(
             
               hintText: "Search",

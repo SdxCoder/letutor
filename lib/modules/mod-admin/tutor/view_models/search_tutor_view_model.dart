@@ -17,11 +17,13 @@ class SearchTutorViewModel extends BaseViewModel{
   Set<String> tempList = Set<String>();
 
   void searchResults(String query){
+    tempList = Set<String>();
     for(String tutor in tutors){
-      if(tutor.startsWith(query)){
+      if(tutor.toLowerCase().contains(query.toLowerCase())){
         tempList.add(tutor);
         notifyListeners();
       }
     }
+    
   }
 }

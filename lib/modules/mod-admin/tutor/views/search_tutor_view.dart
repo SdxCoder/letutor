@@ -4,16 +4,12 @@ import 'package:stacked/stacked.dart';
 import '../../../../core/core.dart';
 
 class SearchTutorView extends StatelessWidget {
-  final _searchController = TextEditingController();
-
 
 
 
   @override
   Widget build(BuildContext context) {
-    // _searchController.addListener(() {
-      
-    // });
+   
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => SearchTutorViewModel(),
       builder: (context,SearchTutorViewModel model, child)=>
@@ -35,12 +31,16 @@ class SearchTutorView extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: SearchBar(
-                  controller: TextEditingController(),
+                //  controller: TextEditingController(),
+                  onEditingComplete: (){
+
+                  },
                   onChanged: (String value) {
                     model.searchResults(value);
                     print(value);
                   },
                   onSubmit: (String value) {
+                    model.searchResults(value);
                     print(value);
                   },
                 ),
@@ -61,7 +61,7 @@ class SearchTutorView extends StatelessWidget {
         scrollDirection: Axis.vertical,
         itemCount: model.tempList.length,
         shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return UpcomingBookingCard(
             heroTag: index.toString(),
@@ -76,7 +76,9 @@ class SearchTutorView extends StatelessWidget {
                     Icons.check_circle,
                     color: Colors.blue,
                   ),
-            onTap: () {},
+            onTap: () {
+              
+            },
           );
         });
   }

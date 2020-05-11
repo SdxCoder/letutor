@@ -42,10 +42,7 @@ class AppointmentsView extends StatelessWidget {
                     .photoUrl ??
                 Modular.get<AuthService>().currentUser.user.photoPlaceholder),
         body: TabBarView(
-          children: [
-          _upcomingBookings(context),
-          _pastBookings(context)
-        ]),
+            children: [_upcomingBookings(context), _pastBookings(context)]),
       ),
     );
   }
@@ -64,6 +61,11 @@ class AppointmentsView extends StatelessWidget {
         itemCount: 5,
         itemBuilder: (BuildContext context, int index) {
           return PastBookingCard(
+            actions: [
+              Text("Status", style: bodyText2.copyWith(color: lightBlackColor)),
+              Text("Confirmed",
+                  style: bodyText2.copyWith(height: 1, color: Colors.blue)),
+            ],
             onTap: () {
               String id = "1"; // This id is of unconfirmed booking
               Navigator.push(
