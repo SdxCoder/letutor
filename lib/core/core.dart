@@ -20,6 +20,7 @@ export './models/user.dart';
 // shared services export
 export './shared_service/user_service.dart';
 export './shared_service/form_validation_service.dart';
+export './shared_service/rbac_service.dart';
 
 // shared widgets export
 export './shared_widgets/booking_card.dart';
@@ -39,6 +40,8 @@ export './shared_widgets/rating_bar.dart';
 export './shared_widgets/past_booking_card.dart';
 export './shared_widgets/bottom_navbar.dart';
 export './shared_widgets/search_bar.dart';
+export './shared_widgets/drop_down_field.dart';
+export './shared_widgets/text_field.dart';
 
 // utils
 export './utils/colors.dart';

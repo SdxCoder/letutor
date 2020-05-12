@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:letutor/modules/mod-account/login/views/login_view.dart';
+import 'package:letutor/modules/mod-tutor/module_tutor.dart';
 import 'package:letutor/modules/mod-user/user_module.dart';
 import 'package:letutor/modules/spash/view/splash_screen.dart';
 
@@ -21,6 +22,7 @@ class AppModule extends MainModule {
         Bind((i) => FormValidationService()),
         Bind((i) => AuthService()),
         Bind((i) => UserService()),
+        Bind((i) => RBACService())
       ];
 
   @override
@@ -32,6 +34,7 @@ class AppModule extends MainModule {
         Router("/login", child: (_, args) => LoginView()),
         Router("/signup", child: (_, args) => SignUpView()),
         Router('/userHome', module: UserModule()),
-        Router('/adminHome', module: AdminModule())
+        Router('/adminHome', module: AdminModule()),
+        Router('/tutorHome', module: TutorModule()),
       ];
 }

@@ -8,6 +8,7 @@ import 'package:stacked/stacked.dart';
 class AuthViewModel extends BaseViewModel {
   final _authService = Modular.get<AuthService>();
   final validationService = Modular.get<FormValidationService>();
+  final _rbacService = Modular.get<RBACService>();
 
   
   Future signUpWithEmailAndPassword(
@@ -42,7 +43,7 @@ class AuthViewModel extends BaseViewModel {
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {
-      Modular.to.pushNamed(Routes.userHome);
+      _rbacService.getRoleBasedAccess();
     }
   }
 
@@ -53,7 +54,7 @@ class AuthViewModel extends BaseViewModel {
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {
-      Modular.to.pushNamed(Routes.userHome);
+      _rbacService.getRoleBasedAccess();
     }
   }
 
@@ -64,7 +65,7 @@ class AuthViewModel extends BaseViewModel {
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {
-      Modular.to.pushNamed(Routes.userHome);
+      _rbacService.getRoleBasedAccess();
     }
   }
 

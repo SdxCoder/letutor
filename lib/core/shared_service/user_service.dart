@@ -6,6 +6,7 @@ class UserService {
   
   Future createUser(User user) async {
     try {
+      if(await _userExists(user) == true) return;
       await _userCollection.document(user.uid).setData(user.toJson());
     } catch (e) {
       return e.message;
@@ -21,12 +22,9 @@ class UserService {
     }
   }
 
-  Future _userExists(User user) async {
-   
+  Future<bool> _userExists(User user) async {
       DocumentSnapshot snapshot = await _userCollection.document(user.uid).get();
-      if(snapshot.exists){
-        return "User already exists";
-      }
+      return snapshot.exists;
     
   }
 }

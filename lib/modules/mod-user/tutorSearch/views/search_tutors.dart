@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+
 import 'package:letutor/core/core.dart';
-import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
+
 import 'package:letutor/modules/mod-user/book_appointment/views/book_course_view.dart';
-import 'package:letutor/modules/mod-user/userprofile/views/user_profile_view.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 
@@ -24,7 +22,7 @@ class SearchTutorsView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                    SizedBox(height: 8),
-                  FindTutorTopNavBar(),
+                  TopNavBar(),
                   SizedBox(height: 16),
                   _buildLevelOptions(model),
                   SizedBox(height: 16),
@@ -89,9 +87,9 @@ class SearchTutorsView extends StatelessWidget {
         physics: ClampingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return CategoryTile(
+          return CapsuleTile(
             id: courses[index].id,
-            category: courses[index].name,
+            title: courses[index].name,
             isSelected: model.selectedCourse == courses[index].id,
             onTap: (category) => model.setSelectedCourse(category),
           );
@@ -110,9 +108,9 @@ class SearchTutorsView extends StatelessWidget {
         physics: ClampingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return CategoryTile(
+          return CapsuleTile(
             id: levels[index].id,
-            category: levels[index].name,
+            title: levels[index].name,
             isSelected: model.selectedLevel == levels[index].id,
             onTap: (category) => model.setSelectedLevel(category),
           );

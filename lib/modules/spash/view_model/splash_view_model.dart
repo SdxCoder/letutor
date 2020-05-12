@@ -4,21 +4,22 @@ import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
 
 class SplashViewModel extends BaseViewModel {
-  final authService = Modular.get<AuthService>();
+  final _authService = Modular.get<AuthService>();
+  final _rbacService = Modular.get<RBACService>();
 
   Future handleStartUpLogic() async {
     setBusy(true);
-    final bool loggedIn = await authService.checkUserLoginStatus();
+    final bool loggedIn = await _authService.checkUserLoginStatus();
     setBusy(false);
     if (loggedIn) {
-      _getRoleBasedAccess();
+      _rbacService.getRoleBasedAccess();
     } else {
       Modular.to.pushNamed(Routes.login);
     }
   }
 
   void _getRoleBasedAccess() {
-    User user = authService.currentUser.user;
+    User user = _authService.currentUser.user;
 
     if (user.role == 'admin') {
       print("admin logged in");

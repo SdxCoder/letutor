@@ -21,7 +21,7 @@ class BottomNavBar extends StatelessWidget {
       iconSize: 16,
       selectedItemColor: Colors.blue,
       onTap: onTap,
-      items: <BottomNavigationBarItem>[
+      items: navItems ?? <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           title: Text(
             'Search Tutors',
@@ -36,7 +36,6 @@ class BottomNavBar extends StatelessWidget {
           ),
           icon: Icon(Icons.calendar_today),
         ),
-        ...navItems
       ],
     ),
   );

@@ -22,7 +22,7 @@ class SearchTutorView extends StatelessWidget {
               SizedBox(
                 height: 8,
               ),
-              FindTutorTopNavBar(
+              TopNavBar(
                 actions: <Widget>[],
               ),
               SizedBox(
@@ -31,7 +31,6 @@ class SearchTutorView extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: SearchBar(
-                //  controller: TextEditingController(),
                   onEditingComplete: (){
 
                   },

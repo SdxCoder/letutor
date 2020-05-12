@@ -161,6 +161,9 @@ class AppointmentsView extends StatelessWidget {
                   itemCount: 5,
                   itemBuilder: (BuildContext context, int index) {
                     return UpcomingBookingCard(
+                      title: "Luis Petterson",
+                      subtitle: "09 Aug 2020, 08am - 10am",
+                    
                       heroTag: index.toString(),
                       onTap: () {
                         String id = "1"; // This id is of unconfirmed booking

@@ -78,7 +78,8 @@ class AuthService {
       final authResult = await _auth.signInWithCredential(credential);
 
       // Create nd Populate current user
-      await _userService.createUser(User(
+      await _userService.createUser(
+        User(
         uid: authResult.user.uid,
         email: authResult.user.email,
         photoUrl: authResult.user.photoUrl ?? "",
