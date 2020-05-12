@@ -10,7 +10,7 @@ class UserProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => UserProfileViewModel(),
-      builder: (context,UserProfileViewModel model, child)=> Scaffold(
+      builder: (context, UserProfileViewModel model, child) => Scaffold(
         backgroundColor: Colors.blue,
         bottomNavigationBar: Container(height: 0.0),
         appBar: AppBar(
@@ -22,54 +22,50 @@ class UserProfileView extends StatelessWidget {
             child: Column(
           children: <Widget>[
             Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                      padding: const EdgeInsets.only(left: 28.0, top: 7.0),
-                      child:
-                       CircleAvatar(
-              radius: 44,
-              backgroundImage: NetworkImage(model.currentUser.user.photoUrl ?? model.currentUser.user.photoPlaceholder),
-                      
-                      ),
-                    ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 38.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-            Text(
-              model.currentUser.user.name,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 22.0,
-                color: Colors.white,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Icon(Icons.location_on,
-                      color: Colors.white, size: 17),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Text(
-                      "San Pedro Sula, HN",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            )
-                      ],
-                    ),
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 28.0, top: 7.0),
+                  child: CircleAvatar(
+                    radius: 44,
+                    backgroundImage: NetworkImage(
+                        model.currentUser.user.photoUrl ??
+                            model.currentUser.user.photoPlaceholder),
                   ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 38.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        model.currentUser.user.name.toUpperCase(),
+                        style: headline5.copyWith(color:Colors.white),
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 8.0),
+                      //   child: Row(
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: <Widget>[
+                      //       Icon(Icons.location_on,
+                      //           color: Colors.white, size: 17),
+                      //       Padding(
+                      //         padding: const EdgeInsets.only(left: 5.0),
+                      //         child: Text(
+                      //           "San Pedro Sula, HN",
+                      //           style: TextStyle(
+                      //             color: Colors.white,
+                      //           ),
+                      //         ),
+                      //       )
+                      //     ],
+                      //   ),
+                      // )
+                    ],
+                  ),
+                ),
+              ],
+            ),
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -80,8 +76,9 @@ class UserProfileView extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 20.0),
                       child: Text(
                         "Profile",
-                        style: TextStyle(
-                            fontSize: 22.0, fontWeight: FontWeight.w600),
+                        style: subtitle1.copyWith(
+                          fontWeight:FontWeight.w600
+                        ),
                       ),
                     ),
                     InfoSection(
@@ -89,20 +86,20 @@ class UserProfileView extends StatelessWidget {
                       title: "Email",
                       value: model.currentUser.user.email,
                     ),
-                    (model.currentUser.user.phoneNo.isNotEmpty) ? InfoSection(
-                      icon: Icons.email,
-                      title: "Phone No",
-                      value: model.currentUser.user.phoneNo,
-                    ) : Offstage(),
-                   
+                    (model.currentUser.user.phoneNo.isNotEmpty)
+                        ? InfoSection(
+                            icon: Icons.email,
+                            title: "Phone No",
+                            value: model.currentUser.user.phoneNo,
+                          )
+                        : Offstage(),
                     raisedButton(
-                        btnText: "Logout",
+                      btnText: "Logout",
                       onPressed: () async {
                         await model.signOut();
                         Modular.to.pushNamed('/');
                       },
                     ),
-                   
                   ],
                 ),
                 decoration: BoxDecoration(
@@ -131,7 +128,7 @@ class InfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,6 +140,7 @@ class InfoSection extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
                   title,
+                  style: bodyText1,
                 ),
               ),
             ],
@@ -150,7 +148,7 @@ class InfoSection extends StatelessWidget {
           Divider(),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-            child: Text(value),
+            child: Text(value, style: bodyText1),
           ),
         ],
       ),

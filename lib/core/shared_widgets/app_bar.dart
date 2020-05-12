@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:letutor/core/constants/constants.dart';
-import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
 import 'package:letutor/modules/mod-user/userprofile/views/user_profile_view.dart';
 
 Widget buildAppBar(

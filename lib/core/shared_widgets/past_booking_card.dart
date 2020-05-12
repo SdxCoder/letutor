@@ -8,8 +8,8 @@ class PastBookingCard extends StatelessWidget {
   final Function onTap;
   final List<Widget> actions;
 
-
-  const PastBookingCard({Key key, this.onTap, this.actions}) : super(key: key);
+  const PastBookingCard({Key key, this.onTap, this.actions = const []})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
@@ -78,8 +78,9 @@ class PastBookingCard extends StatelessWidget {
                             height: 1,
                           )),
                       Spacer(),
-                      ...actions,
+                       ...actions,
                       
+                       
                     ],
                   ),
                 ]),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:letutor/core/utils/colors.dart';
 
 Widget raisedButton({
   String btnText,
@@ -25,12 +26,9 @@ Widget raisedButton({
           onTap: onPressed,
           child: Center(
             child: Text(btnText,
-                style: TextStyle(
-                    color: Colors.white,
-                   // fontFamily: "Poppins-Bold",
-                   fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    letterSpacing: 1.0)),
+                style: bodyText1.copyWith(
+                  color:Colors.white
+                )),
           ),
         ),
       ),),

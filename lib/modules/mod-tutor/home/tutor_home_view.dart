@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:letutor/core/core.dart';
+import 'package:letutor/modules/mod-tutor/bookings_history/view/tutor_bookings_view.dart';
 import 'package:letutor/modules/mod-tutor/courses/view/add_course_view.dart';
 
 
@@ -15,7 +16,7 @@ class _TutorHomeState extends State<TutorHome> {
 
   List<Widget> tabs = [
     AddCourseView(),
-    Text("akask")
+    TutorBookingsView()
   ];
 
   @override
@@ -36,14 +37,14 @@ class _TutorHomeState extends State<TutorHome> {
             'Add Courses',
             style: bodyText2,
           ),
-          icon: Icon(Icons.calendar_today),
+          icon: Icon(Icons.book),
         ),
         BottomNavigationBarItem(
           title: Text(
-            'History',
+            'Bookings',
             style: bodyText2,
           ),
-          icon: Icon(Icons.history),
+          icon: Icon(Icons.calendar_today),
         ),
       ],
       ),
