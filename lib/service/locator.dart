@@ -4,5 +4,5 @@ import 'package:letutor/service/db_service.dart';
 final locator = GetIt.instance;
 
 void setupLocator() {
-  locator.registerLazySingleton(() => DatabaseService());
+  // locator.registerLazySingleton(() => DatabaseService());
 }

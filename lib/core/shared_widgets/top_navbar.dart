@@ -10,7 +10,7 @@ class TopNavBar extends StatelessWidget {
 
   const TopNavBar({
     Key key,
-    this.title = const [],
+    this.title,
     this.actions = const [],
   }) : super(key: key);
   @override
@@ -25,7 +25,9 @@ class TopNavBar extends StatelessWidget {
             children: title ?? [
               Text(
                 'Find',
-                style: headline6.copyWith(),
+                style: headline6.copyWith(
+                 
+                ),
               ),
               Text('Tutor',
                   style: headline5.copyWith(

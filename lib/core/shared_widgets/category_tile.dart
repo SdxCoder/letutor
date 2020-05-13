@@ -6,6 +6,7 @@ class CapsuleTile extends StatelessWidget {
   final String id;
   final String title;
   final bool isSelected;
+  final Color titleColor;
   final Function(String category) onTap;
   final Function onTapCancelIcon;
 
@@ -14,11 +15,12 @@ class CapsuleTile extends StatelessWidget {
       {@required this.title,
        this.id,
        this.isSelected  = false,
-       this.onTap, this.cancelIcon, this.onTapCancelIcon});
+       this.onTap, this.cancelIcon, this.onTapCancelIcon, this.titleColor = lightBlackColor});
 
   @override
   Widget build(BuildContext context) {
     return Row(
+
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         GestureDetector(
@@ -40,7 +42,7 @@ class CapsuleTile extends StatelessWidget {
             child: Text(
               title,
               style: bodyText2.copyWith(
-                color: isSelected ? Color(0xffFC9535) : lightBlackColor
+                color: isSelected ? Color(0xffFC9535) : titleColor
               ),
               // TextStyle(
               //     color: widget.isSelected ? Color(0xffFC9535) : Color(0xffA1A1A1)),
@@ -48,9 +50,9 @@ class CapsuleTile extends StatelessWidget {
           ),
         ),
         SizedBox(width: 4),
-        GestureDetector(
+        (cancelIcon != null) ? GestureDetector(
           onTap: onTapCancelIcon,
-          child: cancelIcon)
+          child: cancelIcon) : Offstage()
       ],
     );
   }

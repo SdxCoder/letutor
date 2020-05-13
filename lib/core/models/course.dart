@@ -3,38 +3,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Course {
   final String id;
   final String name;
+  final String pricing;
 
-  Course({this.id, this.name});
+  Course({this.id, this.name, this.pricing});
 
-  factory Course.fromDoc(DocumentSnapshot doc) {
-    return Course(id: doc.documentID, name: doc.data['name']);
+  Course.fromJson(Map<String, dynamic> json) :
+    id = json['id'],
+    name = json['name'],
+    pricing = json['pricing'];
+  
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['pricing'] = this.pricing;
+    return data;
   }
-
-  static Course fromMap(data) {
-    return Course(id: data["id"], name: data["name"]);
-  }
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-      };
-}
-
-class CourseTopic {
-  final String id;
-  final String topic;
-
-  CourseTopic({this.id, this.topic});
-
-  static CourseTopic fromMap(data) {
-    return CourseTopic(
-      id: data["id"],
-      topic: data["topic"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': topic,
-      };
 }

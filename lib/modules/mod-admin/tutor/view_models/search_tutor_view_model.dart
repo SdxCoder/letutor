@@ -1,29 +1,42 @@
 
 
-import 'package:letutor/core/models/tutor.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:letutor/core/core.dart';
+import 'package:letutor/core/shared_service/user_service.dart';
 import 'package:stacked/stacked.dart';
 
 class SearchTutorViewModel extends BaseViewModel{
+  final _userService = Modular.get<UserService>();
 
-  List<String> tutors = [
-    "luisPete@gmail.com",
-    "luisDeiagoe@gmail.com",
-    "luisSanteiagoe@gmail.com",
-    "luisSanteigazola@gmail.com",
-    "santeigazola@gmail.com",
-    "deigoBrute@gmail.com",
-  ];
+  List<User> _users = [];
+  
+  Set<User> _tempList = Set<User>();
 
-  Set<String> tempList = Set<String>();
+  Set<User> get tempList => _tempList;
+
+  Future getAllUsers() async {
+    setBusy(true);
+    var result = await _userService.getUsersOnceOff();
+    setBusy(false);
+
+    if(result is String){
+      await showDialogBox(title : "Error", description : result);
+    }
+    else{
+      _users = result;
+      _tempList.addAll(result);
+      notifyListeners();
+    }
+  }
 
   void searchResults(String query){
-    tempList = Set<String>();
-    for(String tutor in tutors){
-      if(tutor.toLowerCase().contains(query.toLowerCase())){
-        tempList.add(tutor);
+    _tempList = Set<User>();
+    for(User user in _users){
+      if(user.email.toLowerCase().contains(query.toLowerCase())){
+        _tempList.add(user);
         notifyListeners();
       }
     }
-    
   }
+
 }

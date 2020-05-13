@@ -84,13 +84,13 @@ class UserProfileView extends StatelessWidget {
                     InfoSection(
                       icon: Icons.email,
                       title: "Email",
-                      value: model.currentUser.user.email,
+                      value: Text(model.currentUser.user.email, style: bodyText1),
                     ),
                     (model.currentUser.user.phoneNo.isNotEmpty)
                         ? InfoSection(
                             icon: Icons.email,
                             title: "Phone No",
-                            value: model.currentUser.user.phoneNo,
+                            value: Text( model.currentUser.user.phoneNo, style: bodyText1,),
                           )
                         : Offstage(),
                     raisedButton(
@@ -112,45 +112,6 @@ class UserProfileView extends StatelessWidget {
             )
           ],
         )),
-      ),
-    );
-  }
-}
-
-class InfoSection extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final String value;
-
-  const InfoSection({Key key, this.title, this.icon, this.value})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Icon(icon),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                child: Text(
-                  title,
-                  style: bodyText1,
-                ),
-              ),
-            ],
-          ),
-          Divider(),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-            child: Text(value, style: bodyText1),
-          ),
-        ],
       ),
     );
   }

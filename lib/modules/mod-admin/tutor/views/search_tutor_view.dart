@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:letutor/modules/mod-admin/tutor/view_models/search_tutor_view_model.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../core/core.dart';
@@ -10,8 +11,11 @@ class SearchTutorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
    
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<SearchTutorViewModel>.reactive(
       viewModelBuilder: () => SearchTutorViewModel(),
+      onModelReady: ( model) {
+        model.getAllUsers();
+      },
       builder: (context,SearchTutorViewModel model, child)=>
           Scaffold(
         body: Container(
@@ -22,9 +26,7 @@ class SearchTutorView extends StatelessWidget {
               SizedBox(
                 height: 8,
               ),
-              TopNavBar(
-                actions: <Widget>[],
-              ),
+              TopNavBar(),
               SizedBox(
                 height: 16,
               ),
@@ -47,6 +49,8 @@ class SearchTutorView extends StatelessWidget {
               SizedBox(
                 height: 16,
               ),
+              (model.isBusy) ? 
+              Center(child:CircularProgressIndicator()): 
               Expanded(child: _buildTutors(model))
             ],
           ),
@@ -55,6 +59,21 @@ class SearchTutorView extends StatelessWidget {
     );
   }
 
+  // Widget _buildTutorsStream(SearchTutorViewModel model){
+  //    return StreamBuilder(
+  //      stream: model.getAllUsers() ,
+       
+  //      builder: (BuildContext context, AsyncSnapshot<List<User>> snapshot){
+
+  //         if(snapshot.hasData){
+  //           final users = snapshot.data;
+  //           return _buildTutorsList(model, users);
+  //         }  
+         
+  //      },
+  //    );
+  // }
+
   Widget _buildTutors(SearchTutorViewModel model) {
     return ListView.builder(
         scrollDirection: Axis.vertical,
@@ -62,10 +81,11 @@ class SearchTutorView extends StatelessWidget {
         shrinkWrap: true,
         physics: BouncingScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
+          final user = model.tempList.elementAt(index);
           return UpcomingBookingCard(
             heroTag: index.toString(),
-            title: "Tutor Luis",
-            subtitle: model.tempList.elementAt(index),
+            title: user.name,
+            subtitle: user.email,
             trailing: (index.isEven)
                 ? Text(
                     "Pending",
@@ -76,7 +96,8 @@ class SearchTutorView extends StatelessWidget {
                     color: Colors.blue,
                   ),
             onTap: () {
-              
+              String id = index.toString();
+              Modular.to.pushNamed(Routes.tutorDetails.replaceAll(":id", id));
             },
           );
         });

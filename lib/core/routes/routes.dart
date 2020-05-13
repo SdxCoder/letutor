@@ -12,6 +12,7 @@ class Routes{
   static const String tutorAvailability = "/tutorAvailbility";
   // admin home routes
   static const String adminHome = "/adminHome";  // admin home
+  static const String tutorDetails = "$adminHome/tutorDetails/:id";
   // tutor home routes
   static const String tutorHome = "/tutorHome";  // tutor home
   

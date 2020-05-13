@@ -42,6 +42,7 @@ export './shared_widgets/bottom_navbar.dart';
 export './shared_widgets/search_bar.dart';
 export './shared_widgets/drop_down_field.dart';
 export './shared_widgets/text_field.dart';
+export './shared_widgets/info_section.dart';
 
 // utils
 export './utils/colors.dart';

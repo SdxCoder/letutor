@@ -8,7 +8,7 @@ const Color backgroundColor = Color.fromARGB(255, 255, 241, 159);
 const Color commentColor = Color.fromARGB(255, 255, 246, 196);
 const Color buttonColor =  Colors.blue;//Color(0xFF21BFBD);
 const Color lightColor = Color(0xFF7283B5);
-Color  lightBlackColor = Colors.grey;
+const Color  lightBlackColor = Colors.grey;
 Color  lightBlackBorderColor = Colors.black.withOpacity(0.2);
 
 TextStyle headline4 = TextStyle(

@@ -8,6 +8,7 @@ class TutorBookingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(
+        context: context,
         title: Text("Bookings", style: subtitle1.copyWith(color:Colors.black)),
         profileImageUrl: Modular.get<AuthService>().currentUser.user.photoUrl ??
             Modular.get<AuthService>().currentUser.user.photoPlaceholder,
