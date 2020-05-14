@@ -6,31 +6,38 @@ import 'package:stacked/stacked.dart';
 
 class TutorDetailsView extends StatelessWidget {
   final String id;
+  final User user;
 
-  TutorDetailsView({Key key, this.id}) : super(key: key);
+  TutorDetailsView({Key key, this.id, this.user}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    print("built");
+    return ViewModelBuilder<TutorDetailsViewModel>.reactive(
       viewModelBuilder: () => TutorDetailsViewModel(),
       builder: (context, model, child) => Scaffold(
         appBar: buildAppBar(
             automaticallyImplyLeading: true,
             backgroundColor: Colors.transparent,
             title: Text(
-              "Tutor Details",
+              (model.editUser) ? "Add Courses" :"Profile",
               style: subtitle1.copyWith(color: Colors.black),
             ),
             actions: [
+            
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: IconButton(icon: Icon(Icons.edit), onPressed: () {}),
+                child: IconButton(icon: Icon(Icons.edit, color: model.editUser ? Colors.blue : Colors.black), onPressed: () {
+                  model.switchEditing();
+                }
+                ),
               )
             ]),
-        body: (model.role == "tutor")
-            ? _buildCourseForm(context, model)
+        body: (model.editUser) 
+            ? (user.role == "Tutor") ? _buildCourseForm(context, model) 
+            : _changeRoleWidget(context, model)
             : Container(
                 padding: EdgeInsets.all(16),
                 child: SingleChildScrollView(
@@ -44,49 +51,65 @@ class TutorDetailsView extends StatelessWidget {
                       Center(
                         child: CircleAvatar(
                           radius: ScreenUtil().setWidth(200),
-                          backgroundImage: NetworkImage(imageUrl),
+                          backgroundImage: NetworkImage(user.photoUrl ?? user.photoPlaceholder),
                         ),
                       ),
                       Center(
                           child: Text(
-                        "luisPetterson".toUpperCase(),
+                        user.name.toUpperCase(),
                         style: bodyText1.copyWith(fontWeight: FontWeight.bold),
                       )),
                       SizedBox(
                         height: 16,
                       ),
                       InfoSection(
-                        icon: Icons.person,
-                        title: "Name",
-                        value: Text(
-                          "luisPetterson",
-                          style: bodyText1,
-                        ),
-                      ),
-                      InfoSection(
                         icon: Icons.email,
-                        title: "Courses",
+                        title: "Email",
                         value: Text(
-                          "luisPetterson@gmail.com",
+                          user.email,
                           style: bodyText1,
                         ),
                       ),
                       InfoSection(
+                        icon: Icons.person,
+                        title: "Role",
+                        value: Text(
+                          user.role,
+                          style: bodyText1,
+                        ),
+                      ),
+                      (user.bookingStatus == "none" ) ? Offstage() : InfoSection(
                         icon: Icons.calendar_today,
                         title: "Booking Status",
                         value: Text(
-                          "Pending",
-                          style: bodyText1.copyWith(color: Colors.red),
-                        ),
+                          user.bookingStatus,
+                          style: bodyText1.copyWith(color: (user.bookingStatus == "Pending") ? Colors.red : Colors.blue),
+                        )
                       ),
-                      Center(
+                       (user.bookingStatus == "none" ||  user.bookingStatus == "Confirmed") ? Offstage() : Center(
                         child:
-                            raisedButton(btnText: "Confirm", onPressed: () {}),
+                            raisedButton(btnText: "Confirm", onPressed: () async {
+                              await model.confirmBooking(user);
+                            }),
                       )
                     ],
                   ),
                 )),
       ),
+    );
+  }
+
+  Widget _changeRoleWidget(context, model){
+    return dropdownField(
+      collection: [
+        "user",
+        "tutor"
+      ],
+      onChanged: (val){
+
+      },
+      title: "Change Role",
+      value: "user"
     );
   }
 

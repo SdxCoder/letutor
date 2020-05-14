@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:letutor/core/core.dart';
 import 'package:letutor/core/shared_widgets/app_bar.dart';
 import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
@@ -29,8 +30,8 @@ class BookingsView extends StatelessWidget {
         return PastBookingCard(
           actions: [
             Container(
-              height: 25,
-              width: 60,
+              height: ScreenUtil().setHeight(60),
+              width: ScreenUtil().setWidth(170),
               child: RaisedButton(
                 padding: EdgeInsets.zero,
                 elevation: 0,

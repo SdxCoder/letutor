@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:letutor/modules/mod-admin/tutor/view_models/search_tutor_view_model.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../core/core.dart';
@@ -49,8 +50,7 @@ class SearchTutorView extends StatelessWidget {
               SizedBox(
                 height: 16,
               ),
-              (model.isBusy) ? 
-              Center(child:CircularProgressIndicator()): 
+              
               Expanded(child: _buildTutors(model))
             ],
           ),
@@ -75,31 +75,33 @@ class SearchTutorView extends StatelessWidget {
   // }
 
   Widget _buildTutors(SearchTutorViewModel model) {
-    return ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: model.tempList.length,
-        shrinkWrap: true,
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          final user = model.tempList.elementAt(index);
-          return UpcomingBookingCard(
-            heroTag: index.toString(),
-            title: user.name,
-            subtitle: user.email,
-            trailing: (index.isEven)
-                ? Text(
-                    "Pending",
-                    style: bodyText2.copyWith(color: Colors.red),
-                  )
-                : Icon(
-                    Icons.check_circle,
-                    color: Colors.blue,
-                  ),
-            onTap: () {
-              String id = index.toString();
-              Modular.to.pushNamed(Routes.tutorDetails.replaceAll(":id", id));
-            },
-          );
-        });
+    return Container(
+      child: (model.tempList.isEmpty) ? 
+              Center(child:Text("No users", style: bodyText1,)): 
+      ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: model.tempList.length,
+          shrinkWrap: true,
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            final user = model.tempList.elementAt(index);
+            return UpcomingBookingCard(
+              avatarImage: user.photoUrl ?? user.photoPlaceholder,
+              heroTag: index.toString(),
+              title: user.name,
+              subtitle: user.email,
+              trailing: (user.bookingStatus == "none")
+                  ? Offstage() : (user.bookingStatus == "Pending") ? Text(
+                      user.bookingStatus,
+                      style: bodyText2.copyWith(color: Colors.red),
+                    ) : Icon(Icons.check_circle, size: ScreenUtil().setSp(45), color: Colors.blue,),
+                 
+              onTap: () {
+                String id = user.uid;
+                Modular.to.pushNamed(Routes.tutorDetails.replaceAll(":id", id), arguments: user);
+              },
+            );
+          }),
+    );
   }
 }

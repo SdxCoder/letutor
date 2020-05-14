@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:meta/meta.dart';
 import '../core.dart';
 
 class UpcomingBookingCard extends StatelessWidget {
   final String heroTag;
   final Function onTap;
-  final String title;
+   final String title;
   final String subtitle;
   final Widget trailing;
+  final String avatarImage;
   
   const UpcomingBookingCard({
     Key key,
     this.onTap,
-    this.heroTag, this.title, this.subtitle, this.trailing,
+    this.heroTag,@required this.title, @required this.subtitle, this.trailing, @required this.avatarImage,
   }) : super(key: key);
 
   @override
@@ -30,7 +31,7 @@ class UpcomingBookingCard extends StatelessWidget {
                 tag: heroTag,
                 child: CircleAvatar(
                  radius: ScreenUtil().setSp(60),
-                  backgroundImage: NetworkImage(imageUrl),
+                  backgroundImage: NetworkImage(avatarImage),
                 ),
               ),
           title: Text(title),

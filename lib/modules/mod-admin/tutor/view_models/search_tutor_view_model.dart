@@ -20,7 +20,8 @@ class SearchTutorViewModel extends BaseViewModel{
     setBusy(false);
 
     if(result is String){
-      await showDialogBox(title : "Error", description : result);
+      print(result);
+      //await showDialogBox(title : "Error", description : result);
     }
     else{
       _users = result;

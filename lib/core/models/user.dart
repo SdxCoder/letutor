@@ -12,6 +12,7 @@ class User {
   DateTime _dob;
   String _role;
   String _email;
+  String _bookingStatus ;
 
   User(
       {String uid,
@@ -23,6 +24,7 @@ class User {
       String photoPlaceholder,
       DateTime dob,
       String role,
+      String bookingStatus,
       String email}) {
     this._uid = uid;
     this._firstName = firstName;
@@ -34,6 +36,7 @@ class User {
     this._dob = dob;
     this._role = role;
     this._email = email;
+    this._bookingStatus = bookingStatus;
   }
 
   String get uid => _uid;
@@ -57,6 +60,8 @@ class User {
   set role(String role) => _role = role;
   String get email => _email;
   set email(String email) => _email = email;
+  String get bookingStatus => _bookingStatus;
+  set bookingStatus(String bookingStatus) => _bookingStatus = bookingStatus;
 
   User.fromJson(Map<String, dynamic> json) {
    
@@ -70,6 +75,7 @@ class User {
     _dob = json['dob'].toDate();
     _role = json['role'];
     _email = json['email'];
+    _bookingStatus = json['bookingStatus'];
   }
 
   Map<String, dynamic> toJson() {
@@ -85,6 +91,7 @@ class User {
     data['dob'] = this._dob.toUtc();
     data['role'] = this._role;
     data['email'] = this._email;
+    data['bookingStatus'] = this._bookingStatus;
     return data;
   }
 }

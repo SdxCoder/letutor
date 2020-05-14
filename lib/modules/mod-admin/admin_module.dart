@@ -12,7 +12,7 @@ class AdminModule extends ChildModule{
   @override
   List<Router> get routers => [
      Router('/', child: (_, args) => AdminHome()),
-     Router('/tutorDetails/:id', child: (_, args) => TutorDetailsView(id: args.params["id"],)),
+     Router('/tutorDetails/:id', child: (_, args) => TutorDetailsView(id: args.params["id"], user: args.data,)),
     // Router('/bookCourse', child: (_, args) => BookCourseView()),
     // Router('/bookingDetail/:id', child: (_, args) => BookingDetailView()),
     // Router('/tutorProfile', child: (_, args) => TutorProfileView()),

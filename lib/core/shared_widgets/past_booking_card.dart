@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../core.dart';

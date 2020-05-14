@@ -7,7 +7,6 @@ import 'package:letutor/core/utils/colors.dart';
 class InfoSection extends StatelessWidget {
   final String title;
   final IconData icon;
-
   final Widget value;
 
   const InfoSection({Key key, this.title, this.icon, this.value,})
@@ -31,6 +30,7 @@ class InfoSection extends StatelessWidget {
                   style: bodyText1,
                 ),
               ),
+             
             ],
           ),
           Divider(),
