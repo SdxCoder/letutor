@@ -22,11 +22,10 @@ class TutorDetailsView extends StatelessWidget {
             automaticallyImplyLeading: true,
             backgroundColor: Colors.transparent,
             title: Text(
-              (model.editUser) ? "Add Courses" :"Profile",
+              (model.editUser && user.role ==  Role.tutor) ? "Add Courses" : "Profile",
               style: subtitle1.copyWith(color: Colors.black),
             ),
             actions: [
-            
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: IconButton(icon: Icon(Icons.edit, color: model.editUser ? Colors.blue : Colors.black), onPressed: () {
@@ -35,9 +34,9 @@ class TutorDetailsView extends StatelessWidget {
                 ),
               )
             ]),
-        body: (model.editUser) 
-            ? (user.role == "Tutor") ? _buildCourseForm(context, model) 
-            : _changeRoleWidget(context, model)
+        body: (model.editUser && user.role ==  Role.tutor) 
+            ?  _buildCourseForm(context, model) 
+             
             : Container(
                 padding: EdgeInsets.all(16),
                 child: SingleChildScrollView(
@@ -70,14 +69,8 @@ class TutorDetailsView extends StatelessWidget {
                           style: bodyText1,
                         ),
                       ),
-                      InfoSection(
-                        icon: Icons.person,
-                        title: "Role",
-                        value: Text(
-                          user.role,
-                          style: bodyText1,
-                        ),
-                      ),
+                     
+                      _changeRoleWidget(context, model),
                       (user.bookingStatus == "none" ) ? Offstage() : InfoSection(
                         icon: Icons.calendar_today,
                         title: "Booking Status",
@@ -86,12 +79,6 @@ class TutorDetailsView extends StatelessWidget {
                           style: bodyText1.copyWith(color: (user.bookingStatus == "Pending") ? Colors.red : Colors.blue),
                         )
                       ),
-                       (user.bookingStatus == "none" ||  user.bookingStatus == "Confirmed") ? Offstage() : Center(
-                        child:
-                            raisedButton(btnText: "Confirm", onPressed: () async {
-                              await model.confirmBooking(user);
-                            }),
-                      )
                     ],
                   ),
                 )),
@@ -99,17 +86,34 @@ class TutorDetailsView extends StatelessWidget {
     );
   }
 
-  Widget _changeRoleWidget(context, model){
-    return dropdownField(
-      collection: [
-        "user",
-        "tutor"
-      ],
-      onChanged: (val){
-
-      },
-      title: "Change Role",
-      value: "user"
+  Widget _changeRoleWidget(context,TutorDetailsViewModel model){
+    return
+    InfoSection(
+      icon: Icons.person,
+      title: "Role",
+      value: (model.editUser && user.role ==  Role.user) ?  Column(
+        children: <Widget>[
+          dropdownField(
+            collection: [
+               Role.user,
+               Role.tutor,
+            ],
+            onChanged: (val){
+              model.changeUserRole(val);
+            },
+            title: "Change Role",
+            value: model.selectedUserRole
+          ),
+          SizedBox(height: 16,),
+          raisedButton(
+            btnText: "Update",
+            onPressed: () async{
+              await model.confirmBooking(user);
+            }
+          ),
+        ],
+        
+      ) : Text(user.role, style: bodyText1,),
     );
   }
 
