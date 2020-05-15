@@ -8,6 +8,7 @@ import 'package:letutor/modules/mod-user/user_module.dart';
 import 'package:letutor/modules/spash/view/splash_screen.dart';
 
 import 'core/core.dart';
+import 'core/shared_service/db_service.dart';
 import 'core/shared_service/form_validation_service.dart';
 import 'main.dart';
 import 'modules/mod-account/login/services/auth_service.dart';
@@ -22,7 +23,8 @@ class AppModule extends MainModule {
         Bind((i) => FormValidationService()),
         Bind((i) => AuthService()),
         Bind((i) => UserService()),
-        Bind((i) => RBACService())
+        Bind((i) => RBACService()),
+         Bind((i) => DbService())
       ];
 
   @override

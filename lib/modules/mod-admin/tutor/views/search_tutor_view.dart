@@ -11,12 +11,13 @@ class SearchTutorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
+    print("search view build");
     return ViewModelBuilder<SearchTutorViewModel>.reactive(
       viewModelBuilder: () => SearchTutorViewModel(),
       onModelReady: ( model) {
-        model.getAllUsers();
+        model.listenToUsers();
       },
+     disposeViewModel: false,
       builder: (context,SearchTutorViewModel model, child)=>
           Scaffold(
         body: Container(
@@ -61,14 +62,16 @@ class SearchTutorView extends StatelessWidget {
 
   // Widget _buildTutorsStream(SearchTutorViewModel model){
   //    return StreamBuilder(
-  //      stream: model.getAllUsers() ,
-       
+  //      stream: model.userStream(),
   //      builder: (BuildContext context, AsyncSnapshot<List<User>> snapshot){
 
   //         if(snapshot.hasData){
   //           final users = snapshot.data;
-  //           return _buildTutorsList(model, users);
+  //           model.setTempList(users);
+  //           return _buildTutors(model);
   //         }  
+
+  //         return Text("No users");
          
   //      },
   //    );
@@ -76,7 +79,8 @@ class SearchTutorView extends StatelessWidget {
 
   Widget _buildTutors(SearchTutorViewModel model) {
     return Container(
-      child: (model.tempList.isEmpty) ? 
+       child: 
+      (model.tempList.isEmpty) ? 
               Center(child:Text("No users", style: bodyText1,)): 
       ListView.builder(
           scrollDirection: Axis.vertical,
@@ -85,16 +89,14 @@ class SearchTutorView extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
             final user = model.tempList.elementAt(index);
+         //  final user = users[index];
             return UpcomingBookingCard(
               avatarImage: user.photoUrl ?? user.photoPlaceholder,
               heroTag: index.toString(),
               title: user.name,
               subtitle: user.email,
-              trailing: (user.bookingStatus == "none")
-                  ? Offstage() : (user.bookingStatus == "Pending") ? Text(
-                      user.bookingStatus,
-                      style: bodyText2.copyWith(color: Colors.red),
-                    ) : Icon(Icons.check_circle, size: ScreenUtil().setSp(45), color: Colors.blue,),
+              trailing: (user.role == Role.user)
+                  ? Offstage()  : Icon(Icons.check_circle, size: ScreenUtil().setSp(45), color: Colors.blue,),
                  
               onTap: () {
                 String id = user.uid;

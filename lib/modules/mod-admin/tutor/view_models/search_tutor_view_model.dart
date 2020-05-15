@@ -14,6 +14,24 @@ class SearchTutorViewModel extends BaseViewModel{
 
   Set<User> get tempList => _tempList;
 
+  void setTempList(users){
+    _tempList.addAll(users);
+  }
+
+   void listenToUsers() {
+    setBusy(true);
+    _userService.listenToUsersRealTime().listen((usersData) {
+      _tempList = Set<User>();
+      List<User> updatedUsers = usersData;
+      if (updatedUsers != null && updatedUsers.length > 0) {
+        _users = updatedUsers;
+        notifyListeners();
+      }
+      tempList.addAll(updatedUsers);
+      setBusy(false);
+    });
+  }
+
   Future getAllUsers() async {
     setBusy(true);
     var result = await _userService.getUsersOnceOff();
@@ -38,6 +56,12 @@ class SearchTutorViewModel extends BaseViewModel{
         notifyListeners();
       }
     }
+  }
+
+  @override
+  void dispose() {
+    
+    super.dispose();
   }
 
 }

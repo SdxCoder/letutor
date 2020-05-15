@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Level {
   final String id;
@@ -6,19 +6,15 @@ class Level {
 
   Level({this.id, this.name});
 
-  factory Level.fromDoc(DocumentSnapshot doc) {
-    return Level(id: doc.documentID, name: doc.data['name']);
-  }
+ Level.fromJson(Map<String, dynamic> json) :
+    id = json['id'],
+    name = json['name'];
+  
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-      };
-
-  static Level fromMap(data) {
-    return Level(
-      id: data["id"],
-      name: data["name"],
-    );
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    return data;
   }
 }

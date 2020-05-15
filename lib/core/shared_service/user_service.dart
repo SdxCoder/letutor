@@ -1,9 +1,32 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:letutor/core/models/user.dart';
 
 class UserService {
   final _userCollection = Firestore.instance.collection("users");
+
+  final StreamController<List<User>> _userController =
+      StreamController<List<User>>.broadcast();
+
+  Stream<List<User>> listenToUsersRealTime() {
+     // Register the handler for when the posts data changes
+    _userCollection.snapshots().listen((usersSnapshot) {
+      if (usersSnapshot.documents.isNotEmpty) {
+        var users = usersSnapshot.documents
+            .map((snapshot) => User.fromJson(snapshot.data))
+            .where((mappedItem) => mappedItem.role != "admin")
+            .toList();
+
+        // Add the posts onto the controller
+        _userController.add(users);
+      }
+    });
+
+    // Return the stream underlying our _postsController.
+    return _userController.stream;
+  }
 
   Future getUsersOnceOff() async {
     try {
@@ -35,7 +58,7 @@ class UserService {
       await _userCollection
           .document(user.uid)
           .updateData(user.toJson());
-      return true;
+
     } catch (e) {
       if (e is PlatformException) {
         return e.message;

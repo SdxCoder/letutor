@@ -25,7 +25,7 @@ class AuthService {
             phoneNo: phoneNo,
             name: firstName + " " + lastName,
             role: Role.user,
-            bookingStatus: "none",
+       
             dob: dob,
             firstName: firstName,
             lastName: lastName,
@@ -87,7 +87,7 @@ class AuthService {
         phoneNo: authResult.user.phoneNumber ?? "",
         name: authResult.user.displayName ?? "",
         role:  Role.user,
-        bookingStatus: "none",
+  
         dob: DateTime(2020).toUtc(),
         firstName: "",
         lastName: "",
@@ -124,7 +124,6 @@ class AuthService {
             phoneNo: authResult.user.phoneNumber ?? "",
             name: authResult.user.displayName ?? "",
             role:  Role.user,
-            bookingStatus: "none",
             dob: DateTime(2020).toUtc(),
             firstName: "",
             lastName: "",

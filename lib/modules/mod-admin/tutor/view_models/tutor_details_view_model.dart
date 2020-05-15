@@ -4,36 +4,81 @@ import 'package:stacked/stacked.dart';
 
 class TutorDetailsViewModel extends BaseViewModel {
   final _userService = Modular.get<UserService>();
+  final _lessonService = Modular.get<LessonService>();
 
-  String _selectedlevel;
-  String _selectedUserRole;
-  String _selectedCourse;
-  Set<String> _selectedCourses = Set<String>();
+  User _edittingUser;
 
-  String get selectedlevel => _selectedlevel;
-  String get selectedCourse => _selectedCourse;
-  String get selectedUserRole => _selectedUserRole;
-  Set<String> get selectedCourses => _selectedCourses;
+ 
 
-  String role = "tutor";
-  bool _editUser = false;
-  bool get editUser => _editUser;
+  Set<Lesson> _lessons = Set<Lesson>();
+  Set<Lesson> get lessons  => _lessons;
 
-  Future confirmBooking(User user) async {
+  Future createlessons() async{
+    if(lessons.isNotEmpty){
+      for(Lesson lesson in lessons){
+        var result = await _lessonService.createLesson(lesson);
+
+        if(result is String){
+           await showDialogBox(title: "Error", description: result);
+           return;
+        }
+      }
+       await showDialogBox(title: "Success", description: "All lessons added");
+    }
+  }
+
+  void setEdittingUser(User user) {
+    _edittingUser = user;
+  }
+
+  void addLesson(){
+    _lessons.add(Lesson(
+      level: _selectedlevel,
+      courses: _selectedCourses.toList(),
+      tutorId: _edittingUser.uid,
+      documentId: _edittingUser.uid,
+    ));
+    notifyListeners();
+  }
+
+   void removeLesson(lesson){
+    _lessons.remove(lesson);
+    notifyListeners();
+  }
+
+
+  Future confirmBooking() async {
     setBusy(true);
-    user.bookingStatus = "Confirmed";
-    user.role = selectedUserRole;
-    var result = await _userService.updateUser(user);
-    setBusy(false);
-
+    var result = await _userService.updateUser(User(
+      email: _edittingUser.email,
+      dob: _edittingUser.dob,
+      firstName: _edittingUser.firstName,
+      lastName: _edittingUser.lastName,
+      name: _edittingUser.name,
+      phoneNo: _edittingUser.phoneNo,
+      photoPlaceholder: _edittingUser.photoPlaceholder,
+      photoUrl: _edittingUser.photoUrl,
+      role: _selectedUserRole,
+      uid: _edittingUser.uid,
+    ));
+     setBusy(false);
+    
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {
       await showDialogBox(title: "Success", description: "Booking confirmed");
     }
+
+    Modular.to.pop();
+    
   }
 
-  void changeUserRole(String value){
+  void reset() {
+    _editUser = false;
+    notifyListeners();
+  }
+
+  void changeUserRole(String value) {
     _selectedUserRole = value;
     notifyListeners();
   }
@@ -43,18 +88,18 @@ class TutorDetailsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void addCourse(String value) {
+  void addCourse(Course value) {
     if (value != null) {
-      _selectedCourses.add(value.toUpperCase());
+      _selectedCourses.add(value);
     }
   }
 
-  void removeCourse(String value) {
-    _selectedCourses.remove(value.toUpperCase());
+  void removeCourse(Course value) {
+    _selectedCourses.remove(value);
     notifyListeners();
   }
 
-  void selectCourse(String value) {
+  void selectCourse(Course value) {
     _selectedCourse = value;
     addCourse(value);
     notifyListeners();
@@ -64,6 +109,19 @@ class TutorDetailsViewModel extends BaseViewModel {
     _selectedlevel = value;
     notifyListeners();
   }
+
+  String _selectedlevel;
+  String _selectedUserRole;
+  Course _selectedCourse;
+  Course get selectedCourse => _selectedCourse;
+  Set<Course> _selectedCourses = Set<Course>();
+  bool _editUser = false;
+
+  String get selectedlevel => _selectedlevel;
+  
+  String get selectedUserRole => _selectedUserRole;
+  Set<Course> get selectedCourses => _selectedCourses;
+  bool get editUser => _editUser;
 
   List<String> modalities = [
     "Elementary",

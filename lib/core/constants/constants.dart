@@ -6,8 +6,15 @@ const userProfileHeroTag = "userProfileHeroTag";
 
 class Role{
   static String admin = "admin";
-  static String user = "user";
+  static String user = "User";
   static String tutor = "Tutor";
+}
+
+
+class BookingStatus{
+  static String pending = "Pending";
+  static String confirmed = "Confirmed";
+  static String none = "none";
 }
 
 List<String> modalities = [

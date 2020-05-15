@@ -1,13 +1,18 @@
 
 
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:letutor/core/core.dart';
+import 'package:letutor/core/shared_service/db_service.dart';
 
 import 'home/admin_home_view.dart';
 import 'tutor/views/tutor_details_view.dart';
 
 class AdminModule extends ChildModule{
   @override
-  List<Bind> get binds => [];
+  List<Bind> get binds => [
+    Bind((i) => LessonService()),
+   
+  ];
 
   @override
   List<Router> get routers => [
