@@ -18,13 +18,17 @@ class TutorDetailsView extends StatelessWidget {
     print("built");
     return ViewModelBuilder<TutorDetailsViewModel>.reactive(
       viewModelBuilder: () => TutorDetailsViewModel(),
-      onModelReady: (model) => model.setEdittingUser(user),
+      onModelReady: (model) async {
+        model.setEdittingUser(user);
+         await model.getAllCourses();
+         await model.getAllLevels();
+      } ,
       builder: (context, model, child) => Scaffold(
         floatingActionButton: FloatingActionButton(
-          
           child: Icon(Icons.add),
-          onPressed:(model.lessons.isEmpty) ? null : (){
+          onPressed:(model.lessons.isEmpty) ? null : () async {
           model.createlessons();
+        
         }),
         appBar: buildAppBar(
             automaticallyImplyLeading: true,
@@ -150,19 +154,19 @@ class TutorDetailsView extends StatelessWidget {
           SizedBox(
             height: 16,
           ),
-          SelectCourseWidget(
-            onChanged: (val){
-              model.selectCourse(val);
-            },
-            value: model.selectedCourse.name,
-          ),
-          // dropdownField(
-          //     value: model.selectedCourse,
-          //     collection: model.courses,
-          //     onChanged: (value) {
-          //       model.selectCourse(value);
-          //     },
-          //     title: "Add Courses"),
+          // SelectCourseWidget(
+          //   onChanged: (val){
+          //     model.selectCourse(val);
+          //   },
+          //   value: model.selectedCourse.name,
+          // ),
+          dropdownField(
+              value: model.selectedCourse,
+              collection: model.courses,
+              onChanged: (value) {
+                model.selectCourse(value);
+              },
+              title: "Add Courses"),
           SizedBox(
             height: 8,
           ),
@@ -222,7 +226,7 @@ class TutorDetailsView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      model.selectedlevel,
+                      model.selectedlevel.name,
                       style: bodyText2.copyWith(height: 1),
                     ),
                   ),
@@ -242,7 +246,7 @@ class TutorDetailsView extends StatelessWidget {
                         .map<Widget>((course) => Padding(
                             padding: const EdgeInsets.symmetric(vertical: 2.0),
                             child: CapsuleTile(
-                              title: course,
+                              title: course.name,
                               titleColor: Colors.black,
                             )))
                         .toList(),

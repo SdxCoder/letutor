@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 Widget dropdownField(
-    {String title, String value, List collection, Function onChanged}) {
+    {String title,  value, List collection, Function onChanged}) {
   return Container(
     height: 35,
     decoration: BoxDecoration(
@@ -24,8 +24,8 @@ Widget dropdownField(
             borderRadius: BorderRadius.circular(50),
             borderSide: BorderSide.none
           )),
-      items: collection.map<DropdownMenuItem<String>>((value) {
-        return DropdownMenuItem<String>(value: value, child: Text(value.toString()));
+      items: collection.map<DropdownMenuItem>((value) {
+        return DropdownMenuItem(value: value, child: Text(value.name));
       }).toList(),
       onChanged: onChanged,
     ),

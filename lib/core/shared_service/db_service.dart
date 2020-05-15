@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:letutor/core/core.dart';
 import 'package:letutor/core/models/course.dart';
 
@@ -8,38 +9,52 @@ class DbService {
   final _coursesCollection = Firestore.instance.collection("courses");
   final _levelsCollection = Firestore.instance.collection("levels");
 
-  final StreamController<List<Course>> _coursesController =
-      StreamController<List<Course>>.broadcast();
+  Future getAllCourses() async {
+    try {
+      var doc = await _coursesCollection
+          .getDocuments();
 
-  final StreamController<List<Level>> _levelsController =
-      StreamController<List<Level>>.broadcast();
+          print(doc.documents.length);
 
-  Stream<List<Course>> getAllCourses() {
-    _coursesCollection.snapshots().listen((snapshots) {
-      if (snapshots.documents.isNotEmpty) {
-        var users = snapshots.documents
+      if (doc.documents.isNotEmpty) {
+        return doc.documents
             .map((snapshot) => Course.fromJson(snapshot.data))
             .toList();
-
-        _coursesController.add(users);
       }
-    });
+      else{
+        return List<Course>(); // return emply list
+      }
+      
+    } catch (e) {
+      if (e is PlatformException) {
+        return e.message;
+      }
 
-    return _coursesController.stream;
+      return e.toString();
+    }
   }
 
-  Stream<List<Level>> getAllLevels() {
-    _levelsCollection.snapshots().listen((snapshots) {
-      if (snapshots.documents.isNotEmpty) {
-        var levels = snapshots.documents
+   Future getAllLevels() async {
+    try {
+      var doc = await _levelsCollection
+          .getDocuments();
+
+      if (doc.documents.isNotEmpty) {
+        return doc.documents
             .map((snapshot) => Level.fromJson(snapshot.data))
             .toList();
-
-        _levelsController.add(levels);
       }
-    });
+      else{
+        return List<Level>(); // return emply list
+      }
+      
+    } catch (e) {
+      if (e is PlatformException) {
+        return e.message;
+      }
 
-    return _levelsController.stream;
+      return e.toString();
+    }
   }
 
 }

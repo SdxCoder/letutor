@@ -1,5 +1,7 @@
 
 
+import 'dart:async';
+
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:letutor/core/core.dart';
 import 'package:letutor/core/shared_service/user_service.dart';
@@ -17,20 +19,24 @@ class SearchTutorViewModel extends BaseViewModel{
   void setTempList(users){
     _tempList.addAll(users);
   }
-
+  StreamSubscription _subscription;
    void listenToUsers() {
     setBusy(true);
-    _userService.listenToUsersRealTime().listen((usersData) {
+    _subscription = _userService.listenToUsersRealTime().listen((usersData) {
       _tempList = Set<User>();
       List<User> updatedUsers = usersData;
       if (updatedUsers != null && updatedUsers.length > 0) {
         _users = updatedUsers;
         notifyListeners();
       }
+
       tempList.addAll(updatedUsers);
       setBusy(false);
     });
   }
+
+
+ 
 
   Future getAllUsers() async {
     setBusy(true);
@@ -59,8 +65,8 @@ class SearchTutorViewModel extends BaseViewModel{
   }
 
   @override
-  void dispose() {
-    
+  void dispose() { 
+    _subscription.cancel();
     super.dispose();
   }
 

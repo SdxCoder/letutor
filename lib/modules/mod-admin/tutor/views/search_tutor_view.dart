@@ -17,7 +17,6 @@ class SearchTutorView extends StatelessWidget {
       onModelReady: ( model) {
         model.listenToUsers();
       },
-     disposeViewModel: false,
       builder: (context,SearchTutorViewModel model, child)=>
           Scaffold(
         body: Container(

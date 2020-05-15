@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import 'course.dart';
 
-class Tutor extends Equatable{
+class Tutor extends Equatable {
   final String documentId;
   final String uid;
   final String lessonId;
@@ -22,16 +22,15 @@ class Tutor extends Equatable{
       this.email,
       this.availableSlots});
 
-  Tutor.fromJson(Map<String, dynamic> json) :
-    documentId = json['documentId'],
-    uid = json['uid'],
-    lessonId = json['lessonId'],
-    name = json['name'],
-    firstName = json['firstName'],
-    lastName = json['lastName'],
-    email = json['email'],
-    availableSlots = json['availableSlots'].cast<String>();
-  
+  Tutor.fromJson(Map<String, dynamic> json)
+      : documentId = json['documentId'],
+        uid = json['uid'],
+        lessonId = json['lessonId'],
+        name = json['name'],
+        firstName = json['firstName'],
+        lastName = json['lastName'],
+        email = json['email'],
+        availableSlots = json['availableSlots'].cast<String>();
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -50,32 +49,34 @@ class Tutor extends Equatable{
   List<Object> get props => throw UnimplementedError();
 }
 
-class Lesson extends Equatable{
+class Lesson extends Equatable {
   final String documentId;
   final String tutorId;
   final String level;
   final String levelId;
   final List<Course> courses;
 
-  Lesson(this.levelId, {this.documentId, this.tutorId, this.level, this.courses});
+  Lesson({this.levelId, this.documentId, this.tutorId, this.level, this.courses});
 
-  Lesson.fromJson(Map<String, dynamic> json, String documentId) :
-    documentId = documentId,
-    tutorId = json['tutorId'],
-    level = json['level'],
-    levelId = json['levelId'],
-    courses = json['courses'].cast<Course>();
-  
+  Lesson.fromJson(Map<String, dynamic> json, String documentId)
+      : documentId = documentId,
+        tutorId = json['tutorId'],
+        level = json['level'],
+        levelId = json['levelId'],
+        courses = json['courses'].forEach((v) => Course.fromJson(v)).toList();
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['documentId'] = this.documentId;
     data['tutorId'] = this.tutorId;
     data['level'] = this.level;
-    data['courses'] = this.courses;
+    if (this.courses != null) {
+      data['courses'] = this.courses.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 
-   @override
-  List<Object> get props => [this.courses, this.level, this.documentId, this.tutorId];
+  @override
+  List<Object> get props =>
+      [this.courses, this.level, this.documentId, this.tutorId];
 }

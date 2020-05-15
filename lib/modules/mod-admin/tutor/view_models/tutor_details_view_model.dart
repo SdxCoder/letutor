@@ -1,51 +1,18 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:letutor/core/core.dart';
+
 import 'package:stacked/stacked.dart';
+import 'package:rxdart/rxdart.dart';
 
 class TutorDetailsViewModel extends BaseViewModel {
   final _userService = Modular.get<UserService>();
   final _lessonService = Modular.get<LessonService>();
+  final _dbService = Modular.get<DbService>();
 
   User _edittingUser;
 
- 
-
-  Set<Lesson> _lessons = Set<Lesson>();
-  Set<Lesson> get lessons  => _lessons;
-
-  Future createlessons() async{
-    if(lessons.isNotEmpty){
-      for(Lesson lesson in lessons){
-        var result = await _lessonService.createLesson(lesson);
-
-        if(result is String){
-           await showDialogBox(title: "Error", description: result);
-           return;
-        }
-      }
-       await showDialogBox(title: "Success", description: "All lessons added");
-    }
-  }
-
-  void setEdittingUser(User user) {
-    _edittingUser = user;
-  }
-
-  void addLesson(){
-    _lessons.add(Lesson(
-      level: _selectedlevel,
-      courses: _selectedCourses.toList(),
-      tutorId: _edittingUser.uid,
-      documentId: _edittingUser.uid,
-    ));
-    notifyListeners();
-  }
-
-   void removeLesson(lesson){
-    _lessons.remove(lesson);
-    notifyListeners();
-  }
-
+  List<Lesson> _lessons = [];
+  List<Lesson> get lessons => _lessons;
 
   Future confirmBooking() async {
     setBusy(true);
@@ -61,8 +28,8 @@ class TutorDetailsViewModel extends BaseViewModel {
       role: _selectedUserRole,
       uid: _edittingUser.uid,
     ));
-     setBusy(false);
-    
+    setBusy(false);
+
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {
@@ -70,11 +37,51 @@ class TutorDetailsViewModel extends BaseViewModel {
     }
 
     Modular.to.pop();
-    
   }
 
-  void reset() {
-    _editUser = false;
+  Future createlessons() async {
+    if (lessons.isNotEmpty) {
+      for (Lesson lesson in lessons) {
+        var result = await _lessonService.createLesson(lesson);
+
+        if (result is String) {
+          await showDialogBox(title: "Error", description: result);
+          return;
+        }
+      }
+      await showDialogBox(title: "Success", description: "All lessons added");
+    }
+  }
+
+  Future getAllCourses() async{
+    courses =  await _dbService.getAllCourses();
+  
+  }
+
+  Future getAllLevels() async{
+    modalities =  await _dbService.getAllLevels();
+ 
+  }
+
+  void setEdittingUser(User user) {
+    _edittingUser = user;
+  }
+
+  void addLesson() {
+    _lessons.add(
+      Lesson(
+      level: _selectedlevel.name,
+      levelId: _selectedlevel.id,
+      courses: _selectedCourses.toList(),
+      tutorId: _edittingUser.uid,
+      documentId: _edittingUser.uid,
+    ));
+    _lessons = _lessons.toSet().toList();
+    notifyListeners();
+  }
+
+  void removeLesson(lesson) {
+    _lessons.remove(lesson);
     notifyListeners();
   }
 
@@ -91,6 +98,8 @@ class TutorDetailsViewModel extends BaseViewModel {
   void addCourse(Course value) {
     if (value != null) {
       _selectedCourses.add(value);
+      _selectedCourses = _selectedCourses.toSet().toList();
+       _selectedCourses.sort((a, b) => a.name.compareTo(b.name));
     }
   }
 
@@ -105,34 +114,25 @@ class TutorDetailsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void selectLevel(String value) {
+  void selectLevel(Level value) {
     _selectedlevel = value;
     notifyListeners();
   }
 
-  String _selectedlevel;
+  Level _selectedlevel;
   String _selectedUserRole;
   Course _selectedCourse;
   Course get selectedCourse => _selectedCourse;
-  Set<Course> _selectedCourses = Set<Course>();
+  List<Course> _selectedCourses = List<Course>();
   bool _editUser = false;
 
-  String get selectedlevel => _selectedlevel;
-  
+  Level get selectedlevel => _selectedlevel;
+
   String get selectedUserRole => _selectedUserRole;
-  Set<Course> get selectedCourses => _selectedCourses;
+  List<Course> get selectedCourses => _selectedCourses;
   bool get editUser => _editUser;
 
-  List<String> modalities = [
-    "Elementary",
-    "High School",
-    "University",
-  ];
+  List<Level> modalities = [];
 
-  List<String> courses = [
-    "Mathematics",
-    "Biology",
-    "Physics",
-    "Statistics",
-  ];
+  List<Course> courses = [];
 }

@@ -1,22 +1,22 @@
 
 
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:letutor/core/core.dart';
-import 'package:stacked/stacked.dart';
+// import 'package:flutter_modular/flutter_modular.dart';
+// import 'package:letutor/core/core.dart';
+// import 'package:stacked/stacked.dart';
 
-class SelectCourseViewModel extends BaseViewModel{
+// class SelectCourseViewModel extends BaseViewModel{
   
-  final _dbService = Modular.get<DbService>();
+//   final _dbService = Modular.get<DbService>();
 
 
-  List<Course> _courses = [];
-  List<Course> get courses => _courses;
+//   List<Course> _courses = [];
+//   List<Course> get courses => _courses;
 
-  void getAllCourses(){
-    _dbService.getAllCourses().listen((courses) {
-        _courses = courses;
-        notifyListeners();
-     });
-  }
+//   void getAllCourses(){
+//     _dbService.getAllCourses().listen((courses) {
+//         _courses = courses;
+//         notifyListeners();
+//      });
+//   }
 
-}
+// }
