@@ -15,6 +15,7 @@ export './models/base.dart';
 export './models/booking.dart';
 export './models/tutor.dart';
 export './models/user.dart';
+export './models/lesson.dart';
 
 
 // shared services export

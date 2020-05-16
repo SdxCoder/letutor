@@ -43,24 +43,34 @@ class TutorDetailsViewModel extends BaseViewModel {
     if (lessons.isNotEmpty) {
       for (Lesson lesson in lessons) {
         var result = await _lessonService.createLesson(lesson);
-
+        
         if (result is String) {
           await showDialogBox(title: "Error", description: result);
           return;
         }
       }
       await showDialogBox(title: "Success", description: "All lessons added");
+      _lessons = [];
+        notifyListeners();
     }
   }
 
-  Future getAllCourses() async{
-    courses =  await _dbService.getAllCourses();
-  
+  Future getAllCourses() async {
+    var result = await _dbService.getAllCourses();
+    if (result is String) {
+      await showSnackBar(desc: result);
+    } else {
+      courses = result;
+    }
   }
 
-  Future getAllLevels() async{
-    modalities =  await _dbService.getAllLevels();
- 
+  Future getAllLevels() async {
+    var result = await _dbService.getAllLevels();
+    if (result is String) {
+      await showSnackBar(desc: result);
+    } else {
+      modalities = result;
+    }
   }
 
   void setEdittingUser(User user) {
@@ -68,12 +78,12 @@ class TutorDetailsViewModel extends BaseViewModel {
   }
 
   void addLesson() {
-    _lessons.add(
-      Lesson(
+    _lessons.add(Lesson(
+      tutorId: _edittingUser.uid,
+      tutorName: _edittingUser.name,
       level: _selectedlevel.name,
       levelId: _selectedlevel.id,
-      courses: _selectedCourses.toList(),
-      tutorId: _edittingUser.uid,
+      courses: _selectedCourses,
       documentId: _edittingUser.uid,
     ));
     _lessons = _lessons.toSet().toList();
@@ -99,7 +109,7 @@ class TutorDetailsViewModel extends BaseViewModel {
     if (value != null) {
       _selectedCourses.add(value);
       _selectedCourses = _selectedCourses.toSet().toList();
-       _selectedCourses.sort((a, b) => a.name.compareTo(b.name));
+      _selectedCourses.sort((a, b) => a.name.compareTo(b.name));
     }
   }
 

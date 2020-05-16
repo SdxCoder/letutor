@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:letutor/core/core.dart';
 import 'package:letutor/modules/mod-admin/tutor/view_models/tutor_details_view_model.dart';
-import 'package:letutor/modules/mod-admin/tutor/widgets/select_course_widget.dart';
 import 'package:stacked/stacked.dart';
 
 class TutorDetailsView extends StatelessWidget {
@@ -24,10 +23,10 @@ class TutorDetailsView extends StatelessWidget {
          await model.getAllLevels();
       } ,
       builder: (context, model, child) => Scaffold(
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton:(model.lessons.isEmpty) ? null : FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed:(model.lessons.isEmpty) ? null : () async {
-          model.createlessons();
+          onPressed:() async {
+          await model.createlessons();
         
         }),
         appBar: buildAppBar(
@@ -154,12 +153,6 @@ class TutorDetailsView extends StatelessWidget {
           SizedBox(
             height: 16,
           ),
-          // SelectCourseWidget(
-          //   onChanged: (val){
-          //     model.selectCourse(val);
-          //   },
-          //   value: model.selectedCourse.name,
-          // ),
           dropdownField(
               value: model.selectedCourse,
               collection: model.courses,
@@ -226,7 +219,7 @@ class TutorDetailsView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      model.selectedlevel.name,
+                      model.lessons.elementAt(index).level,
                       style: bodyText2.copyWith(height: 1),
                     ),
                   ),

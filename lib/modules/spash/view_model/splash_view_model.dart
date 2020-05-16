@@ -18,18 +18,5 @@ class SplashViewModel extends BaseViewModel {
     }
   }
 
-  void _getRoleBasedAccess() {
-    User user = _authService.currentUser.user;
-
-    if (user.role == 'admin') {
-      print("admin logged in");
-      Modular.to.pushReplacementNamed(Routes.adminHome);
-    } else if (user.role == 'tutor') {
-      print("tutor logged in");
-      Modular.to.pushReplacementNamed(Routes.tutorHome);
-    } else {
-      print("user logged in");
-      Modular.to.pushReplacementNamed(Routes.userHome);
-    }
-  }
+ 
 }

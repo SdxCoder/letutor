@@ -17,6 +17,7 @@ class DbService {
           print(doc.documents.length);
 
       if (doc.documents.isNotEmpty) {
+        
         return doc.documents
             .map((snapshot) => Course.fromJson(snapshot.data))
             .toList();

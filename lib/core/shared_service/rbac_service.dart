@@ -11,10 +11,10 @@ class RBACService{
    void getRoleBasedAccess() {
     User user = authService.currentUser.user;
 
-    if (user.role == 'admin') {
-      print("admin logged in");
+    if (user.role == Role.admin) {
+       print("admin logged in");
       Modular.to.pushReplacementNamed(Routes.adminHome);
-    } else if (user.role == 'tutor') {
+    } else if (user.role == Role.tutor) {
       print("tutor logged in");
       Modular.to.pushReplacementNamed(Routes.tutorHome);
     } else {
