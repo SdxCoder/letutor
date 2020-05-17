@@ -20,5 +20,11 @@ class Course extends Equatable{
   }
 
   @override
+  String toString() {
+    super.toString();
+    return name;
+  }
+
+  @override
   List<Object> get props => [this.id, this.name];
 }

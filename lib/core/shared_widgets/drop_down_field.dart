@@ -25,7 +25,7 @@ Widget dropdownField(
             borderSide: BorderSide.none
           )),
       items: collection.map<DropdownMenuItem>((value) {
-        return DropdownMenuItem(value: value, child: Text(value.name));
+        return DropdownMenuItem(value: value, child: Text(value.toString()));
       }).toList(),
       onChanged: onChanged,
     ),

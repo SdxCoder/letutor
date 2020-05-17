@@ -9,8 +9,8 @@ class CapsuleTile extends StatelessWidget {
   final Color titleColor;
   final Function(String category) onTap;
   final Function onTapCancelIcon;
-
   final Icon cancelIcon;
+  
   CapsuleTile(
       {@required this.title,
        this.id,

@@ -17,4 +17,10 @@ class Level {
     data['name'] = this.name;
     return data;
   }
+
+   @override
+  String toString() {
+    super.toString();
+    return name;
+  }
 }

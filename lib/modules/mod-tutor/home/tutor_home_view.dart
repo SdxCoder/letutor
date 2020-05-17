@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:letutor/core/core.dart';
 import 'package:letutor/modules/mod-tutor/bookings_history/view/tutor_bookings_view.dart';
-import 'package:letutor/modules/mod-tutor/courses/view/add_course_view.dart';
+import 'package:letutor/modules/mod-tutor/courses/view/availability_view.dart';
 
 
 class TutorHome extends StatefulWidget {
@@ -15,7 +15,7 @@ class _TutorHomeState extends State<TutorHome> {
   int _currentIndex  = 0;
 
   List<Widget> tabs = [
-    AddCourseView(),
+    AvailablityView(),
     TutorBookingsView()
   ];
 

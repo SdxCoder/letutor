@@ -10,7 +10,11 @@ class Role{
   static String tutor = "Tutor";
 }
 
-
+class DatePickerType{
+   static String date = "By Date";
+   static String range = "By Range";
+   static String week = "By Week";
+}
 class BookingStatus{
   static String pending = "Pending";
   static String confirmed = "Confirmed";

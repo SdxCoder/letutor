@@ -46,7 +46,8 @@ export './shared_widgets/search_bar.dart';
 export './shared_widgets/drop_down_field.dart';
 export './shared_widgets/text_field.dart';
 export './shared_widgets/info_section.dart';
-
+export './shared_widgets/time_slot_tile.dart';
+export './shared_widgets/date_picker.dart';
 // utils
 export './utils/colors.dart';
 export './utils/spacing.dart';
