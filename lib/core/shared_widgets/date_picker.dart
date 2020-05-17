@@ -9,8 +9,13 @@ class DateRangePicker extends StatefulWidget {
   //final ValueChanged<dp.DatePeriod> onNewRangeSelected;
   final Function(dp.DatePeriod) onChanged;
   final String flag;
+  final List<DateTime> alreadySelectedDates;
 
-  DateRangePicker({Key key,@required this.onChanged, @required this.flag})
+  DateRangePicker(
+      {Key key,
+      @required this.onChanged,
+      @required this.flag,
+      this.alreadySelectedDates})
       : super(key: key);
 
   @override
@@ -29,11 +34,11 @@ class _DateRangePickerState extends State<DateRangePicker> {
     return _flagBasedPicker();
   }
 
-  Widget _flagBasedPicker(){
-    if(widget.flag == DatePickerType.date){
+  Widget _flagBasedPicker() {
+    if (widget.flag == DatePickerType.date) {
       return _buildDayPicker();
     }
-    if(widget.flag == DatePickerType.range){
+    if (widget.flag == DatePickerType.range) {
       return _buildRangePicker();
     }
 
@@ -42,52 +47,62 @@ class _DateRangePickerState extends State<DateRangePicker> {
 
   Widget _buildDayPicker() {
     return Column(
-       mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text("Select Date"),
         dp.DayPicker(
             selectedDate: _selectedDate,
+            firstDate: _firstDate,
+            selectableDayPredicate: (dateTime) {
+              for (DateTime date in widget.alreadySelectedDates) {
+                if (date.day == dateTime.day &&
+                    date.month == dateTime.month &&
+                    date.year == dateTime.year) {
+                  print("equal");
+                  return false;
+                }
+                print("not equal");
+              }
+
+              return true;
+            },
             onChanged: (dateTime) {
               setState(() {
                 _selectedDate = dateTime;
               });
               widget.onChanged(dp.DatePeriod(dateTime, dateTime));
             },
-            firstDate: _firstDate,
             lastDate: _lastDate),
       ],
     );
   }
 
-  // Widget _buildMonthPicker() {
-  //   return dp.MonthPicker(
-  //     selectedDate: _selectedDate,
-  //     onChanged: (dateTime) {
-  //       setState(() {
-  //         _selectedDate = dateTime;
-  //       });
-  //        widget.onChanged(period);
-  //     },
-  //     firstDate: _firstDate,
-  //     lastDate: _lastDate,
-  //     datePickerStyles: _datePickerStyles,
-  //   );
-  // }
-
   Widget _buildWeekPicker() {
     return Column(
-       mainAxisSize: MainAxisSize.min,
-       
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text("Select Week"),
         dp.WeekPicker(
             selectedDate: _selectedDate,
+            firstDate: _firstDate,
+            lastDate: _lastDate,
+            selectableDayPredicate: (dateTime) {
+              for (DateTime date in widget.alreadySelectedDates) {
+                if (date.day == dateTime.day &&
+                    date.month == dateTime.month &&
+                    date.year == dateTime.year) {
+                  print("equal");
+                  return false;
+                }
+                print("not equal");
+              }
+
+              return true;
+            },
             onChanged: (period) {
               _selectWeek(period);
               widget.onChanged(period);
             },
-            firstDate: _firstDate,
-            lastDate: _lastDate,
             datePickerStyles: _styles),
       ],
     );
@@ -97,17 +112,30 @@ class _DateRangePickerState extends State<DateRangePicker> {
     // add some colors to default settings
 
     return Column(
-        mainAxisSize: MainAxisSize.min,
-       
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text("Select Date Range"),
         dp.RangePicker(
+            selectableDayPredicate: (dateTime) {
+              for (DateTime date in widget.alreadySelectedDates) {
+                if (date.day == dateTime.day &&
+                    date.month == dateTime.month &&
+                    date.year == dateTime.year) {
+                  print("equal");
+                  return false;
+                }
+                print("not equal");
+              }
+
+              return true;
+            },
             selectedPeriod: _selectedPeriod,
+            //firstDate: widget.unselectablePeriod?.end?.add(Duration(days: 1)) ?? _firstDate,
+            firstDate: _firstDate,
             onChanged: (period) {
               selectPeriod(period);
               widget.onChanged(period);
             },
-            firstDate: _firstDate,
             lastDate: _lastDate,
             datePickerStyles: _styles),
       ],
@@ -125,11 +153,11 @@ class _DateRangePickerState extends State<DateRangePicker> {
   dp.DatePickerStyles _datePickerStyles;
 
   void initialize() {
-    _selectedDate = DateTime.now().add(Duration(milliseconds: 1));
-    _selectedPeriod = dp.DatePeriod(DateTime.now().add(Duration(days: 1)),
-        DateTime.now().add(Duration(days: 1)));
-    _firstDate = DateTime.now();
-    _lastDate = DateTime.now().add(Duration(days: 30));
+    _selectedDate = DateTime.now();
+    _selectedPeriod = dp.DatePeriod(DateTime.now(), DateTime.now());
+
+    _firstDate = DateTime.now().subtract(Duration(milliseconds: 1));
+    _lastDate = DateTime.now().add(Duration(days: 360));
     _periodStartColor = Colors.blue;
     _periodLastColor = Colors.blue;
     _periodMiddleColor = Colors.blue.withOpacity(0.5);
@@ -161,7 +189,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
 
   void _selectWeek(dp.DatePeriod period) {
     setState(() {
-      _selectedDate = period.start;
+      _selectedDate = period.end;
       _selectedPeriod = period;
       _periodStartColor = Colors.blue;
       _periodLastColor = Colors.blue;
@@ -180,8 +208,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
 }
 
 Future<String> showCalenderDialogBox(
-    {
-    @required Widget content,
+    {@required Widget content,
     model,
     String buttonText = "OK",
     String buttonTextCancel = "Close"}) async {

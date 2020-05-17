@@ -59,6 +59,8 @@ class AvailablityView extends StatelessWidget {
                     onPressed: () async {
                       String changed = await showCalenderDialogBox(
                           content: DateRangePicker(
+                         
+                            alreadySelectedDates: model.alreadySelectedDates,
                             flag: model.selectedDatePickerType,
                             onChanged: (period) {
                               model.selectDate(period);
@@ -68,7 +70,8 @@ class AvailablityView extends StatelessWidget {
                             },
                           ));
                       if (changed == "true") {
-                        print("confirmed");
+                        model.recordSelectedDates();
+                        print(model.alreadySelectedDates.length);
                       } else {
                         print("closed");
                       }
@@ -88,16 +91,7 @@ class AvailablityView extends StatelessWidget {
     );
   }
 
-  Future<DateTime> _showDatePicker(
-      {context, String headerText, AvailablityViewModel model}) async {
-    return showDatePicker(
-      context: context,
-      helpText: headerText,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 30)),
-    );
-  }
+  
 
   Widget _buildTimeSlots(AvailablityViewModel model) {
     return Column(

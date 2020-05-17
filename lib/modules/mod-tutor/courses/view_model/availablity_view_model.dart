@@ -10,7 +10,7 @@ class AvailablityViewModel extends BaseViewModel {
   DatePeriod _selectedPeriod;
   String _selectedDatePickerType = DatePickerType.date;
 
- Map<DateTime, List<dynamic>> _events;
+  Map<DateTime, List<dynamic>> _events;
 
   List<String> _selectedSlots = [];
 
@@ -18,17 +18,28 @@ class AvailablityViewModel extends BaseViewModel {
   List<String> get selectedSlots => _selectedSlots;
   String get selectedDatePickerType => _selectedDatePickerType;
 
+  List<DateTime> alreadySelectedDates = [];
+
+
+  void recordSelectedDates(){
+    final difference = _selectedPeriod.end.difference(_selectedPeriod.start).inDays;
+    print(difference);
+    DateTime start = _selectedPeriod.start;
+    for(int days = 0; days <= difference; days++ ){
+      alreadySelectedDates.add(start);
+      start = start.add(Duration(days: 1));
+      print(start);
+    }
+     notifyListeners();
+   
+  }
 
   void addEvents(){
-    final difference = _selectedPeriod.start.difference(_selectedPeriod.end).inDays;
+    final difference = _selectedPeriod.end.difference(_selectedPeriod.start).inDays;
     for(int days = 0; days <= difference; days++ ){
       _events.addAll({
         _selectedPeriod.start : _selectedSlots
       });
-
-      if(_selectedPeriod.start.compareTo(_selectedPeriod.end) == 0){
-        break;
-      }
        _selectedPeriod.start.add(Duration(days: 1));
     }
 
