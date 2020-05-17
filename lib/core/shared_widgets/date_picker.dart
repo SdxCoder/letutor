@@ -180,7 +180,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
 }
 
 Future<String> showCalenderDialogBox(
-    {@required String title,
+    {
     @required Widget content,
     model,
     String buttonText = "OK",

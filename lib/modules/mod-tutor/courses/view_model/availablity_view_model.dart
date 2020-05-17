@@ -1,31 +1,58 @@
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:flutter_date_pickers/flutter_date_pickers.dart';
+import 'package:intl/intl.dart';
 import 'package:letutor/core/constants/constants.dart';
 import 'package:stacked/stacked.dart';
 
 class AvailablityViewModel extends BaseViewModel {
  
 
-  DateTime _selectedDate;
+  DatePeriod _selectedPeriod;
   String _selectedDatePickerType = DatePickerType.date;
 
-  Map<DateTime, List<dynamic>> _events = {
-    DateTime.now().add(Duration(days: 4)): ["Tutor available"],
-  };
+ Map<DateTime, List<dynamic>> _events;
 
-  List selectedEvents = [];
+  List<String> _selectedSlots = [];
 
-  DateTime get selectedDate => _selectedDate;
-  Map<DateTime, List<dynamic>> get events => _events;
+  DatePeriod get selectedPeriod => _selectedPeriod;
+  List<String> get selectedSlots => _selectedSlots;
   String get selectedDatePickerType => _selectedDatePickerType;
 
-  void selectDate(dateTime, List<dynamic> events) {
-    selectedEvents = events;
-    _selectedDate = dateTime;
+
+  void addEvents(){
+    final difference = _selectedPeriod.start.difference(_selectedPeriod.end).inDays;
+    for(int days = 0; days <= difference; days++ ){
+      _events.addAll({
+        _selectedPeriod.start : _selectedSlots
+      });
+
+      if(_selectedPeriod.start.compareTo(_selectedPeriod.end) == 0){
+        break;
+      }
+       _selectedPeriod.start.add(Duration(days: 1));
+    }
+
+   
+
+  }
+
+  void selectDate(period) {
+    _selectedPeriod = period;
     notifyListeners();
   }
 
   void changePickerType(value){
     _selectedDatePickerType = value;
+    notifyListeners();
+  }
+
+  void selectSlot(String slot){
+    _selectedSlots.add(slot);
+    notifyListeners();
+  }
+
+  void unselectSlot(String slot){
+    _selectedSlots.remove(slot);
     notifyListeners();
   }
 

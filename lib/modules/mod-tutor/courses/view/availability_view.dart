@@ -51,18 +51,19 @@ class AvailablityView extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  model.selectedDate?.dob ?? "Select Date",
+                  "Select Date",
                   style: bodyText1.copyWith(color: lightBlackColor),
                 ),
                 Spacer(),
                 IconButton(
                     onPressed: () async {
                       String changed = await showCalenderDialogBox(
-                          title: "Select Date",
                           content: DateRangePicker(
                             flag: model.selectedDatePickerType,
                             onChanged: (period) {
-                              print(period);
+                              model.selectDate(period);
+                              print(period.start.dob);
+                              print(period.end.dob);
                               print("called");
                             },
                           ));
@@ -151,14 +152,14 @@ class AvailablityView extends StatelessWidget {
               title: slot,
               titleColor: lightBlackColor,
               onSelection: (val) {
-                print("selected : $val");
+                model.selectSlot(val);
+                print(model.selectedSlots.length);
               },
               onCancelSelection: (val) {
-                print("unselected : $val");
+                model.unselectSlot(val);
+                print(model.selectedSlots.length);
               },
-              onTap: (String slot) {
-                print(slot);
-              },
+             
             );
           }).toList(),
         ),

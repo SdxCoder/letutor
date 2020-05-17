@@ -6,12 +6,11 @@ class TimeSlotTile extends StatefulWidget {
 
   final String title;
   final Color titleColor;
-  final Function(String slot) onTap;
-  final Function(bool) onSelection;
-  final Function(bool) onCancelSelection;
+  final Function(String) onSelection;
+  final Function(String) onCancelSelection;
   final Widget content;
 
-  TimeSlotTile({Key key, this.title, this.titleColor, this.onTap, this.onSelection, this.onCancelSelection, this.content})
+  TimeSlotTile({Key key, this.title, this.titleColor,this.onSelection, this.onCancelSelection, this.content})
       : super(key: key);
 
   @override
@@ -33,13 +32,13 @@ class _TimeSlotTileState extends State<TimeSlotTile> {
               _isSelected = !_isSelected;
             });
 
-            widget.onTap(this.widget.title);
+           // widget.onTap(this.widget.title);
             if(_isSelected == true){
-              widget.onSelection(_isSelected);
+              widget.onSelection(widget.title);
             }
 
             if(_isSelected == false){
-              widget.onCancelSelection(_isSelected);
+              widget.onCancelSelection(widget.title);
             }
           },
           child: Container(

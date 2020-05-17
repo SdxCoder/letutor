@@ -48,6 +48,7 @@ dependencies:
   flutter_rating_bar: ^3.0.1+1
   flushbar: ^1.10.4
   flutter_date_pickers: ^0.0.6
+  intl:
 
 
   # The following adds the Cupertino Icons font to your application.

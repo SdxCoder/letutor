@@ -6,6 +6,7 @@ class TutorAvailabilityViewModel extends BaseViewModel{
   DateTime _selectedDate = DateTime.now();
   Map<DateTime, List<dynamic>> _events = {
     DateTime.now().add(Duration(days: 4)) : ["Tutor available"],
+    DateTime.now().add(Duration(days: 4)) : ["Tutor available"],
   };
   List selectedEvents = [];
 
