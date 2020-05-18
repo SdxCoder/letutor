@@ -9,11 +9,11 @@ class SearchTutorViewModel extends BaseViewModel{
   String _selectedLevel;
   String _selectedCourse;
   List<Tutor> _tutorsList = [
-    Tutor(uid: "1", name : "John", lastName: "Wick"),
-    Tutor(uid: "2", name : "John", lastName: "Wick"),
-    Tutor(uid: "3", name : "John", lastName: "Wick"),
-    Tutor(uid: "4", name : "John", lastName: "Wick"),
-    Tutor(uid: "5", name : "John", lastName: "Wick"),
+    // Tutor(uid: "1", name : "John", lastName: "Wick"),
+    // Tutor(uid: "2", name : "John", lastName: "Wick"),
+    // Tutor(uid: "3", name : "John", lastName: "Wick"),
+    // Tutor(uid: "4", name : "John", lastName: "Wick"),
+    // Tutor(uid: "5", name : "John", lastName: "Wick"),
   ];
 
   Stream<List<Tutor>> _tutors;

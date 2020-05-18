@@ -16,8 +16,16 @@ class AvailablityView extends StatelessWidget {
               ? Offstage()
               : FloatingActionButton(
                   child: Icon(Icons.add),
-                  onPressed: () {
-                    
+                  onPressed: () async {
+                    // String confirm = await showActionDialogBox(
+                    //   title: "Reminder",
+                    //   description: "Are you sure you want to proceed?"
+                    // );
+                    // if(confirm == "true"){
+                       
+                    // }
+                    await model.addAvailablity();
+                   
                   },
                 ),
           body: Container(
@@ -158,7 +166,7 @@ class AvailablityView extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 2.0),
                               child: CapsuleTile(
-                                title: val.key.dob,
+                                title: DateTime.parse(val.key).dob,
                                 titleColor: Colors.black,
                                 cancelIcon: Icon(
                                   Icons.cancel,

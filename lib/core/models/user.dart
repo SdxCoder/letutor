@@ -1,6 +1,6 @@
+import 'package:equatable/equatable.dart';
 
-
-class User {
+class User extends Equatable {
   final String uid;
   final String firstName;
   final String lastName;
@@ -12,9 +12,8 @@ class User {
   final String role;
   final String email;
 
-
   User(
-      {this.uid,
+     { this.uid,
       this.firstName,
       this.lastName,
       this.name,
@@ -23,7 +22,6 @@ class User {
       this.photoPlaceholder,
       this.dob,
       this.role,
-
       this.email});
 
   // String get uid => _uid;
@@ -50,24 +48,21 @@ class User {
   // String get bookingStatus => _bookingStatus;
   // set bookingStatus(String bookingStatus) => _bookingStatus = bookingStatus;
 
-  User.fromJson(Map<String, dynamic> json) :
-   
-    uid = json['uid'],
-    firstName = json['firstName'],
-    lastName = json['lastName'],
-    name = json['name'],
-    phoneNo = json['phoneNo'],
-    photoUrl = json['photoUrl'],
-    photoPlaceholder = json['photoPlaceholder'],
-    dob = json['dob'].toDate(),
-    role = json['role'],
-    email = json['email'];
-
-  
+  User.fromJson(Map<String, dynamic> json)
+      : uid = json['uid'],
+        firstName = json['firstName'],
+        lastName = json['lastName'],
+        name = json['name'],
+        phoneNo = json['phoneNo'],
+        photoUrl = json['photoUrl'],
+        photoPlaceholder = json['photoPlaceholder'],
+        dob = json['dob'].toDate(),
+        role = json['role'],
+        email = json['email'];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    
+
     data['uid'] = this.uid;
     data['firstName'] = this.firstName;
     data['lastName'] = this.lastName;
@@ -80,4 +75,7 @@ class User {
     data['email'] = this.email;
     return data;
   }
+
+  @override
+  List<Object> get props => throw UnimplementedError();
 }

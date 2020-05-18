@@ -3,7 +3,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_date_pickers/flutter_date_pickers.dart' as dp;
 import 'package:letutor/core/constants/constants.dart';
 import 'package:letutor/core/utils/colors.dart';
-import 'package:letutor/modules/mod-tutor/courses/view_model/availablity_view_model.dart';
 import 'package:meta/meta.dart';
 
 class DateRangePicker extends StatefulWidget {
@@ -206,59 +205,6 @@ class _DateRangePickerState extends State<DateRangePicker> {
       _periodMiddleColor = Colors.blue.withOpacity(0.5);
     });
   }
-}
-
-Future<String> showCalenderDialogBox(
-    {@required Widget content,
-    model,
-    String buttonText = "OK",
-    String buttonTextCancel = "Close"}) async {
-  print("show dialog");
-  return await showDialog<String>(
-    context: Modular.navigatorKey.currentState.overlay.context,
-    builder: (context) {
-      
-      // return Dialog(
-      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      //   child: Padding(
-      //     padding: const EdgeInsets.all(16.0),
-      //     child: Container(
-      //       width: 400,
-      //       child: Column(
-      //           mainAxisSize: MainAxisSize.min,
-      //           crossAxisAlignment: CrossAxisAlignment.center,
-      //           children: [
-      //             SizedBox(height: 16),
-      //             Padding(padding: const EdgeInsets.all(16.0), child: content),
-      //             SizedBox(height: 16),
-      //             ButtonBar(
-      //               children: <Widget>[
-      //                 FlatButton(
-      //                     shape: RoundedRectangleBorder(
-      //                         borderRadius: BorderRadius.circular(10)),
-      //                     child: Text(buttonTextCancel,
-      //                         style: TextStyle(color: Colors.blue)),
-      //                     onPressed: () {
-      //                       String result = "false";
-      //                       return Modular.to.pop(result);
-      //                     }),
-      //                 RaisedButton(
-      //                     shape: RoundedRectangleBorder(
-      //                         borderRadius: BorderRadius.circular(10)),
-      //                     color: Colors.blue,
-      //                     elevation: 0,
-      //                     child: Text(buttonText),
-      //                     onPressed: () {
-      //                       return Modular.to.pop("true");
-      //                     }),
-      //               ],
-      //             ),
-      //           ]),
-      //     ),
-      //   ),
-      // );
-    },
-  );
 }
 
 class CalDialog extends StatefulWidget {

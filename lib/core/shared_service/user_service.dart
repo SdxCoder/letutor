@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
+import 'package:letutor/core/constants/constants.dart';
 import 'package:letutor/core/models/user.dart';
 
 class UserService {
@@ -16,7 +17,7 @@ class UserService {
       if (usersSnapshot.documents.isNotEmpty) {
         var users = usersSnapshot.documents
             .map((snapshot) => User.fromJson(snapshot.data))
-            .where((mappedItem) => mappedItem.role != "admin")
+            .where((mappedItem) => mappedItem.role != Role.admin)
             .toList();
 
         // Add the posts onto the controller
@@ -31,13 +32,12 @@ class UserService {
   Future getUsersOnceOff() async {
     try {
       var doc = await _userCollection
-
           .getDocuments();
      
       if (doc.documents.isNotEmpty) {
         return doc.documents
             .map((snapshot) => User.fromJson(snapshot.data))
-            .where((element) => element.role != "admin")
+            .where((element) => element.role != Role.admin)
             .toList();
       }
       else{
@@ -48,7 +48,6 @@ class UserService {
       if (e is PlatformException) {
         return e.message;
       }
-
       return e.toString();
     }
   }

@@ -24,7 +24,9 @@ class AppModule extends MainModule {
         Bind((i) => AuthService()),
         Bind((i) => UserService()),
         Bind((i) => RBACService()),
-         Bind((i) => DbService())
+         Bind((i) => DbService()),
+         Bind((i) => TutorService()),
+         
       ];
 
   @override
