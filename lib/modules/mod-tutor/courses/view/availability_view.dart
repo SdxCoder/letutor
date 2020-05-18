@@ -12,86 +12,171 @@ class AvailablityView extends StatelessWidget {
     return ViewModelBuilder<AvailablityViewModel>.reactive(
       viewModelBuilder: () => AvailablityViewModel(),
       builder: (context, model, child) => Scaffold(
-          body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(
-            height: 8,
-          ),
-          TopNavBar(
-            title: [
-              Text(
-                "Add your",
-                style: headline6,
-              ),
-              Text(
-                "Availablity",
-                style: headline5.copyWith(fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-          SizedBox(height: 32),
-          _buildTimeSlots(model),
-          SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(
-              "Choose Date",
-              style: bodyText1.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          SizedBox(height: 16),
-          Container(
-            height: 35,
-            padding: EdgeInsets.only(left: 16),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(12)),
-            child: Row(
-              children: [
-                Text(
-                  "Select Date",
-                  style: bodyText1.copyWith(color: lightBlackColor),
+          floatingActionButton: (model.events.isEmpty)
+              ? Offstage()
+              : FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    
+                  },
                 ),
-                Spacer(),
-                IconButton(
-                    onPressed: () async {
-                      String changed = await showCalenderDialogBox(
-                          content: DateRangePicker(
-                         
-                            alreadySelectedDates: model.alreadySelectedDates,
-                            flag: model.selectedDatePickerType,
-                            onChanged: (period) {
-                              model.selectDate(period);
-                              print(period.start.dob);
-                              print(period.end.dob);
-                              print("called");
-                            },
-                          ));
-                      if (changed == "true") {
-                        model.recordSelectedDates();
-                        print(model.alreadySelectedDates.length);
-                      } else {
-                        print("closed");
-                      }
-                    },
-                    icon: Icon(
-                      Icons.calendar_today,
-                      size: ScreenUtil().setSp(45),
-                      color: lightBlackColor,
-                    ))
+          body: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 8),
+                TopNavBar(title: [
+                  Text("Add your", style: headline6),
+                  Text("Availablity",
+                      style: headline5.copyWith(fontWeight: FontWeight.bold))
+                ]),
+                SizedBox(height: 20),
+                _buildTimeSlots(model),
+                SizedBox(height: 8),
+                (model.selectedSlots.isEmpty)
+                    ? Offstage()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text(
+                          "Choose Date",
+                          style: bodyText1.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                SizedBox(height: 8),
+                (model.selectedSlots.isEmpty)
+                    ? Offstage()
+                    : Container(
+                        height: 35,
+                        padding: EdgeInsets.only(left: 16),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Select Date",
+                              style: bodyText1.copyWith(color: lightBlackColor),
+                            ),
+                            Spacer(),
+                            IconButton(
+                                onPressed: () async {
+                                  String changed = await showDialog<String>(
+                                      context: context,
+                                      builder: (context) => CalDialog(
+                                            alreadySelectedDates:
+                                                model.alreadySelectedDates,
+                                            flag: model.selectedDatePickerType,
+                                            onChanged: (period) {
+                                              model.selectDate(period);
+                                            },
+                                          ));
+                                  print(changed);
+
+                                  if (changed == "true") {
+                                    model.recordSelectedDatesAndEvents();
+                                    print(model.alreadySelectedDates.length);
+                                  } else {
+                                    print("closed");
+                                  }
+                                },
+                                icon: Icon(
+                                  Icons.calendar_today,
+                                  size: ScreenUtil().setSp(45),
+                                  color: lightBlackColor,
+                                ))
+                          ],
+                        ),
+                      ),
+                SizedBox(height: 8),
+                (model.events.isNotEmpty)
+                    ? Center(
+                        child: Text("Swipe to cancel",
+                            style: bodyText1.copyWith(color: lightBlackColor)),
+                      )
+                    : Offstage(),
+                SizedBox(height: 8),
+                Expanded(child: _buildEvents(model)),
+                SizedBox(height: 8),
               ],
             ),
-          ),
-          SizedBox(height: 16),
-         
-        ]),
-      )),
+          )),
     );
   }
 
-  
+  Widget _buildEvents(AvailablityViewModel model) {
+    print("events : " + model.events?.length.toString());
+    return (model.events.isNotEmpty)
+        ? Dismissible(
+            key: UniqueKey(),
+            onDismissed: (d) {
+              model.removeEvents();
+            },
+            child: Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Chosen Dates",
+                      style: bodyText1.copyWith(color: lightBlackColor),
+                    ),
+                    // ...model.events.entries
+                    //     .map<Widget>(
+                    //       (val) => Padding(
+                    //         padding: const EdgeInsets.symmetric(vertical: 2.0),
+                    //         child: 
+                    //         CapsuleTile(
+                    //           title: val.key.dob,
+                    //           titleColor: Colors.black,
+                    //           cancelIcon: Icon(
+                    //             Icons.cancel,
+                    //             size: ScreenUtil().setSp(45),
+                    //           ),
+                    //           onTapCancelIcon: () {
+                    //             model.removeParticularEvents(val.key);
+                    //           },
+                    //         ),
+                    //       ),
+                    //     )
+                    //     .toList(),
+                    Wrap(
+                      alignment: WrapAlignment.start,
+                      runSpacing: 2,
+                      spacing: 2,
+                      direction: Axis.horizontal,
+                      children: model.events.entries
+                          .map<Widget>((val) => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 2.0),
+                              child: CapsuleTile(
+                                title: val.key.dob,
+                                titleColor: Colors.black,
+                                cancelIcon: Icon(
+                                  Icons.cancel,
+                                  size: ScreenUtil().setSp(45),
+                                ),
+                                onTapCancelIcon: () {
+                                  model.removeParticularEvents(val.key);
+                                },
+                              )))
+                          .toList(),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
+        : Offstage();
+  }
 
   Widget _buildTimeSlots(AvailablityViewModel model) {
     return Column(
@@ -99,7 +184,7 @@ class AvailablityView extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal : 8),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Row(
             children: [
               Text(
@@ -113,17 +198,14 @@ class AvailablityView extends StatelessWidget {
                 width: 100,
                 height: 35,
                 child: DropdownButtonFormField(
-                
-                   value: model.selectedDatePickerType,
-                   
-                   style: bodyText2.copyWith(
-                     color:lightBlackColor
-                   ),
+                    value: model.selectedDatePickerType,
+                    style: bodyText2.copyWith(color: lightBlackColor),
                     decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(left:8),
+                        contentPadding: EdgeInsets.only(left: 8),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: lightBlackBorderColor))),
+                            borderSide:
+                                BorderSide(color: lightBlackBorderColor))),
                     items: model.datePickerTypes.map<DropdownMenuItem>((value) {
                       return DropdownMenuItem(
                           value: value, child: Text(value.toString()));
@@ -153,7 +235,6 @@ class AvailablityView extends StatelessWidget {
                 model.unselectSlot(val);
                 print(model.selectedSlots.length);
               },
-             
             );
           }).toList(),
         ),

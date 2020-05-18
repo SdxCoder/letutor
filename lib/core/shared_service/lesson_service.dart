@@ -9,7 +9,6 @@ class LessonService {
         return "Lesson already exists";
       }
     try {
-     
       await _lessonCollection.document().setData(lesson.toJson());
     } catch (e) {
       return e.message;

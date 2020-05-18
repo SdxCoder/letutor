@@ -197,7 +197,7 @@ class TutorDetailsView extends StatelessWidget {
       itemCount: model.lessons.length,
       itemBuilder: (context, index) {
         return Dismissible(
-          key: Key(index.toString()),
+          key: Key(model.lessons.elementAt(index).hashCode.toString()),
           onDismissed: (d) {
             model.removeLesson(model.lessons.elementAt(index));
           },

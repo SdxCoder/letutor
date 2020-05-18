@@ -78,12 +78,14 @@ class TutorDetailsViewModel extends BaseViewModel {
   }
 
   void addLesson() {
+    var courses = List<Course>();
+    courses.addAll(_selectedCourses);
     _lessons.add(Lesson(
       tutorId: _edittingUser.uid,
       tutorName: _edittingUser.name,
       level: _selectedlevel.name,
       levelId: _selectedlevel.id,
-      courses: _selectedCourses,
+      courses: courses,
       documentId: _edittingUser.uid,
     ));
     _lessons = _lessons.toSet().toList();
@@ -120,7 +122,7 @@ class TutorDetailsViewModel extends BaseViewModel {
 
   void selectCourse(Course value) {
     _selectedCourse = value;
-    addCourse(value);
+    addCourse(_selectedCourse);
     notifyListeners();
   }
 
@@ -133,7 +135,7 @@ class TutorDetailsViewModel extends BaseViewModel {
   String _selectedUserRole;
   Course _selectedCourse;
   Course get selectedCourse => _selectedCourse;
-  List<Course> _selectedCourses = List<Course>();
+  List<Course> _selectedCourses = [];
   bool _editUser = false;
 
   Level get selectedlevel => _selectedlevel;

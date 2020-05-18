@@ -3,6 +3,7 @@ import 'package:flutter_date_pickers/flutter_date_pickers.dart';
 import 'package:intl/intl.dart';
 import 'package:letutor/core/constants/constants.dart';
 import 'package:stacked/stacked.dart';
+import 'package:built_collection/built_collection.dart';
 
 class AvailablityViewModel extends BaseViewModel {
  
@@ -10,42 +11,46 @@ class AvailablityViewModel extends BaseViewModel {
   DatePeriod _selectedPeriod;
   String _selectedDatePickerType = DatePickerType.date;
 
-  Map<DateTime, List<dynamic>> _events;
+  Map<DateTime, List> _events = Map<DateTime, List>();
 
   List<String> _selectedSlots = [];
 
   DatePeriod get selectedPeriod => _selectedPeriod;
   List<String> get selectedSlots => _selectedSlots;
   String get selectedDatePickerType => _selectedDatePickerType;
+  Map<DateTime, List> get events => _events;
 
   List<DateTime> alreadySelectedDates = [];
 
-
-  void recordSelectedDates(){
+  void recordSelectedDatesAndEvents(){
     final difference = _selectedPeriod.end.difference(_selectedPeriod.start).inDays;
+    var slots = List<String>();
+    slots.addAll(_selectedSlots);
     print(difference);
     DateTime start = _selectedPeriod.start;
     for(int days = 0; days <= difference; days++ ){
       alreadySelectedDates.add(start);
+      _events.addAll({
+        start : _selectedSlots
+      });
       start = start.add(Duration(days: 1));
       print(start);
     }
-     notifyListeners();
-   
+    notifyListeners();
   }
 
-  void addEvents(){
-    final difference = _selectedPeriod.end.difference(_selectedPeriod.start).inDays;
-    for(int days = 0; days <= difference; days++ ){
-      _events.addAll({
-        _selectedPeriod.start : _selectedSlots
-      });
-       _selectedPeriod.start.add(Duration(days: 1));
-    }
-
-   
-
+   void removeParticularEvents(DateTime key){
+    _events.remove(key);
+    alreadySelectedDates.remove(key);
+    notifyListeners();
   }
+
+  void removeEvents(){
+    _events.clear();
+    alreadySelectedDates.clear();
+    notifyListeners();
+  }
+
 
   void selectDate(period) {
     _selectedPeriod = period;
