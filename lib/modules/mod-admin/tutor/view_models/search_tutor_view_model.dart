@@ -19,8 +19,9 @@ class SearchTutorViewModel extends BaseViewModel{
   void setTempList(users){
     _tempList.addAll(users);
   }
+
   StreamSubscription _subscription;
-   void listenToUsers() {
+  void listenToUsers() {
     setBusy(true);
     _subscription = _userService.listenToUsersRealTime().listen((usersData) {
       _tempList = Set<User>();

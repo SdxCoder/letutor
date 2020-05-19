@@ -12,13 +12,21 @@ import 'tutor_details.dart';
 class SearchTutorsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<SearchTutorViewModel>.reactive(
       viewModelBuilder: () => SearchTutorViewModel(),
+      onModelReady: (model) async {
+        model.listenToTutors();
+        model.setBusy(true);
+        await model.fetchCourses();
+        await model.fetchLevels();
+        model.setBusy(false);
+      },
       builder: (context, model, child) => Scaffold(
         body: ResponsiveBuilder(
           builder: (context, sizingInfo) => Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
+            child: (model.isBusy) ? Center(child:CircularProgressIndicator()):
+            Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                    SizedBox(height: 8),
@@ -51,12 +59,13 @@ class SearchTutorsView extends StatelessWidget {
   Widget _buildTutors(BuildContext context, SearchTutorViewModel model) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: (model.tutorsList ?? []).length,
+      itemCount: model.tempList.length,
       shrinkWrap: true,
       physics: ClampingScrollPhysics(),
       itemBuilder: (context, index) {
+        final tutor = model.tempList.elementAt(index);
         return TutorTile(
-          tutor: model.tutorsList[index],
+          tutor: tutor,
           onTapBook: () {
             Navigator.push(
                 context,
@@ -69,7 +78,7 @@ class SearchTutorsView extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => TutorProfileView(
-                          tutor: model.tutorsList[index],
+                          tutor: tutor,
                         ),
                     settings: RouteSettings(name: Routes.tutorProfile)));
           },

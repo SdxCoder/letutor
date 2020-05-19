@@ -24,11 +24,10 @@ class TutorTile extends StatelessWidget {
         onTap: onTap,
         child: Card(
           margin: EdgeInsets.only(right: 16),
-          
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-             // side: BorderSide(color: lightBlackBorderColor, width: 1)
-              ),
+            borderRadius: BorderRadius.circular(20),
+            // side: BorderSide(color: lightBlackBorderColor, width: 1)
+          ),
           elevation: 0,
           color: Colors.white,
           child: Container(
@@ -45,13 +44,13 @@ class TutorTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            '${tutor.name} ${tutor.lastName}',
+                            '${tutor.name}',
                             style: bodyText1.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            'Biology',
+                            'University',
                             style: bodyText1.copyWith(
                               height: 1,
                               color: lightBlackColor,
@@ -79,26 +78,34 @@ class TutorTile extends StatelessWidget {
                       ),
                       Spacer(),
                       CircleAvatar(
-                        backgroundImage: NetworkImage(imageUrl),
+                        radius: ScreenUtil().setSp(120),
+                        backgroundImage: NetworkImage(tutor.photoUrl),
                       )
                     ],
                   ),
                 ),
-                // Container(
-                //   height: sizingInfo.localWidgetSize.height * 0.4,
-                //   foregroundDecoration: BoxDecoration(
-                //     color: Colors.white.withOpacity(0.4),
-                //   ),
-                //   decoration: BoxDecoration(
-                //     image: DecorationImage(
-                //         image: NetworkImage(imageUrl), fit: BoxFit.cover),
-                //     borderRadius: BorderRadius.only(
-                //       topLeft: Radius.circular(20),
-                //       topRight: Radius.circular(20),
-                //     ),
-                //   ),
-                // ),
-
+                SizedBox(
+                  height: ScreenUtil().setHeight(32),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal :16.0),
+                  child: Text(
+                    'Courses',
+                    style: bodyText1.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                   padding: const EdgeInsets.symmetric(horizontal :16.0),
+                  child: Text(
+                    '200 NHL',
+                    style: bodyText1.copyWith(
+                      height: 1,
+                      color: lightBlackColor,
+                    ),
+                  ),
+                ),
                 Spacer(),
                 GestureDetector(
                   onTap: onTapBook,
@@ -121,23 +128,6 @@ class TutorTile extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // ButtonBar(
-                //   alignment: MainAxisAlignment.start,
-                //   children: <Widget>[
-
-                //     FlatButton(
-                //       onPressed: onTapBook,
-                //       child: Text(
-                //         "Book",
-                //         style: bodyText1.copyWith(color: Colors.blue),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(
-                //   height: ScreenUtil().setHeight(16),
-                // ),
               ],
             ),
           ),

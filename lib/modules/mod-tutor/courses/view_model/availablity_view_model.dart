@@ -45,7 +45,6 @@ class AvailablityViewModel extends BaseViewModel {
       }else{
         await showDialogBox(title: "Success", description: "Availability updated");
       }
-  
   }
 
   void recordSelectedDatesAndEvents() {

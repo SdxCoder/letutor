@@ -19,7 +19,7 @@ class LessonService {
     var docs = await _lessonCollection.getDocuments();
     if (docs.documents.isNotEmpty) {
       for (DocumentSnapshot snapshot in docs.documents) {
-        var lesson = Lesson.fromJson(snapshot.data, snapshot.documentID);
+        var lesson = Lesson.fromJson(snapshot.data,documentId: snapshot.documentID);
         print(lesson.toString());
         if (lesson == createdLesson) {
           return true;

@@ -14,7 +14,7 @@ class Lesson extends Equatable {
 
   Lesson({this.tutorName, this.levelId, this.documentId, this.tutorId, this.level, this.courses});
 
-  Lesson.fromJson(Map<String, dynamic> json, String documentId)
+  Lesson.fromJson(Map<String, dynamic> json, {documentId})
       : documentId = documentId,
         tutorId = json['tutorId'],
         tutorName = json['tutorName'],
