@@ -8,8 +8,9 @@ class InfoSection extends StatelessWidget {
   final String title;
   final IconData icon;
   final Widget value;
+  final Widget secondaryIcon;
 
-  const InfoSection({Key key, this.title, this.icon, this.value,})
+  const InfoSection({Key key, this.title, this.icon, this.value, this.secondaryIcon,})
       : super(key: key);
 
   @override
@@ -30,6 +31,8 @@ class InfoSection extends StatelessWidget {
                   style: bodyText1,
                 ),
               ),
+              Spacer(),
+              secondaryIcon??Offstage()
              
             ],
           ),

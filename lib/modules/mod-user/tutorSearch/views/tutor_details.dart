@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:letutor/core/core.dart';
 
 class TutorProfileView extends StatelessWidget {
@@ -10,21 +9,110 @@ class TutorProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        elevation: 0.0,
-        brightness: Brightness.light,
-        iconTheme: IconThemeData(color: Colors.black87),
-      ),
-      body: SafeArea(
+      appBar: buildAppBar(
+          backgroundColor: Colors.transparent,
+          title:
+              Text("Profile", style: subtitle1.copyWith(color: Colors.black)),
+          automaticallyImplyLeading: true),
+      body: Container(
+        padding: EdgeInsets.all(16),
+        child: SingleChildScrollView(
           child: Column(
-        children: <Widget>[
-          _buildSplash(context),
-          Expanded(
-            child: Text("About"),
-          )
-        ],
-      )),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(
+                height: 16,
+              ),
+              Center(
+                child: CircleAvatar(
+                  radius: ScreenUtil().setWidth(200),
+                  backgroundImage: NetworkImage(tutor.photoUrl),
+                ),
+              ),
+              Center(
+                  child: Text(
+                tutor.name.toUpperCase(),
+                style: bodyText1.copyWith(fontWeight: FontWeight.bold),
+              )),
+              SizedBox(
+                height: 16,
+              ),
+              InfoSection(
+                icon: Icons.email,
+                title: "Email",
+                value: Text(
+                  tutor.email,
+                  style: bodyText1,
+                ),
+              ),
+              (tutor.phoneNo.isEmpty)
+                  ? Offstage()
+                  : InfoSection(
+                      icon: Icons.phone_android,
+                      title: "Phone No",
+                      value: Text(
+                        tutor.phoneNo,
+                        style: bodyText1,
+                      ),
+                    ),
+              (tutor.lessons.isEmpty)
+                  ? Offstage()
+                  : InfoSection(
+                      icon: Icons.library_books,
+                      title: "Courses",
+                      value: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ...tutor.lessons
+                              .map(
+                                (lesson) => Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      lesson.level,
+                                      style: bodyText1,
+                                    ),
+                                    Wrap(
+                                        spacing: 8,
+                                        children: lesson.courses
+                                            .map(
+                                              (course) => Text(
+                                                course.name,
+                                                style: bodyText2.copyWith(
+                                                    color: lightBlackColor),
+                                              ),
+                                            )
+                                            .toList())
+                                  ],
+                                ),
+                              )
+                              .toList(),
+                        ],
+                      ),
+                    ),
+              InfoSection(
+                icon: Icons.access_time,
+                title: "Available Dates",
+                value: GridView.count(
+                  crossAxisCount: 3,
+                  childAspectRatio: 2.8,
+                  shrinkWrap: true,
+                  children: [
+                    ...tutor.availableSlots.entries.map(
+                      (slot) => Text(
+                        DateTime.parse(slot.key).abbrDate,
+                        style: bodyText2.copyWith(color: lightBlackColor),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              
+            ],
+          ),
+        ),
+      ),
     );
   }
 

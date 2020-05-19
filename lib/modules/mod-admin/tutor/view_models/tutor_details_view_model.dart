@@ -40,6 +40,7 @@ class TutorDetailsViewModel extends BaseViewModel {
   }
 
   Future createlessons() async {
+    setBusy(true);
     if (lessons.isNotEmpty) {
       for (Lesson lesson in lessons) {
         var result = await _lessonService.createLesson(lesson);
@@ -53,6 +54,7 @@ class TutorDetailsViewModel extends BaseViewModel {
       _lessons = [];
         notifyListeners();
     }
+    setBusy(false);
   }
 
   Future getAllCourses() async {
@@ -80,6 +82,8 @@ class TutorDetailsViewModel extends BaseViewModel {
   void addLesson() {
     var courses = List<Course>();
     courses.addAll(_selectedCourses);
+   
+    _lessons.removeWhere((element) => element.levelId == _selectedlevel.id);
     _lessons.add(Lesson(
       tutorId: _edittingUser.uid,
       tutorName: _edittingUser.name,
@@ -89,6 +93,7 @@ class TutorDetailsViewModel extends BaseViewModel {
       documentId: _edittingUser.uid,
     ));
     _lessons = _lessons.toSet().toList();
+     
     notifyListeners();
   }
 

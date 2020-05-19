@@ -10,7 +10,6 @@ import 'tutor/views/tutor_details_view.dart';
 class AdminModule extends ChildModule{
   @override
   List<Bind> get binds => [
-    Bind((i) => LessonService()),
    
   ];
 

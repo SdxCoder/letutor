@@ -29,7 +29,7 @@ class TutorService {
 
   Future createTutor(Tutor tutor) async {
     try {
-      if (await _tutorExists(tutor) == true) return;
+     // if (await _tutorExists(tutor) == true) return;
       await _tutorCollection.document(tutor.uid).setData(tutor.toJson());
     } catch (e) {
       return e.message;

@@ -70,7 +70,7 @@ class SearchTutorsView extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => BookCourseView(),
+                    builder: (context) => BookCourseView(tutor : tutor),
                     settings: RouteSettings(name: Routes.bookCourse)));
           },
           onTap: () {

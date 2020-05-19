@@ -19,16 +19,19 @@ class TutorDetailsView extends StatelessWidget {
       viewModelBuilder: () => TutorDetailsViewModel(),
       onModelReady: (model) async {
         model.setEdittingUser(user);
-         await model.getAllCourses();
-         await model.getAllLevels();
-      } ,
+        model.setBusy(true);
+        await model.getAllCourses();
+        await model.getAllLevels();
+        model.setBusy(false);
+      },
       builder: (context, model, child) => Scaffold(
-        floatingActionButton:(model.lessons.isEmpty) ? null : FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed:() async {
-          await model.createlessons();
-        
-        }),
+        floatingActionButton: (model.lessons.isEmpty)
+            ? null
+            : FloatingActionButton(
+                child: Icon(Icons.add),
+                onPressed: () async {
+                  await model.createlessons();
+                }),
         appBar: buildAppBar(
             automaticallyImplyLeading: true,
             backgroundColor: Colors.transparent,
@@ -49,7 +52,8 @@ class TutorDetailsView extends StatelessWidget {
                     }),
               )
             ]),
-        body: (model.editUser && user.role == Role.tutor)
+        body: (model.isBusy) ? Center(child:CircularProgressIndicator()):
+        (model.editUser && user.role == Role.tutor)
             ? _buildCourseForm(context, model)
             : Container(
                 padding: EdgeInsets.all(16),
@@ -96,7 +100,8 @@ class TutorDetailsView extends StatelessWidget {
                               )),
                     ],
                   ),
-                )),
+                ),
+              ),
       ),
     );
   }

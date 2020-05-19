@@ -45,7 +45,7 @@ class _TimeSlotTileState extends State<TimeSlotTile> {
             width: MediaQuery.of(context).size.width*0.26,
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(
-                horizontal: ScreenUtil().setSp(15), vertical: ScreenUtil().setSp(40)),
+                horizontal: ScreenUtil().setSp(10), vertical: ScreenUtil().setSp(40)),
             margin: EdgeInsets.only(left: 8, bottom: 8),
             decoration: BoxDecoration(
               color: _isSelected ? Colors.blue : Colors.transparent,

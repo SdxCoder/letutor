@@ -41,6 +41,11 @@ class Lesson extends Equatable {
   bool get stringify => true;
 
   @override
+  String toString() {
+    return this.level;
+  }
+
+  @override
   List<Object> get props =>
       [ this.level,this.levelId, this.tutorId, this.tutorName, this.courses];
 }

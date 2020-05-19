@@ -18,7 +18,6 @@ class TutorTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const imageUrl = 'https://i.imgur.com/pEVEnCs.jpeg';
     return ResponsiveBuilder(
       builder: (context, sizingInfo) => GestureDetector(
         onTap: onTap,
@@ -49,13 +48,13 @@ class TutorTile extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            'University',
-                            style: bodyText1.copyWith(
-                              height: 1,
-                              color: lightBlackColor,
-                            ),
-                          ),
+                          // Text(
+                          //   'University',
+                          //   style: bodyText1.copyWith(
+                          //     height: 1,
+                          //     color: lightBlackColor,
+                          //   ),
+                          // ),
                           ratingBar(
                               initialRating: 3.5, onRatingUpdate: (rating) {}),
                           SizedBox(
@@ -84,28 +83,44 @@ class TutorTile extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: ScreenUtil().setHeight(32),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal :16.0),
-                  child: Text(
-                    'Courses',
-                    style: bodyText1.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Padding(
-                   padding: const EdgeInsets.symmetric(horizontal :16.0),
-                  child: Text(
-                    '200 NHL',
-                    style: bodyText1.copyWith(
-                      height: 1,
-                      color: lightBlackColor,
-                    ),
-                  ),
-                ),
+                // SizedBox(
+                //   height: ScreenUtil().setHeight(32),
+                // ),
+                (sizingInfo.screenSize.height < 570)
+                    ? Offstage()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text(
+                          'Courses',
+                          style: bodyText1.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                (sizingInfo.screenSize.height < 570)
+                    ? Offstage()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Wrap(
+                          spacing: 8,
+
+                            children: [
+                              ...tutor.lessons[0].courses
+                                .map(
+                                  (course) => Text(
+                                    course.name,
+                                    style: bodyText1.copyWith(
+                                      height: 1,
+                                      color: lightBlackColor,
+                                    ),
+                                  ),
+                                ),
+                                Text("...more", style: bodyText1.copyWith(
+                                      height: 1,
+                                      color: Colors.blue,
+                                    ),)
+                                ]),
+                      ),
                 Spacer(),
                 GestureDetector(
                   onTap: onTapBook,

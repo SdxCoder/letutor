@@ -1,23 +1,24 @@
+import 'package:letutor/core/core.dart';
 import 'package:stacked/stacked.dart';
 
 class BookCourseViewModel extends BaseViewModel {
-  String _selectedlevel;
-  String _selectedCourse;
+  Lesson _selectedLesson;
+  Course _selectedCourse;
   List<String> _topics = [];
 
 
 
-  String get selectedlevel => _selectedlevel;
-  String get selectedCourse => _selectedCourse;
+  Lesson get selectedLesson => _selectedLesson;
+  Course get selectedCourse => _selectedCourse;
   List<String> get topics => _topics;
 
-  void selectCourse(String value) {
+  void selectCourse(Course value) {
     _selectedCourse = value;
     notifyListeners();
   }
 
-  void selectLevel(String value) {
-    _selectedlevel = value;
+  void selectLesson(value) {
+    _selectedLesson = value;
     notifyListeners();
   }
 

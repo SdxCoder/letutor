@@ -26,6 +26,7 @@ class AppModule extends MainModule {
         Bind((i) => RBACService()),
          Bind((i) => DbService()),
          Bind((i) => TutorService()),
+         Bind((i) => LessonService()),
          
       ];
 

@@ -8,6 +8,7 @@ import 'package:stacked/stacked.dart';
 
 class AvailablityViewModel extends BaseViewModel {
   final _tutorService = Modular.get<TutorService>();
+  final _lessonService = Modular.get<LessonService>();
   final _currentUser = Modular.get<AuthService>().currentUser;
 
   DatePeriod _selectedPeriod;
@@ -23,12 +24,25 @@ class AvailablityViewModel extends BaseViewModel {
   Map<String, List<dynamic>> get events => _events;
 
   List<DateTime> alreadySelectedDates = [];
+  List<Lesson> _lessons = [];
+
+  Future fetchLessons() async {
+    setBusy(true);
+    var result = await _lessonService.fetchLessons(_currentUser.user.uid);
+    setBusy(false);
+     if(result is String){
+        await showSnackBar( desc: result);
+      }else{
+        _lessons = result;
+      }
+  }
 
   Future addAvailablity() async {
     print("add availblity from view Model");
-  
+      setBusy(true);
       var result = await _tutorService.createTutor(Tutor(
         availableSlots: _events,
+        lessons: _lessons,
         uid: _currentUser.user.uid,
             email: _currentUser.user.email,
             photoUrl: _currentUser.user.photoUrl,
@@ -40,6 +54,7 @@ class AvailablityViewModel extends BaseViewModel {
             lastName: _currentUser.user.lastName,
             photoPlaceholder: _currentUser.user.photoPlaceholder
       ));
+      setBusy(false);
       if(result is String){
         await showDialogBox(title: "Error", description: result);
       }else{
