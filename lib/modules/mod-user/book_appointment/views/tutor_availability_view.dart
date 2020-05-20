@@ -5,6 +5,9 @@ import 'package:stacked/stacked.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class TutorAvailabilityView extends StatefulWidget {
+  final Tutor tutor;
+
+  const TutorAvailabilityView({Key key, this.tutor}) : super(key: key);
   @override
   TutorAvailabilityViewState createState() => TutorAvailabilityViewState();
 }
@@ -36,76 +39,82 @@ class TutorAvailabilityViewState extends State<TutorAvailabilityView>
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<TutorAvailabilityViewModel>.reactive(
       viewModelBuilder: () => TutorAvailabilityViewModel(),
+      onModelReady: (model) {
+        model.setTutor(widget.tutor);
+        model.mapEvents();
+      },
       builder: (context, TutorAvailabilityViewModel model, child) => Scaffold(
+        appBar: buildAppBar(
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: true,
+          title: Text("Select Date and Slot", style:subtitle1.copyWith(color:Colors.black)),
+        centerTitle: true
+        ),
         body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 20.0, left: 15.0),
-                child: Text(
-                  "Availability",
-                  style: Theme.of(context).textTheme.title,
-                ),
-              ),
-              TableCalendar(
-                  events: model.events,
-                  calendarController: _calendarController,
-                  startingDayOfWeek: StartingDayOfWeek.monday,
-                  calendarStyle: CalendarStyle(
-                    selectedColor: Colors.deepOrange[400],
-                    todayColor: Colors.deepOrange[200],
-                    markersColor: Colors.brown[700],
-                    outsideDaysVisible: true,
-                    holidayStyle: Theme.of(context)
-                        .textTheme
-                        .caption
-                        .copyWith(color: Colors.black),
-                    outsideHolidayStyle:
-                        Theme.of(context).textTheme.caption.copyWith(
-                              color: Colors.orange,
-                            ),
-                  ),
-                  headerStyle: HeaderStyle(
-                    formatButtonTextStyle: TextStyle()
-                        .copyWith(color: Colors.white, fontSize: 15.0),
-                    formatButtonDecoration: BoxDecoration(
-                      color: Colors.deepOrange[400],
-                      borderRadius: BorderRadius.circular(16.0),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TableCalendar(
+                    events: model.events,
+                    calendarController: _calendarController,
+                    startingDayOfWeek: StartingDayOfWeek.monday,
+                    calendarStyle: CalendarStyle(
+                      selectedColor: Colors.deepOrange[400],
+                      todayColor: Colors.deepOrange[200],
+                      markersColor: Colors.brown[700],
+                      outsideDaysVisible: true,
+                      holidayStyle: Theme.of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(color: Colors.black),
+                      outsideHolidayStyle:
+                          Theme.of(context).textTheme.caption.copyWith(
+                                color: Colors.orange,
+                              ),
                     ),
-                  ),
-                  onDaySelected: (dateTime, events) {
-                    model.selectDate(dateTime, events);
-                  }),
-                  SizedBox(height: 20,),
-                  Expanded(child: _buildEventList(model),),
-                  Align(
-                    alignment: Alignment.centerRight,
-                                      child: Padding(
-                      padding: EdgeInsets.only(right: 20.0, bottom: 20.0),
-                      child: RaisedButton(
-                        disabledColor: buttonColor.withOpacity(0.5),
-                        onPressed: (model.selectedDate == null ) ? null :() {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => TutorAvailabilityView(),
-                          //         settings: RouteSettings(
-                          //           name: Routes.tutorAvailability
-                          //         )
-                          //         ));
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        color: Color(0xFF21BFBD),
-                        child:
-                            Text('Next', style: TextStyle(color: Colors.white)),
+                    headerStyle: HeaderStyle(
+                      formatButtonTextStyle: TextStyle()
+                          .copyWith(color: Colors.white, fontSize: 15.0),
+                      formatButtonDecoration: BoxDecoration(
+                        color: Colors.deepOrange[400],
+                        borderRadius: BorderRadius.circular(16.0),
                       ),
                     ),
-                  ),
-            ],
+                    onDaySelected: (dateTime, events) {
+                      model.selectDate(dateTime, events);
+                    }),
+                    SizedBox(height: 20,),
+                    Expanded(child: _buildEventList(model),),
+                    Align(
+                      alignment: Alignment.centerRight,
+                                        child: Padding(
+                        padding: EdgeInsets.only(right: 20.0, bottom: 20.0),
+                        child: RaisedButton(
+                          disabledColor: buttonColor.withOpacity(0.5),
+                          onPressed: (model.selectedDate == null ) ? null :() {
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => TutorAvailabilityView(),
+                            //         settings: RouteSettings(
+                            //           name: Routes.tutorAvailability
+                            //         )
+                            //         ));
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          color: Color(0xFF21BFBD),
+                          child:
+                              Text('Next', style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                    ),
+              ],
+            ),
           ),
         ),
       ),
@@ -113,24 +122,34 @@ class TutorAvailabilityViewState extends State<TutorAvailabilityView>
   }
 
   Widget _buildEventList(TutorAvailabilityViewModel model) {
-    return ListView(
-      children: model.selectedEvents
-          .map((event) => Container(
-                
-                decoration: BoxDecoration(
-                  border: Border.all(width: 0.8, color: Colors.deepOrange[400]),
-                  borderRadius: BorderRadius.circular(12.0),
-                  
-                  color: Colors.deepOrange[100]
-                ),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                child: ListTile(
-                  title: Text(event.toString()),
-                  onTap: () => print('$event tapped!'),
-                ),
-              ))
-          .toList(),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Available Slots", style: subtitle1.copyWith(
+            fontWeight:FontWeight.bold
+          ),),
+          SizedBox(height: 16,),
+          GridView.count(
+            crossAxisCount: 3,
+            childAspectRatio: 2.1,
+            shrinkWrap: true,
+            children: model.selectedEvents
+                .map((event) => TimeSlotTile(
+                  title: event,
+                  onSelection: (val){
+                    print(val);
+                  },
+                  onCancelSelection: (val){
+                    print(val);
+                  },
+                  titleColor: lightBlackColor,
+                ))
+                .toList(),
+          ),
+        ],
+      ),
     );
   }
 }

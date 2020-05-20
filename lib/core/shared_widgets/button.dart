@@ -11,10 +11,11 @@ Widget raisedButton({
 }) {
   return  RaisedButton(
     disabledColor: buttonColor.withOpacity(0.5),
+    
     onPressed: onPressed,
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5)),
-    color: Color(0xFF21BFBD),
+    color: buttonColor,
     child:
         Text(btnText, style: TextStyle(color: Colors.white)),
   );

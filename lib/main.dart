@@ -1,11 +1,7 @@
 import 'package:device_preview/device_preview.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_screenutil/screenutil.dart';
 import 'package:letutor/app_module.dart';
-import 'package:letutor/core/utils/colors.dart';
 import 'package:letutor/service/locator.dart';
 
 

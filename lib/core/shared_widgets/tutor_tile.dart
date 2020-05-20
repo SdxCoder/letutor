@@ -31,6 +31,7 @@ class TutorTile extends StatelessWidget {
           color: Colors.white,
           child: Container(
             width: sizingInfo.screenSize.width * 0.7,
+          
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -86,7 +87,7 @@ class TutorTile extends StatelessWidget {
                 // SizedBox(
                 //   height: ScreenUtil().setHeight(32),
                 // ),
-                (sizingInfo.screenSize.height < 570)
+                (sizingInfo.screenSize.height < 660)
                     ? Offstage()
                     : Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),

@@ -6,8 +6,6 @@ class BookCourseViewModel extends BaseViewModel {
   Course _selectedCourse;
   List<String> _topics = [];
 
-
-
   Lesson get selectedLesson => _selectedLesson;
   Course get selectedCourse => _selectedCourse;
   List<String> get topics => _topics;
@@ -23,8 +21,11 @@ class BookCourseViewModel extends BaseViewModel {
   }
 
   void addTopics(String topic) {
-    _topics.add(topic);
-    notifyListeners();
+    if (topic.isNotEmpty) {
+      _topics.add(topic);
+      _topics = _topics.toSet().toList();
+      notifyListeners();
+    }
   }
 
   void removeTopics(index) {

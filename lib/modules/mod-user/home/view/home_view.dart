@@ -24,6 +24,8 @@ class UserHomeState extends State<UserHome> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, allowFontScaling: true);
+    print(MediaQuery.of(context).size.height);
+    print(MediaQuery.of(context).size.width);
     return Scaffold(
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
