@@ -7,13 +7,13 @@ class TutorAvailabilityViewModel extends BaseViewModel {
   DateTime _selectedDate = DateTime.now();
   Map<DateTime, List<dynamic>> _events = Map<DateTime, List<dynamic>>();
   List _selectedEvents = [];
-  String _selectedSlot;
+  Slot _selectedSlot;
 
   List get selectedEvents =>_selectedEvents;
 
   DateTime get selectedDate => _selectedDate;
   Map<DateTime, List<dynamic>> get events => _events;
-  String get selectedSlot => _selectedSlot;
+  Slot get selectedSlot => _selectedSlot;
 
   void updateBooking(){
     _booking = Booking(
@@ -23,11 +23,8 @@ class TutorAvailabilityViewModel extends BaseViewModel {
       user: _booking.user,
       topics: _booking.topics,
       status: _booking.status,
-      slot: Slot(
-        timeSlot: _selectedSlot,
-        date: selectedDate,
-      ),
-      id: _booking.hashCode.toString()
+      slot: _selectedSlot,
+     // id: _booking.hashCode.toString()
     );
 
     Modular.to.pushNamed(Routes.bookingSummary, arguments: _booking);
@@ -36,6 +33,7 @@ class TutorAvailabilityViewModel extends BaseViewModel {
   void mapEvents() {
     var availbleSlots = _booking.tutor.availableSlots;
     availbleSlots.forEach((key, value) {
+      print(value.toString());
       Map<DateTime, List<dynamic>> map = <DateTime, List<dynamic>>{
         DateTime.parse(key) : value
       };

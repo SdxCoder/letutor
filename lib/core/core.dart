@@ -25,6 +25,7 @@ export './shared_service/rbac_service.dart';
 export './shared_service/lesson_service.dart';
 export './shared_service/db_service.dart';
 export './shared_service/tutor_service.dart';
+export './shared_service/booking_service.dart';
 
 
 // shared widgets export

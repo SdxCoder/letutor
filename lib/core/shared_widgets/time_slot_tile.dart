@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:letutor/core/utils/colors.dart';
 
+import '../core.dart';
+
 class TimeSlotTile extends StatefulWidget {
-  final String title;
+  final slot;
   final Color color;
   final Color titleColor;
-  final Function(String) onSelection;
-  final Function(String) onCancelSelection;
+  final Function(dynamic) onSelection;
+  final Function(dynamic) onCancelSelection;
 
   final Widget content;
 
   TimeSlotTile({
     Key key,
-    this.title,
+    this.slot,
     this.titleColor,
     this.onSelection,
     this.onCancelSelection,
@@ -39,14 +41,14 @@ class _TimeSlotTileState extends State<TimeSlotTile> {
               _isSelected = !_isSelected;
             });
             if (widget.color != null) {
-              widget.onSelection(widget.title);
+              widget.onSelection(widget.slot);
             } else {
                if (_isSelected == true) {
-                widget.onSelection(widget.title);
+                widget.onSelection(widget.slot);
               }
 
               if (_isSelected == false) {
-                widget.onCancelSelection(widget.title);
+                widget.onCancelSelection(widget.slot);
               }
 
             }
@@ -71,7 +73,7 @@ class _TimeSlotTileState extends State<TimeSlotTile> {
             ),
             child: widget.content ??
                 Text(
-                  widget.title,
+                  widget.slot.timeSlot,
                   style: bodyText2.copyWith(
                       fontSize: ScreenUtil().setSp(30),
                       color: (widget.color != null)
@@ -82,6 +84,38 @@ class _TimeSlotTileState extends State<TimeSlotTile> {
         ),
       ],
     );
+  }
+}
+
+class BookedTimeSlot extends StatelessWidget {
+  final String slot;
+
+  const BookedTimeSlot({Key key, this.slot}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+            width: MediaQuery.of(context).size.width * 0.26,
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(
+                horizontal: ScreenUtil().setSp(10),
+                vertical: ScreenUtil().setSp(40)),
+            margin: EdgeInsets.only(left: 8, bottom: 8),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                width: 1.0,
+                color:  Colors.blue.withOpacity(0.5),
+              ),
+            ),
+            child: 
+                Text(
+                  slot,
+                  style: bodyText2.copyWith(
+                      fontSize: ScreenUtil().setSp(30),
+                      color:  Colors.blue.withOpacity(0.5)),
+                ),
+          );
   }
 }
 

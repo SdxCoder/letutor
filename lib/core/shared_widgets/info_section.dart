@@ -9,8 +9,9 @@ class InfoSection extends StatelessWidget {
   final IconData icon;
   final Widget value;
   final Widget secondaryIcon;
+  final Color titleColor;
 
-  const InfoSection({Key key, this.title, this.icon, this.value, this.secondaryIcon,})
+  const InfoSection({Key key, this.title, this.icon, this.value, this.secondaryIcon, this.titleColor,})
       : super(key: key);
 
   @override
@@ -28,7 +29,9 @@ class InfoSection extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
                   title,
-                  style: bodyText1,
+                  style: bodyText1.copyWith(
+                    color : titleColor ?? Colors.black
+                  ),
                 ),
               ),
               Spacer(),

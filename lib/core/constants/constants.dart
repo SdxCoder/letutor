@@ -15,10 +15,16 @@ class DatePickerType{
    static String range = "By Range";
    static String week = "By Week";
 }
+
 class BookingStatus{
   static String pending = "Pending";
   static String confirmed = "Confirmed";
   static String none = "none";
+}
+
+class SlotStatus{
+   static String available = "Available";
+    static String booked = "Booked";
 }
 
 List<String> modalities = [

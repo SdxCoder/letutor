@@ -16,10 +16,10 @@ class AvailablityViewModel extends BaseViewModel {
 
   Map<String, List<dynamic>> _events = Map<String, List>();
 
-  List<String> _selectedSlots = [];
+  List<Slot> _selectedSlots = [];
 
   DatePeriod get selectedPeriod => _selectedPeriod;
-  List<String> get selectedSlots => _selectedSlots;
+  List<Slot> get selectedSlots => _selectedSlots;
   String get selectedDatePickerType => _selectedDatePickerType;
   Map<String, List<dynamic>> get events => _events;
 
@@ -39,6 +39,9 @@ class AvailablityViewModel extends BaseViewModel {
 
   Future addAvailablity() async {
     print("add availblity from view Model");
+    var confirm = await showActionDialogBox(title: "Reminder", description: "Do You want to add your time slots?");
+   print(confirm);
+   if(confirm != "true") return;
       setBusy(true);
       var result = await _tutorService.createTutor(Tutor(
         availableSlots: _events,
@@ -59,19 +62,21 @@ class AvailablityViewModel extends BaseViewModel {
         await showDialogBox(title: "Error", description: result);
       }else{
         await showDialogBox(title: "Success", description: "Availability updated");
+        _events.clear();
+        notifyListeners();
       }
   }
 
   void recordSelectedDatesAndEvents() {
     final difference =
         _selectedPeriod.end.difference(_selectedPeriod.start).inDays;
-    var slots = List<String>();
+    var slots = List<Slot>();
     slots.addAll(_selectedSlots);
     print(difference);
     DateTime start = _selectedPeriod.start;
     for (int days = 0; days <= difference; days++) {
       alreadySelectedDates.add(start);
-      _events.addAll({start.toString(): _selectedSlots});
+      _events.addAll({start.toString(): slots});
       start = start.add(Duration(days: 1));
       print(start);
     }
@@ -100,12 +105,12 @@ class AvailablityViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void selectSlot(String slot) {
+  void selectSlot(Slot slot) {
     _selectedSlots.add(slot);
     notifyListeners();
   }
 
-  void unselectSlot(String slot) {
+  void unselectSlot(Slot slot) {
     _selectedSlots.remove(slot);
     notifyListeners();
   }
@@ -116,17 +121,68 @@ class AvailablityViewModel extends BaseViewModel {
     DatePickerType.week
   ];
 
-  List<String> timeSlots = [
-    "08am - 09am",
-    "09am - 10am",
-    "10am - 11am",
-    "11am - 12am",
-    "12am - 01pm",
-    "01pm - 02pm",
-    "02pm - 03pm",
-    "04pm - 05pm",
-    "05pm - 06pm",
-    "06pm - 07pm",
-    "07pm - 08pm",
+  // List<String> timeSlots = [
+  //   "08am - 09am",
+  //   "09am - 10am",
+  //   "10am - 11am",
+  //   "11am - 12am",
+  //   "12am - 01pm",
+  //   "01pm - 02pm",
+  //   "02pm - 03pm",
+  //   "04pm - 05pm",
+  //   "05pm - 06pm",
+  //   "06pm - 07pm",
+  //   "07pm - 08pm",
+  // ];
+  List<Slot> timeSlots = [
+    Slot(
+      timeSlot: "08am - 09am",
+      availablityStatus: SlotStatus.available
+    ),
+     Slot(
+      timeSlot: "09am - 10am",
+      availablityStatus: SlotStatus.available
+    ),
+     Slot(
+      timeSlot: "10am - 11am",
+      availablityStatus: SlotStatus.available
+    ),
+     Slot(
+      timeSlot: "11am - 12am",
+      availablityStatus: SlotStatus.available
+    ),
+     Slot(
+      timeSlot: "12am - 01pm",
+      availablityStatus: SlotStatus.available
+    ),
+     Slot(
+      timeSlot: "01pm - 02pm",
+      availablityStatus: SlotStatus.available
+    ),
+     Slot(
+      timeSlot: "02pm - 03pm",
+      availablityStatus: SlotStatus.available
+    ),
+     Slot(
+      timeSlot: "03pm - 04pm",
+      availablityStatus: SlotStatus.available
+    ),
+     Slot(
+      timeSlot: "04pm - 05pm",
+      availablityStatus: SlotStatus.available
+    ),
+     Slot(
+      timeSlot: "05pm - 06pm",
+      availablityStatus: SlotStatus.available
+    ),
+     Slot(
+      timeSlot: "06pm - 07pm",
+      availablityStatus: SlotStatus.available
+    ),
+     Slot(
+      timeSlot: "07pm - 08pm",
+      availablityStatus: SlotStatus.available
+    ),
+    
   ];
 }

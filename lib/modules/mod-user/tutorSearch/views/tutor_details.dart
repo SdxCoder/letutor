@@ -116,30 +116,30 @@ class TutorProfileView extends StatelessWidget {
     );
   }
 
-  Widget _buildSplash(BuildContext context) {
-    return Container(
-      height: 160,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(30.0),
-          bottomLeft: Radius.circular(30.0),
-        ),
-        color: Colors.blue,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            "${tutor.name} ${tutor.lastName}",
-            style: TextStyle(
-              fontSize: 30,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildSplash(BuildContext context) {
+  //   return Container(
+  //     height: 160,
+  //     width: MediaQuery.of(context).size.width,
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.only(
+  //         bottomRight: Radius.circular(30.0),
+  //         bottomLeft: Radius.circular(30.0),
+  //       ),
+  //       color: Colors.blue,
+  //     ),
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: <Widget>[
+  //         Text(
+  //           "${tutor.name} ${tutor.lastName}",
+  //           style: TextStyle(
+  //             fontSize: 30,
+  //             color: Colors.white,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

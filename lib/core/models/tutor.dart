@@ -1,6 +1,7 @@
 
 import 'package:equatable/equatable.dart';
 
+import 'booking.dart';
 import 'lesson.dart';
 import 'level.dart';
 import 'user.dart';
@@ -34,8 +35,12 @@ class Tutor extends User {
             lastName: lastName,
             photoPlaceholder: photoPlaceholder);
 
+   Map<String , List> map = Map<String , List> ();
+
   Tutor.fromJson(Map<String, dynamic> json,)
-      : availableSlots =  Map<String, List<dynamic>>.from(json["slots"]),
+      : 
+    
+      availableSlots =  Map<String, List<dynamic>>.from(json["slots"]),
         lessons =  json['lessons'].map<Lesson>((v) => Lesson.fromJson(v)).toList(),
         super(
             uid: json['uid'],
@@ -52,7 +57,15 @@ class Tutor extends User {
   @override
   Map<String, dynamic> toJson() {
      final Map<String, dynamic> data = new Map<String, dynamic>();
+    //  Map<String , List> map = Map<String , List> ();
+    //  this.availableSlots.forEach((key, value) {
+    //    map.addAll({
+    //      key: value.map((e) => e.toJson()).toList()
+    //    });
+    //  });
+    // data['slots'] = map;
      data['slots'] = this.availableSlots;
+
      if (this.lessons != null) {
       data['lessons'] = this.lessons.map((v) => v.toJson()).toList();
     }

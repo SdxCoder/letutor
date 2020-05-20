@@ -38,7 +38,7 @@ Future _dialogBox({
                     SizedBox(
                       height: 20,
                     ),
-                    ButtonBar(children: [confirmButton, cancelButton]),
+                    ButtonBar(children: [ cancelButton, confirmButton]),
                     SizedBox(
                       height: 20,
                     ),
@@ -61,24 +61,25 @@ Future showDialogBox({String title, String description}) {
           }));
 }
 
-// Future showActionDialogBox({String title, String description}) {
-//   return _dialogBox(
-//       title: title,
-//       content: Text(
-//         description,
-//         textAlign: TextAlign.center,
-//       ),
-//       cancelButton: FlatButton(
-//         child:Text("Cancel"),
-//         onPressed:(){
-//           return Modular.to.pop("false");
-//         }),
-//       confirmButton: raisedButton(
-//           btnText: "OK",
-//           onPressed: () {
-//             return Modular.to.pop("true");
-//           }));
-// }
+Future showActionDialogBox({String title, String description}) {
+  return _dialogBox(
+      title: title,
+      content: Text(
+        description,
+        textAlign: TextAlign.center,
+      ),
+       confirmButton: raisedButton(
+          btnText: "OK",
+          onPressed: () {
+            return Modular.to.pop("true");
+          }),
+      cancelButton: FlatButton(
+        child:Text("Cancel"),
+        onPressed:(){
+          return Modular.to.pop("false");
+        }),
+     );
+}
 
 Future showSnackBar({String desc}) {
   var context = Modular.navigatorKey.currentState.overlay.context;

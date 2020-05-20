@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -98,7 +99,10 @@ class AuthService {
 
       print("User : " + authResult.user.displayName);
       return authResult.user;
-    } catch (e) {
+    } on PlatformException {
+      return "Something went wrong. Try again";
+    }
+    catch (e) {
       print("Error : " + e.message);
       return e.message;
     }

@@ -10,8 +10,8 @@ import 'level.dart';
 import 'tutor.dart';
 import 'user.dart';
 
-class Booking extends Equatable{
-  final String id ;
+class Booking extends Equatable {
+  final String id;
   final Slot slot;
   final String status;
   final Course course;
@@ -46,38 +46,28 @@ class Booking extends Equatable{
         'level': this.level.toJson(),
         'course': this.course.toJson(),
         'slot': this.slot.toJson(),
-        'topics': this.topics,
         'tutor': this.tutor.toJson(),
         'user': this.user.toJson()
       };
 
- 
   @override
-  List<Object> get props => [
-    level, course, slot, tutor, topics
-  ];
-
-  
+  List<Object> get props => [level, course, slot, tutor, topics];
 }
 
-class Slot {
-  final String id;
+class Slot extends Equatable{
   final String availablityStatus;
   final String timeSlot;
-  final DateTime date;
 
-  Slot({this.id, this.availablityStatus, this.date, this.timeSlot});
+  Slot({this.availablityStatus, this.timeSlot});
 
   Slot.fromJson(Map<String, dynamic> data)
-      : id = data['id'],
-        availablityStatus = data['availablityStatus'],
-        date = data['date'],
+      : availablityStatus = data['availablityStatus'],
         timeSlot = data['timeSlot'];
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'status': availablityStatus,
-        'tutor': date.toUtc(),
-        'timeSlot': this.timeSlot
-      };
+  Map<String, dynamic> toJson() =>
+      {'availablityStatus': availablityStatus, 'timeSlot': this.timeSlot};
+
+  @override
+  List<Object> get props => [timeSlot, availablityStatus];
+      
 }

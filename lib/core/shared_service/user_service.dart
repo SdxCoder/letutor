@@ -69,7 +69,7 @@ class UserService {
 
   Future createUser(User user) async {
     try {
-      if (await _userExists(user) == true) return;
+      if (await _userExists(user.uid) == true) return;
       await _userCollection.document(user.uid).setData(user.toJson());
     } catch (e) {
       return e.message;
@@ -85,8 +85,8 @@ class UserService {
     }
   }
 
-  Future<bool> _userExists(User user) async {
-    DocumentSnapshot snapshot = await _userCollection.document(user.uid).get();
+  Future<bool> _userExists(String uid) async {
+    DocumentSnapshot snapshot = await _userCollection.document(uid).get();
     return snapshot.exists;
   }
 }

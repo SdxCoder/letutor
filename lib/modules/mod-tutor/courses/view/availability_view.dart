@@ -248,7 +248,7 @@ class AvailablityView extends StatelessWidget {
           shrinkWrap: true,
           children: model.timeSlots.map<Widget>((slot) {
             return TimeSlotTile(
-              title: slot,
+              slot: slot,
               titleColor: lightBlackColor,
               onSelection: (val) {
                 model.selectSlot(val);

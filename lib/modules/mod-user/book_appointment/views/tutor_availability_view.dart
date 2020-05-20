@@ -129,19 +129,25 @@ class TutorAvailabilityViewState extends State<TutorAvailabilityView>
             childAspectRatio: 2.1,
             shrinkWrap: true,
             children: model.selectedEvents
-                .map((event) => TimeSlotTile(
-                      title: event,
-                      color: (model.selectedSlot == event)
+                .map((event) {
+                  if(Slot.fromJson(event).availablityStatus == SlotStatus.booked){
+                    return BookedTimeSlot(
+                      slot : Slot.fromJson(event).timeSlot
+                    );
+                  }
+                  return TimeSlotTile(
+                      slot: Slot.fromJson(event),
+                      color: (model.selectedSlot ==  Slot.fromJson(event))
                           ? Colors.blue
                           : Colors.transparent,
-                      onSelection: (val) {
-                        model.selectSlot(val);
-                        print(val);
+                      onSelection: ( val) {
+                        model.selectSlot( val);
+                        print(val.timeSlot);
                       },
-                      titleColor: (model.selectedSlot == event)
+                      titleColor: (model.selectedSlot ==  Slot.fromJson(event))
                           ? Colors.white
                           : lightBlackColor,
-                    ))
+                    ); })
                 .toList(),
           ),
         ],
