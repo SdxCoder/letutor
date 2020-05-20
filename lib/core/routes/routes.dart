@@ -7,9 +7,11 @@ class Routes{
   static const String userHome = "/userHome";  // user home
   static const String bookCourse = "/bookCourse";
   static const String bookingDetail = "/bookingDetail/:id";
+   static const String bookingSummary = "$userHome/bookingSummary";
   static const String userProfile = "/userProfile";
   static const String tutorProfile = "/tutorProfile";
-  static const String tutorAvailability = "/tutorAvailbility";
+ 
+  static const String tutorAvailability = "$userHome/tutorAvailbility";
   // admin home routes
   static const String adminHome = "/adminHome";  // admin home
   static const String tutorDetails = "$adminHome/tutorDetails/:id";

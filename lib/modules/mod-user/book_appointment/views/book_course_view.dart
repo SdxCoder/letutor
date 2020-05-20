@@ -43,12 +43,13 @@ class BookCourseViewState extends State<BookCourseView> {
                     model.topics.isEmpty)
                 ? null
                 : () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TutorAvailabilityView(tutor: widget.tutor,),
-                            settings:
-                                RouteSettings(name: Routes.tutorAvailability)));
+                  model.createBooking(widget.tutor);
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => TutorAvailabilityView(),
+                    //         settings:
+                    //             RouteSettings(name: Routes.tutorAvailability)));
                   }),
         body: SafeArea(
           child: Padding(

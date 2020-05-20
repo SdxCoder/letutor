@@ -5,6 +5,8 @@ import 'package:letutor/modules/mod-user/home/view/home_view.dart';
 
 import 'appointments/views/booking_detail.dart';
 import 'book_appointment/views/book_course_view.dart';
+import 'book_appointment/views/booking_summary.dart';
+import 'book_appointment/views/tutor_availability_view.dart';
 import 'tutorSearch/views/tutor_details.dart';
 import 'userprofile/views/user_profile_view.dart';
 
@@ -19,6 +21,9 @@ class UserModule extends ChildModule{
     Router('/bookingDetail/:id', child: (_, args) => BookingDetailView()),
     Router('/tutorProfile', child: (_, args) => TutorProfileView()),
     Router('/userProfile', child: (_, args) => UserProfileView()),
+    Router('/tutorAvailbility', child: (_, args) => TutorAvailabilityView(booking : args.data)),
+    Router('/bookingSummary', child: (_, args) => BookingSummaryView(booking : args.data)),
+  
   ];
 
   static Inject get to => Inject<UserModule>.of();

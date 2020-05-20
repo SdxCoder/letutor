@@ -1,84 +1,83 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 // import '../core.dart';
 // import 'base.dart';
 
-// class Booking {
-//   final String id;
-//   final AvailableSlot slot;
-//   final BookingStatus status;
-//   final Course course;
-//   final List<CourseTopic> topics;
-//   final Level level;
+import 'package:equatable/equatable.dart';
 
-//   Booking(
-//       {this.id, this.slot, this.status, this.course, this.topics, this.level});
-//   factory Booking.fromDoc(DocumentSnapshot doc) {
-//     return Booking(
-//       id: doc.documentID,
-//       slot: AvailableSlot.fromMap(doc['slot']),
-//       status: BookingStatus.values[doc["status"]],
-//       course: Course.fromMap(doc["course"]),
-//       topics: doc["topics"].map((topic) => CourseTopic.fromMap(topic)),
-//       level: Level.fromMap(doc["level"]),
-//     );
-//   }
+import 'course.dart';
+import 'level.dart';
+import 'tutor.dart';
+import 'user.dart';
 
-//   int get statusValue => (status ?? BookingStatus.unconfirmed).index;
+class Booking extends Equatable{
+  final String id ;
+  final Slot slot;
+  final String status;
+  final Course course;
+  final List<String> topics;
+  final Level level;
+  final Tutor tutor;
+  final User user;
 
-//   static List<Booking> fromQuery(QuerySnapshot snapshot) =>
-//       snapshot != null ? toList(snapshot, Booking) : [];
+  Booking(
+      {this.id,
+      this.slot,
+      this.status,
+      this.course,
+      this.topics,
+      this.level,
+      this.tutor,
+      this.user});
 
-//   Map<String, dynamic> toJson() => {
-//         'slot': slot.toJson(),
-//         'status': statusValue,
-//         'course': course.toJson(),
-//         'topics': topics.map((topic) => topic.toJson()),
-//         'level': level.name,
-//       };
-// }
+  Booking.formJson(Map<String, dynamic> data)
+      : this.id = data['id'],
+        this.status = data['status'],
+        this.slot = Slot.fromJson(data['slot']),
+        this.level = Level.fromJson(data['level']),
+        this.course = Course.fromJson(data['course']),
+        this.tutor = Tutor.fromJson(data['tutor']),
+        this.topics = data['topics'].cast<String>(),
+        this.user = User.fromJson(data['user']);
 
-// enum BookingStatus {
-//   unconfirmed, // default status when created
-//   confirmed // payment has been made
-// }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'status': status,
+        'level': this.level.toJson(),
+        'course': this.course.toJson(),
+        'slot': this.slot.toJson(),
+        'topics': this.topics,
+        'tutor': this.tutor.toJson(),
+        'user': this.user.toJson()
+      };
 
-// class AvailableSlot {
-//   final String id;
-//   final SlotStatus status;
-//   final Tutor tutor;
-//   final DateTime date;
+ 
+  @override
+  List<Object> get props => [
+    level, course, slot, tutor, topics
+  ];
 
-//   AvailableSlot({this.id, this.status, this.tutor, this.date});
+  
+}
 
-//   factory AvailableSlot.fromDoc(DocumentSnapshot doc) {
-//     return AvailableSlot(
-//       id: doc.documentID,
-//       status: SlotStatus.values[doc['status']],
-//       tutor: Tutor.fromMap(doc["tutor"]),
-//       date: DateTime.fromMicrosecondsSinceEpoch(doc["date"]),
-//     );
-//   }
+class Slot {
+  final String id;
+  final String availablityStatus;
+  final String timeSlot;
+  final DateTime date;
 
-//   int get statusValue => (status ?? SlotStatus.booked).index;
+  Slot({this.id, this.availablityStatus, this.date, this.timeSlot});
 
-//   static List<AvailableSlot> fromQuery(QuerySnapshot snapshot) =>
-//       snapshot != null ? toList(snapshot, AvailableSlot) : [];
+  Slot.fromJson(Map<String, dynamic> data)
+      : id = data['id'],
+        availablityStatus = data['availablityStatus'],
+        date = data['date'],
+        timeSlot = data['timeSlot'];
 
-//   static AvailableSlot fromMap(data) {
-//     return new AvailableSlot(
-//       id: data["id"],
-//       status: data["status"],
-//       tutor: data["tutor"],
-//     );
-//   }
-
-//   Map<String, dynamic> toJson() => {
-//         'id': id,
-//         'status': statusValue,
-//         'tutor': tutor.toJson(),
-//       };
-// }
-
-// enum SlotStatus { available, booked }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'status': availablityStatus,
+        'tutor': date.toUtc(),
+        'timeSlot': this.timeSlot
+      };
+}

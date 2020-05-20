@@ -1,17 +1,40 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:letutor/core/core.dart';
 import 'package:stacked/stacked.dart';
 
 class TutorAvailabilityViewModel extends BaseViewModel {
-  Tutor _selectedTutor;
+  Booking _booking;
   DateTime _selectedDate = DateTime.now();
   Map<DateTime, List<dynamic>> _events = Map<DateTime, List<dynamic>>();
-  List selectedEvents = [];
+  List _selectedEvents = [];
+  String _selectedSlot;
+
+  List get selectedEvents =>_selectedEvents;
 
   DateTime get selectedDate => _selectedDate;
   Map<DateTime, List<dynamic>> get events => _events;
+  String get selectedSlot => _selectedSlot;
+
+  void updateBooking(){
+    _booking = Booking(
+      level: _booking.level,
+      course: _booking.course,
+      tutor: _booking.tutor,
+      user: _booking.user,
+      topics: _booking.topics,
+      status: _booking.status,
+      slot: Slot(
+        timeSlot: _selectedSlot,
+        date: selectedDate,
+      ),
+      id: _booking.hashCode.toString()
+    );
+
+    Modular.to.pushNamed(Routes.bookingSummary, arguments: _booking);
+  }
 
   void mapEvents() {
-    var availbleSlots = _selectedTutor.availableSlots;
+    var availbleSlots = _booking.tutor.availableSlots;
     availbleSlots.forEach((key, value) {
       Map<DateTime, List<dynamic>> map = <DateTime, List<dynamic>>{
         DateTime.parse(key) : value
@@ -21,15 +44,19 @@ class TutorAvailabilityViewModel extends BaseViewModel {
     });
     notifyListeners();
   }
+  void selectSlot(slot){
+    _selectedSlot = slot;
+    notifyListeners();
+  }
 
   void selectDate(dateTime, List<dynamic> events) {
-    selectedEvents = events;
+    _selectedEvents = events;
     _selectedDate = dateTime;
     notifyListeners();
   }
 
-  void setTutor(Tutor tutor) {
-    _selectedTutor = tutor;
+  void setBooking(Booking booking) {
+    _booking = booking;
     notifyListeners();
   }
 }
