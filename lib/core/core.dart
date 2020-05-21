@@ -26,7 +26,7 @@ export './shared_service/lesson_service.dart';
 export './shared_service/db_service.dart';
 export './shared_service/tutor_service.dart';
 export './shared_service/booking_service.dart';
-
+export './shared_service/bookings_view_model.dart';
 
 // shared widgets export
 export './shared_widgets/booking_card.dart';
@@ -51,6 +51,8 @@ export './shared_widgets/text_field.dart';
 export './shared_widgets/info_section.dart';
 export './shared_widgets/time_slot_tile.dart';
 export './shared_widgets/date_picker.dart';
+export './shared_widgets/upcoming_booking.dart';
+export './shared_widgets/past_booking.dart';
 // utils
 export './utils/colors.dart';
 export './utils/spacing.dart';

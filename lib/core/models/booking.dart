@@ -43,6 +43,7 @@ class Booking extends Equatable {
   Map<String, dynamic> toJson() => {
         'id': id,
         'status': status,
+        'topics':topics,
         'level': this.level.toJson(),
         'course': this.course.toJson(),
         'slot': this.slot.toJson(),

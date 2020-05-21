@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:letutor/core/core.dart';
 import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
 
-class AppointmentsViewModel extends BaseViewModel {
+import 'booking_service.dart';
+import '../models/booking.dart';
+
+class BookingsViewModel extends BaseViewModel {
   final _authService = Modular.get<AuthService>();
   final _bookingServie = Modular.get<BookingService>();
 
@@ -16,7 +18,8 @@ class AppointmentsViewModel extends BaseViewModel {
 
   void listenToBookings({bool flag = false}) {
     setBusy(true);
-    _subscription = _bookingServie.listenToBookingsRealTime(flag).listen((data) {
+    _subscription =
+        _bookingServie.listenToBookingsRealTime(flag).listen((data) {
       List<Booking> bookings = data;
       if (bookings != null && bookings.length > 0) {
         _bookings = bookings;

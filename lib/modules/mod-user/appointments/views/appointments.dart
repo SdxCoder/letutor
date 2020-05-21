@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
+import 'package:letutor/modules/mod-user/appointments/view_model/appointments_view_model.dart';
+import 'package:stacked/stacked.dart';
 
 import '../../../../core/core.dart';
 import 'booking_detail.dart';
@@ -41,13 +43,36 @@ class AppointmentsView extends StatelessWidget {
                     .user
                     .photoUrl ??
                 Modular.get<AuthService>().currentUser.user.photoPlaceholder),
-        body: TabBarView(
-            children: [_upcomingBookings(context), _pastBookings(context)]),
+        body: TabBarView(children: [_upcoming(), _past()]),
       ),
     );
   }
 
-  Widget _pastBookings(context) {
+  Widget _upcoming() {
+    return ViewModelBuilder<BookingsViewModel>.reactive(
+      viewModelBuilder: () => BookingsViewModel(),
+      onModelReady: (model){
+        model.listenToBookings(flag: true);
+      },
+      builder: (context, model, child,){
+        return UpcomingBooking(model:model);
+      }, 
+    );
+  }
+
+  Widget _past() {
+    return ViewModelBuilder.reactive(
+      viewModelBuilder: () => BookingsViewModel(),
+      onModelReady: (model){
+        model.listenToBookings(flag : false);
+      },
+      builder: (context, model, child,){
+        return PastBooking(model:model);
+      }, 
+    );
+  }
+
+  Widget _pastBookings(context, AppointmentsViewModel model) {
     return ShaderMask(
       shaderCallback: (rect) {
         return LinearGradient(
@@ -84,7 +109,8 @@ class AppointmentsView extends StatelessWidget {
     );
   }
 
-  Widget _upcomingBookings(context) {
+  Widget _upcomingBookings(context, AppointmentsViewModel model) {
+    model.listenToBookings(flag: false);
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: 10.0,
@@ -158,13 +184,13 @@ class AppointmentsView extends StatelessWidget {
                 },
                 blendMode: BlendMode.dstIn,
                 child: ListView.builder(
-                  itemCount: 5,
+                  itemCount: model.bookings.length,
                   itemBuilder: (BuildContext context, int index) {
+                    final booking = model.bookings[index];
                     return UpcomingBookingCard(
                       avatarImage: imageUrl,
-                      title: "Luis Petterson",
+                      title: booking.user.name,
                       subtitle: "09 Aug 2020, 08am - 10am",
-                    
                       heroTag: index.toString(),
                       onTap: () {
                         String id = "1"; // This id is of unconfirmed booking
