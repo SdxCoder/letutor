@@ -24,6 +24,8 @@ class TutorAvailabilityViewModel extends BaseViewModel {
       topics: _booking.topics,
       status: _booking.status,
       slot: _selectedSlot,
+      studentId: _booking.user.uid,
+      tutorId: _booking.tutor.uid,
      // id: _booking.hashCode.toString()
     );
 

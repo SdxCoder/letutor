@@ -16,7 +16,34 @@ class BookingsViewModel extends BaseViewModel {
 
   List<Booking> get bookings => _bookings;
 
-  void listenToBookings({bool flag = false}) {
+  void listenToBookingsByUser({bool flag = false}) {
+    setBusy(true);
+    _subscription =
+        _bookingServie.listenToBookingsRealTimeByUser(flag).listen((data) {
+      List<Booking> bookings = data;
+      if (bookings != null && bookings.length > 0) {
+        _bookings = bookings;
+        notifyListeners();
+      }
+      
+    });
+    setBusy(false);
+  }
+
+   void listenToBookingsByTutor({bool flag = false}) {
+    setBusy(true);
+    _subscription =
+        _bookingServie.listenToBookingsRealTimeByUser(flag).listen((data) {
+      List<Booking> bookings = data;
+      if (bookings != null && bookings.length > 0) {
+        _bookings = bookings;
+        notifyListeners();
+      }
+      setBusy(false);
+    });
+  }
+
+   void listenToBookings({bool flag = false}) {
     setBusy(true);
     _subscription =
         _bookingServie.listenToBookingsRealTime(flag).listen((data) {

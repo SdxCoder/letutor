@@ -7,13 +7,14 @@ import 'package:flutter_screenutil/screenutil.dart';
 import '../core.dart';
 
 class BookingCard extends StatelessWidget {
+  final Booking booking;
   final heroTag;
   final String imageUrl;
   final List<Widget> actions;
   final Function onTap;
   
   const BookingCard({
-    Key key, this.heroTag, this.onTap, this.imageUrl, this.actions = const []
+    Key key, this.heroTag, this.onTap, this.imageUrl, this.actions = const [], this.booking
   }) : super(key: key);
 
   @override
@@ -75,7 +76,7 @@ class BookingCard extends StatelessWidget {
                             height: ScreenUtil().setSp(120),
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(imageUrl),
+                                  image: NetworkImage(booking.user.photoUrl),
                                   fit: BoxFit.cover),
                               borderRadius: BorderRadius.circular(25.0),
                             ),
@@ -92,13 +93,13 @@ class BookingCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Louis Patterson",
+                            booking.tutor.name,
                             style: bodyText1.copyWith(
                               fontWeight: FontWeight.bold,
                             height: 1
                           ),),
                           Text(
-                            "M. Phil in Biology",
+                             booking.course.name,
                             style: bodyText1.copyWith(
                               height: 1,
                               color: Colors.grey
@@ -163,7 +164,7 @@ class BookingCard extends StatelessWidget {
               ),
             ),
             Text(
-              "12 Jan 2020, 8am - 10am",
+              "12 Jan 2020, ${booking.slot.timeSlot}",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: ScreenUtil().setSp(40),

@@ -1,18 +1,68 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
 
 import '../core.dart';
 
+
 class BookingService {
   final _bookingCollection = Firestore.instance.collection("bookings");
+  final _user = Modular.get<AuthService>().currentUser.user;
 
   final StreamController<List<Booking>> _controller =
       StreamController<List<Booking>>.broadcast();
 
-  Stream<List<Booking>> listenToBookingsRealTime(bool upcomingBookings) {
+  Stream<List<Booking>> listenToBookingsRealTime(bool upcomingBookings,) {
     // Register the handler for when the tutors data changes
     _bookingCollection.snapshots().listen((snapshots) {
+      if (snapshots.documents.isNotEmpty) {
+        var bookings = snapshots.documents
+            .map((snapshot) => Booking.formJson(snapshot.data))
+            .where((element){
+              if(upcomingBookings == true){
+                return element.status == BookingStatus.pending;
+              }
+              return element.status == BookingStatus.confirmed;
+            })
+            .toList();
+        // Add the tutors onto the controller
+        _controller.add(bookings);
+      }
+    });
+
+    // Return the stream underlying our _controller.
+    return _controller.stream;
+  }
+
+
+  Stream<List<Booking>> listenToBookingsRealTimeByUser(bool upcomingBookings,) {
+    // Register the handler for when the tutors data changes
+    _bookingCollection.where("studentId", isEqualTo: _user.uid).snapshots().listen((snapshots) {
+      if (snapshots.documents.isNotEmpty) {
+        var bookings = snapshots.documents
+            .map((snapshot) => Booking.formJson(snapshot.data))
+            .where((element){
+              if(upcomingBookings == true){
+                return element.status == BookingStatus.pending;
+              }
+              return element.status == BookingStatus.confirmed;
+            })
+            .toList();
+        // Add the tutors onto the controller
+        _controller.add(bookings);
+      }
+    });
+
+    // Return the stream underlying our _controller.
+    return _controller.stream;
+  }
+
+
+  Stream<List<Booking>> listenToBookingsRealTimeByTutor(bool upcomingBookings,) {
+    // Register the handler for when the tutors data changes
+    _bookingCollection.where("tutorId", isEqualTo: _user.uid).snapshots().listen((snapshots) {
       if (snapshots.documents.isNotEmpty) {
         var bookings = snapshots.documents
             .map((snapshot) => Booking.formJson(snapshot.data))

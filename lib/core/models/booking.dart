@@ -18,10 +18,12 @@ class Booking extends Equatable {
   final List<String> topics;
   final Level level;
   final Tutor tutor;
+  final String tutorId;
+  final String studentId;
   final User user;
 
   Booking(
-      {this.id,
+      {this.tutorId, this.studentId, this.id,
       this.slot,
       this.status,
       this.course,
@@ -32,6 +34,8 @@ class Booking extends Equatable {
 
   Booking.formJson(Map<String, dynamic> data)
       : this.id = data['id'],
+        this.tutorId = data['tutorId'],
+        this.studentId = data['studentId'],
         this.status = data['status'],
         this.slot = Slot.fromJson(data['slot']),
         this.level = Level.fromJson(data['level']),
@@ -42,6 +46,8 @@ class Booking extends Equatable {
 
   Map<String, dynamic> toJson() => {
         'id': id,
+        'studentId':studentId,
+        'tutorId':tutorId,
         'status': status,
         'topics':topics,
         'level': this.level.toJson(),

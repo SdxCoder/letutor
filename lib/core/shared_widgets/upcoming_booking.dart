@@ -22,25 +22,28 @@ class UpcomingBooking extends StatelessWidget {
 
 
   Widget _upcomingBookings(context, BookingsViewModel model) {
+
+    final firstBooking = model.bookings.first;
   
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: 10.0,
         horizontal: 24.0,
       ),
-      child: Column(
+      child: 
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-        
           Padding(
             padding: EdgeInsets.only(top: ScreenUtil().setSp(40)),
             child: BookingCard(
+              booking: firstBooking,
               actions: <Widget>[
                 Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "Pending",
+                      firstBooking.status,
                       style: bodyText1.copyWith(color: Colors.blue),
                     ))
               ],
@@ -61,6 +64,7 @@ class UpcomingBooking extends StatelessWidget {
               },
             ),
           ),
+          (model.bookings.length <= 1) ? Offstage():
           Padding(
             padding: EdgeInsets.symmetric(vertical: ScreenUtil().setSp(20)),
             child: Text("Next lessons",
@@ -85,6 +89,9 @@ class UpcomingBooking extends StatelessWidget {
                   itemCount: model.bookings.length,
                   itemBuilder: (BuildContext context, int index) {
                     final booking = model.bookings[index];
+                    if(booking == firstBooking){
+                      return Offstage();
+                    }
                     return UpcomingBookingCard(
                       avatarImage: imageUrl,
                       title: booking.user.name,
