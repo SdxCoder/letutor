@@ -59,7 +59,6 @@ class _TimeSlotTileState extends State<TimeSlotTile> {
             padding: EdgeInsets.symmetric(
                 horizontal: ScreenUtil().setSp(10),
                 vertical: ScreenUtil().setSp(40)),
-            margin: EdgeInsets.only(left: 8, bottom: 8),
             decoration: BoxDecoration(
               color: widget.color ??
                   (_isSelected ? Colors.blue : Colors.transparent),
@@ -99,7 +98,7 @@ class BookedTimeSlot extends StatelessWidget {
             padding: EdgeInsets.symmetric(
                 horizontal: ScreenUtil().setSp(10),
                 vertical: ScreenUtil().setSp(40)),
-            margin: EdgeInsets.only(left: 8, bottom: 8),
+           // margin: EdgeInsets.only(left: 8, bottom: 8),
             decoration: BoxDecoration(
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(10),

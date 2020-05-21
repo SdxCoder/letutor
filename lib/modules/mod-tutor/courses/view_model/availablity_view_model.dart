@@ -76,7 +76,7 @@ class AvailablityViewModel extends BaseViewModel {
     DateTime start = _selectedPeriod.start;
     for (int days = 0; days <= difference; days++) {
       alreadySelectedDates.add(start);
-      _events.addAll({start.toString(): slots});
+      _events.addAll({start.toString() : slots});
       start = start.add(Duration(days: 1));
       print(start);
     }

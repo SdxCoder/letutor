@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:letutor/core/models/tutor.dart';
 
 class TutorService {
@@ -29,10 +30,24 @@ class TutorService {
 
   Future createTutor(Tutor tutor) async {
     try {
-     // if (await _tutorExists(tutor) == true) return;
-      await _tutorCollection.document(tutor.uid).setData(tutor.toJson());
+      if (await _tutorExists(tutor) == true) return;
+      await _tutorCollection.document(tutor.uid).setData(tutor.toObjectJson());
     } catch (e) {
       return e.message;
+    }
+  }
+
+  Future updateTutor(Tutor tutor ) async {
+    try {
+      await _tutorCollection
+          .document(tutor.uid)
+          .updateData(tutor.toJson());
+
+    } catch (e) {
+      if (e is PlatformException) {
+        return e.message;
+      }
+      return e.toString();
     }
   }
 

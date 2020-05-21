@@ -57,14 +57,25 @@ class Tutor extends User {
   @override
   Map<String, dynamic> toJson() {
      final Map<String, dynamic> data = new Map<String, dynamic>();
-    //  Map<String , List> map = Map<String , List> ();
-    //  this.availableSlots.forEach((key, value) {
-    //    map.addAll({
-    //      key: value.map((e) => e.toJson()).toList()
-    //    });
-    //  });
-    // data['slots'] = map;
      data['slots'] = this.availableSlots;
+
+     if (this.lessons != null) {
+      data['lessons'] = this.lessons.map((v) => v.toJson()).toList();
+    }
+     data.addAll( super.toJson());
+   
+    return data;
+  }
+
+  Map<String, dynamic> toObjectJson() {
+     final Map<String, dynamic> data = new Map<String, dynamic>();
+     Map<String , List> map = Map<String , List> ();
+     this.availableSlots.forEach((key, value) {
+       map.addAll({
+         key: value.map((e) => e.toJson()).toList()
+       });
+     });
+    data['slots'] = map;
 
      if (this.lessons != null) {
       data['lessons'] = this.lessons.map((v) => v.toJson()).toList();

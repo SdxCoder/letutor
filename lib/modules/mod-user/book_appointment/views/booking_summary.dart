@@ -99,16 +99,18 @@ class BookingSummaryView extends StatelessWidget {
                 ),
                 InfoSection(
                   icon: Icons.library_books,
-                  
                   title: "Topics",
-                  value: ListView(
-                    physics: ClampingScrollPhysics(),
-                    shrinkWrap: true,
+                  value: Wrap(
                     children: [
                       ...booking.topics.map(
-                        (topic) => Text(
-                          topic,
-                          style: bodyText2.copyWith(color: lightBlackColor),
+                        (topic) => Row(
+                          
+                          children: [
+                            Text(
+                              topic,
+                              style: bodyText2.copyWith(color: lightBlackColor),
+                            ),
+                          ],
                         ),
                       )
                     ],
@@ -116,6 +118,17 @@ class BookingSummaryView extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 16,
+                ),
+               
+                InfoSection(
+                  icon: Icons.date_range,
+                  title: "Selected Date",
+                  value: Text(
+                    booking.slot.date.abbrDate,
+                    style: bodyText1.copyWith(
+                      color : lightBlackColor
+                    ),
+                  ),
                 ),
                 InfoSection(
                   icon: Icons.timer,

@@ -57,15 +57,17 @@ class Booking extends Equatable {
 class Slot extends Equatable{
   final String availablityStatus;
   final String timeSlot;
+  final DateTime date;
 
-  Slot({this.availablityStatus, this.timeSlot});
+  Slot({this.availablityStatus, this.timeSlot, this.date, });
 
   Slot.fromJson(Map<String, dynamic> data)
       : availablityStatus = data['availablityStatus'],
+        date = data['date'],
         timeSlot = data['timeSlot'];
 
   Map<String, dynamic> toJson() =>
-      {'availablityStatus': availablityStatus, 'timeSlot': this.timeSlot};
+      {'availablityStatus': availablityStatus, 'timeSlot': this.timeSlot,};
 
   @override
   List<Object> get props => [timeSlot, availablityStatus];

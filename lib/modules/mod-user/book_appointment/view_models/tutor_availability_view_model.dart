@@ -43,13 +43,19 @@ class TutorAvailabilityViewModel extends BaseViewModel {
     notifyListeners();
   }
   void selectSlot(slot){
-    _selectedSlot = slot;
+    //var s = Slot.fromJson(slot);
+    _selectedSlot = Slot(
+      timeSlot: slot.timeSlot,
+      availablityStatus: slot.availablityStatus,
+      date: _selectedDate
+    );
     notifyListeners();
   }
 
   void selectDate(dateTime, List<dynamic> events) {
     _selectedEvents = events;
     _selectedDate = dateTime;
+    _selectedSlot = null;
     notifyListeners();
   }
 

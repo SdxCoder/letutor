@@ -126,7 +126,7 @@ class TutorAvailabilityViewState extends State<TutorAvailabilityView>
           ),
           GridView.count(
             crossAxisCount: 3,
-            childAspectRatio: 2.1,
+            childAspectRatio: 2.0,
             shrinkWrap: true,
             children: model.selectedEvents
                 .map((event) {

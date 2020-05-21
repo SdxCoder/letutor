@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:letutor/core/core.dart';
 import 'package:letutor/core/shared_widgets/top_navbar.dart';
 import 'package:letutor/core/utils/colors.dart';
@@ -152,25 +153,7 @@ class AvailablityView extends StatelessWidget {
                       "Chosen Dates",
                       style: bodyText1.copyWith(color: lightBlackColor),
                     ),
-                    // ...model.events.entries
-                    //     .map<Widget>(
-                    //       (val) => Padding(
-                    //         padding: const EdgeInsets.symmetric(vertical: 2.0),
-                    //         child:
-                    //         CapsuleTile(
-                    //           title: val.key.dob,
-                    //           titleColor: Colors.black,
-                    //           cancelIcon: Icon(
-                    //             Icons.cancel,
-                    //             size: ScreenUtil().setSp(45),
-                    //           ),
-                    //           onTapCancelIcon: () {
-                    //             model.removeParticularEvents(val.key);
-                    //           },
-                    //         ),
-                    //       ),
-                    //     )
-                    //     .toList(),
+                  
                     Wrap(
                       alignment: WrapAlignment.start,
                       runSpacing: 2,
