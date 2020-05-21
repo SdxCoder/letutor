@@ -32,8 +32,8 @@ class Booking extends Equatable {
       this.tutor,
       this.user});
 
-  Booking.formJson(Map<String, dynamic> data)
-      : this.id = data['id'],
+  Booking.formJson(Map<String, dynamic> data, {String id})
+      : this.id = id,
         this.tutorId = data['tutorId'],
         this.studentId = data['studentId'],
         this.status = data['status'],
@@ -66,15 +66,15 @@ class Slot extends Equatable{
   final String timeSlot;
   final DateTime date;
 
-  Slot({this.availablityStatus, this.timeSlot, this.date, });
+  Slot({this.availablityStatus, this.timeSlot, this.date});
 
   Slot.fromJson(Map<String, dynamic> data)
       : availablityStatus = data['availablityStatus'],
-        date = data['date'],
+        date = data['date'].toDate(),
         timeSlot = data['timeSlot'];
 
   Map<String, dynamic> toJson() =>
-      {'availablityStatus': availablityStatus, 'timeSlot': this.timeSlot,};
+      {'availablityStatus': availablityStatus, 'timeSlot': this.timeSlot, 'date': this.date};
 
   @override
   List<Object> get props => [timeSlot, availablityStatus];

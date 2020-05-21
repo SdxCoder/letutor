@@ -97,7 +97,7 @@ class UserProfileView extends StatelessWidget {
                       btnText: "Logout",
                       onPressed: () async {
                         await model.signOut();
-                        Modular.to.pushNamed('/');
+                        Modular.to.pushNamedAndRemoveUntil('/', ModalRoute.withName('/'));
                       },
                     ),
                   ],

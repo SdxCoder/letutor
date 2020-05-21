@@ -1,7 +1,4 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:letutor/modules/mod-user/appointments/views/booking_detail.dart';
 
 import '../core.dart';
 
@@ -12,12 +9,12 @@ class PastBooking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (model.isBusy) ? 
-    Center(child: CircularProgressIndicator())
-    :_pastBookings(context, model);
+    return (model.isBusy)
+        ? Center(child: CircularProgressIndicator())
+        : _pastBookings(context, model);
   }
 
-    Widget _pastBookings(context,BookingsViewModel model) {
+  Widget _pastBookings(context, BookingsViewModel model) {
     return ShaderMask(
       shaderCallback: (rect) {
         return LinearGradient(
@@ -28,15 +25,11 @@ class PastBooking extends StatelessWidget {
       },
       blendMode: BlendMode.dstIn,
       child: ListView.builder(
-        itemCount:  model.bookings.length,
+        itemCount: model.bookings.length,
         itemBuilder: (BuildContext context, int index) {
-            final booking = model.bookings[index];
+          final booking = model.bookings[index];
           return PastBookingCard(
-            actions: [
-              Text("Status", style: bodyText2.copyWith(color: lightBlackColor)),
-              Text(booking.status,
-                  style: bodyText2.copyWith(height: 1, color: Colors.blue)),
-            ],
+            booking: booking,
             onTap: () {
               String id = "1"; // This id is of unconfirmed booking
               Navigator.push(
@@ -44,6 +37,8 @@ class PastBooking extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => BookingDetailView(
                           heroTag: index.toString(),
+                          booking: booking,
+                          role: model.user.role,
                         ),
                     settings: RouteSettings(
                         name: Routes.bookingDetail.replaceAll(":id", id))),
@@ -54,6 +49,4 @@ class PastBooking extends StatelessWidget {
       ),
     );
   }
-
-
 }

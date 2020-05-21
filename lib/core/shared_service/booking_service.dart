@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
 
@@ -19,7 +20,7 @@ class BookingService {
     _bookingCollection.snapshots().listen((snapshots) {
       if (snapshots.documents.isNotEmpty) {
         var bookings = snapshots.documents
-            .map((snapshot) => Booking.formJson(snapshot.data))
+            .map((snapshot) => Booking.formJson(snapshot.data, id : snapshot.documentID))
             .where((element){
               if(upcomingBookings == true){
                 return element.status == BookingStatus.pending;
@@ -42,7 +43,7 @@ class BookingService {
     _bookingCollection.where("studentId", isEqualTo: _user.uid).snapshots().listen((snapshots) {
       if (snapshots.documents.isNotEmpty) {
         var bookings = snapshots.documents
-            .map((snapshot) => Booking.formJson(snapshot.data))
+            .map((snapshot) => Booking.formJson(snapshot.data, id : snapshot.documentID))
             .where((element){
               if(upcomingBookings == true){
                 return element.status == BookingStatus.pending;
@@ -65,7 +66,7 @@ class BookingService {
     _bookingCollection.where("tutorId", isEqualTo: _user.uid).snapshots().listen((snapshots) {
       if (snapshots.documents.isNotEmpty) {
         var bookings = snapshots.documents
-            .map((snapshot) => Booking.formJson(snapshot.data))
+            .map((snapshot) => Booking.formJson(snapshot.data, id : snapshot.documentID))
             .where((element){
               if(upcomingBookings == true){
                 return element.status == BookingStatus.pending;
@@ -91,8 +92,25 @@ class BookingService {
     }
   }
 
+  Future updateBooking(String id, Map<String ,dynamic> map)async {
+     try {
+      await _bookingCollection
+          .document(id)
+          .updateData(map);
+
+    } catch (e) {
+      if (e is PlatformException) {
+        return e.message;
+      }
+
+      return e.toString();
+    }
+  }
+
   Future<bool> _bookingExists(String id) async {
     DocumentSnapshot snapshot = await _bookingCollection.document(id).get();
     return snapshot.exists;
   }
+
+  
 }

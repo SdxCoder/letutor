@@ -9,12 +9,12 @@ import '../core.dart';
 class BookingCard extends StatelessWidget {
   final Booking booking;
   final heroTag;
-  final String imageUrl;
   final List<Widget> actions;
   final Function onTap;
+  final String role;
   
   const BookingCard({
-    Key key, this.heroTag, this.onTap, this.imageUrl, this.actions = const [], this.booking
+    Key key, this.heroTag, this.onTap, this.actions = const [], this.booking, this.role
   }) : super(key: key);
 
   @override
@@ -76,7 +76,7 @@ class BookingCard extends StatelessWidget {
                             height: ScreenUtil().setSp(120),
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(booking.user.photoUrl),
+                                  image: NetworkImage(role == Role.tutor ? booking.user.photoUrl : booking.tutor.photoUrl),
                                   fit: BoxFit.cover),
                               borderRadius: BorderRadius.circular(25.0),
                             ),
@@ -164,7 +164,7 @@ class BookingCard extends StatelessWidget {
               ),
             ),
             Text(
-              "12 Jan 2020, ${booking.slot.timeSlot}",
+              "${booking.slot.date.abbrDate}, ${booking.slot.timeSlot}",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: ScreenUtil().setSp(40),

@@ -1,10 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
-import 'package:letutor/modules/mod-user/appointments/views/booking_detail.dart';
 
 import '../core.dart';
 
@@ -48,8 +45,7 @@ class UpcomingBooking extends StatelessWidget {
                     ))
               ],
               heroTag: appointmentsHeroTag,
-              imageUrl: Modular.get<AuthService>().currentUser.user.photoUrl ??
-                  imageUrl,
+              role: model.user.role,
               onTap: () {
                 String id = "1"; // This id is of unconfirmed booking
                 Navigator.push(
@@ -57,6 +53,8 @@ class UpcomingBooking extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => BookingDetailView(
                             heroTag: appointmentsHeroTag,
+                            booking: firstBooking,
+                            role: model.user.role,
                           ),
                       settings: RouteSettings(
                           name: Routes.bookingDetail.replaceAll(":id", id))),
@@ -93,9 +91,9 @@ class UpcomingBooking extends StatelessWidget {
                       return Offstage();
                     }
                     return UpcomingBookingCard(
-                      avatarImage: imageUrl,
+                      avatarImage: model.user.role ==Role.tutor ? booking.user.photoUrl:  booking.tutor.photoUrl,
                       title: booking.user.name,
-                      subtitle: "${booking.slot.timeSlot}",
+                      subtitle: "${booking.slot.date.abbrDate} - ${booking.slot.timeSlot}",
                     
                       heroTag: index.toString(),
                       onTap: () {
@@ -105,6 +103,8 @@ class UpcomingBooking extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => BookingDetailView(
                                     heroTag: index.toString(),
+                                    booking: booking,
+                                    role: model.user.role,
                                   ),
                               settings: RouteSettings(
                                   name: Routes.bookingDetail

@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:letutor/core/core.dart';
-import 'dart:convert';
+
 
 class AuthService {
   final _auth = FirebaseAuth.instance;

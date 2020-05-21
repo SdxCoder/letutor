@@ -5,9 +5,9 @@ import '../core.dart';
 
 class PastBookingCard extends StatelessWidget {
   final Function onTap;
-  final List<Widget> actions;
+  final Booking booking;
 
-  const PastBookingCard({Key key, this.onTap, this.actions = const []})
+  const PastBookingCard({Key key, this.onTap,  this.booking})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class PastBookingCard extends StatelessWidget {
                       Spacer(),
                       Text("Tutor",
                           style: bodyText2.copyWith(color: lightBlackColor)),
-                      Text("Loius Patterson",
+                      Text(booking.tutor.name,
                           style: bodyText2.copyWith(
                             height: 1,
                           )),
@@ -54,14 +54,14 @@ class PastBookingCard extends StatelessWidget {
                     children: <Widget>[
                       Text("Time",
                           style: bodyText2.copyWith(color: lightBlackColor)),
-                      Text("02am - 04am",
+                      Text(booking.slot.timeSlot,
                           style: bodyText2.copyWith(
                             height: 1,
                           )),
                       Spacer(),
                       Text("Course",
                           style: bodyText2.copyWith(color: lightBlackColor)),
-                      Text("Boilogy",
+                      Text(booking.course.name,
                           style: bodyText2.copyWith(
                             height: 1,
                           )),
@@ -77,7 +77,9 @@ class PastBookingCard extends StatelessWidget {
                             height: 1,
                           )),
                       Spacer(),
-                       ...actions,
+                       Text("Status", style: bodyText2.copyWith(color: lightBlackColor)),
+              Text(booking.status,
+                  style: bodyText2.copyWith(height: 1, color: Colors.blue)),
                       
                        
                     ],

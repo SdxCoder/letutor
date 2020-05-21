@@ -8,6 +8,7 @@ class TutorModule extends ChildModule{
   List<Bind> get binds => [
      Bind((i) => TutorService()),
      Bind((i) => LessonService()),
+       Bind((i) => BookingService()),
   ];
 
   @override

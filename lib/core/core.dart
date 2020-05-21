@@ -54,6 +54,7 @@ export './shared_widgets/date_picker.dart';
 export './shared_widgets/upcoming_booking.dart';
 export './shared_widgets/past_booking.dart';
 export './shared_widgets/empty_list_placeholder.dart';
+export './shared_widgets/booking_detail.dart';
 // utils
 export './utils/colors.dart';
 export './utils/spacing.dart';

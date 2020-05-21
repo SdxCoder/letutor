@@ -46,6 +46,7 @@ class TutorAvailabilityViewModel extends BaseViewModel {
   }
   void selectSlot(slot){
     //var s = Slot.fromJson(slot);
+    print(_selectedDate.toString());
     _selectedSlot = Slot(
       timeSlot: slot.timeSlot,
       availablityStatus: slot.availablityStatus,

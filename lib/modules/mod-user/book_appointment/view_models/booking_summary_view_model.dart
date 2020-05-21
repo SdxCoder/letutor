@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:letutor/core/core.dart';
 import 'package:letutor/core/shared_service/booking_service.dart';
@@ -26,7 +27,7 @@ class BookingSummaryViewModel extends BaseViewModel {
     else {
       await showDialogBox(
           title: "Success", description: "Availability updated");
-      Modular.to.pushNamedAndRemoveUntil(Routes.userHome, (d) => true);
+      Modular.to.pushNamedAndRemoveUntil(Routes.userHome, ModalRoute.withName(Routes.userHome));
     }
   }
 

@@ -66,7 +66,8 @@ class TutorBookingsView extends StatelessWidget {
         model.listenToBookingsByTutor(flag : false);
       },
       builder: (context, model, child,){
-        return PastBooking(model:model);
+        return model.bookings.isEmpty ? 
+       empltyList(): PastBooking(model:model);
       }, 
     );
   }
