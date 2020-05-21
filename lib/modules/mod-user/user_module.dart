@@ -1,6 +1,7 @@
 
 
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:letutor/core/core.dart';
 import 'package:letutor/modules/mod-user/home/view/home_view.dart';
 
 import 'appointments/views/booking_detail.dart';
@@ -12,7 +13,9 @@ import 'userprofile/views/user_profile_view.dart';
 
 class UserModule extends ChildModule{
   @override
-  List<Bind> get binds => [];
+  List<Bind> get binds => [
+     Bind((i) => TutorService()),
+  ];
 
   @override
   List<Router> get routers => [

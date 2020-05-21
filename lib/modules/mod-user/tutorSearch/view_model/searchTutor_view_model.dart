@@ -30,26 +30,72 @@ class SearchTutorViewModel extends BaseViewModel {
     });
   }
 
+  void searchResults() {
+    _tempList = Set<Tutor>();
+
+    _tempList = _tutorsList.map((e) => e).where((element) {
+      if (_selectedCourse != null && _selectedLevel != null) {
+        for (var lesson in element.lessons) {
+          for (var course in lesson.courses) {
+            if (_selectedCourse == course.id &&
+                _selectedLevel == lesson.levelId) {
+              print("both matched : true");
+              return true;
+            }
+          }
+        }
+      } else {
+        if (_selectedLevel != null) {
+          for (var lesson in element.lessons) {
+            if (_selectedLevel == lesson.levelId) {
+              print("level matched : true");
+              return true;
+            }
+          }
+        }
+
+        if (_selectedCourse != null) {
+          for (var lesson in element.lessons) {
+            for (var course in lesson.courses) {
+              if (_selectedCourse == course.id) {
+                print("course matched : true");
+                return true;
+              }
+            }
+          }
+        }
+      }
+
+      return false;
+    }).toSet();
+    notifyListeners();
+    // for(Tutor tutor in _tutorsList){
+
+    //   if(tutor.uid.toLowerCase().contains(query.toLowerCase())){
+    //     _tempList.add(tutor);
+    //     notifyListeners();
+    //   }
+    // }
+  }
+
   Future fetchCourses() async {
-    
     var result = await _dbService.getAllCourses();
-   
-    if(result is String){
+
+    if (result is String) {
       await showSnackBar(desc: result);
-    }else{
+    } else {
       _courses = result;
     }
   }
 
   Future fetchLevels() async {
-     var result = await _dbService.getAllLevels();
-    if(result is String){
+    var result = await _dbService.getAllLevels();
+    if (result is String) {
       await showSnackBar(desc: result);
-    }else{
+    } else {
       _academicLevels = result;
     }
   }
-
 
   String _selectedLevel;
   String _selectedCourse;
@@ -84,8 +130,6 @@ class SearchTutorViewModel extends BaseViewModel {
     _selectedCourse = course;
     notifyListeners();
   }
-
-  
 
   @override
   void dispose() {

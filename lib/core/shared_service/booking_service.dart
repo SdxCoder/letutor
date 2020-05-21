@@ -10,15 +10,14 @@ class BookingService{
    Future createBooking(Booking booking) async {
        await _bookingCollection.document(booking.id).setData(booking.toJson());
     try {
-       if (await _userExists(booking.id) == true) return;
+       if (await _bookingExists(booking.id) == true) return;
     
     } catch (e) {
       return e.message;
     }
   }
 
-
-  Future<bool> _userExists(String id) async {
+  Future<bool> _bookingExists(String id) async {
     DocumentSnapshot snapshot = await _bookingCollection.document(id).get();
     return snapshot.exists;
   }

@@ -15,7 +15,7 @@ class CapsuleTile extends StatelessWidget {
       {@required this.title,
        this.id,
        this.isSelected  = false,
-       this.onTap, this.cancelIcon, this.onTapCancelIcon, this.titleColor = lightBlackColor});
+       this.onTap, this.cancelIcon, this.onTapCancelIcon, this.titleColor = lightBlackColor,});
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +30,19 @@ class CapsuleTile extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setSp(40), vertical: 0),
             margin: EdgeInsets.only(left: 8),
             decoration: BoxDecoration(
-              color: isSelected ? Color(0xffFFD0AA) : Colors.transparent,
+              color: isSelected ? Colors.blue : Colors.transparent,
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
                 width: 1.0,
                 color: isSelected
-                    ? Colors.orange.withOpacity(0.5)
+                    ? Colors.blue
                     : lightBlackBorderColor,
               ),
             ),
             child: Text(
               title,
               style: bodyText2.copyWith(
-                color: isSelected ? Color(0xffFC9535) : titleColor
+                color: isSelected ? Colors.white : titleColor
               ),
               // TextStyle(
               //     color: widget.isSelected ? Color(0xffFC9535) : Color(0xffA1A1A1)),

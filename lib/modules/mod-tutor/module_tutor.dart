@@ -6,7 +6,8 @@ import 'package:letutor/modules/mod-tutor/home/tutor_home_view.dart';
 class TutorModule extends ChildModule{
   @override
   List<Bind> get binds => [
-    
+     Bind((i) => TutorService()),
+     Bind((i) => LessonService()),
   ];
 
   @override

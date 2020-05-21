@@ -25,31 +25,31 @@ class SearchTutorsView extends StatelessWidget {
         body: ResponsiveBuilder(
           builder: (context, sizingInfo) => Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
-            child: (model.isBusy) ? Center(child:CircularProgressIndicator()):
-            Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                   SizedBox(height: 8),
-                  TopNavBar(),
-                  SizedBox(height: 16),
-                  _buildLevelOptions(model),
-                  SizedBox(height: 16),
-                  _buildCourseOptions(model),
-                  SizedBox(height: 32),
-                  Text(
-                    "Tutors",
-                    style: headline6.copyWith(
-                  
-                      fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 16.0,
-                  ),
-                  Expanded(child: _buildTutors(context, model)),
-                  SizedBox(
-                    height: 32.0,
-                  ),
-                ]),
+            child: (model.isBusy)
+                ? Center(child: CircularProgressIndicator())
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                        SizedBox(height: 8),
+                        TopNavBar(),
+                        SizedBox(height: 16),
+                        _buildLevelOptions(model),
+                        SizedBox(height: 16),
+                        _buildCourseOptions(model),
+                        SizedBox(height: 32),
+                        Text(
+                          "Tutors",
+                          style:
+                              headline6.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 16.0,
+                        ),
+                        Expanded(child: _buildTutors(context, model)),
+                        SizedBox(
+                          height: 32.0,
+                        ),
+                      ]),
           ),
         ),
       ),
@@ -70,7 +70,7 @@ class SearchTutorsView extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => BookCourseView(tutor : tutor),
+                    builder: (context) => BookCourseView(tutor: tutor),
                     settings: RouteSettings(name: Routes.bookCourse)));
           },
           onTap: () {
@@ -100,7 +100,11 @@ class SearchTutorsView extends StatelessWidget {
             id: courses[index].id,
             title: courses[index].name,
             isSelected: model.selectedCourse == courses[index].id,
-            onTap: (category) => model.setSelectedCourse(category),
+            onTap: (id) {
+              print(id);
+              model.setSelectedCourse(id);
+              model.searchResults();
+            },
           );
         },
       ),
@@ -121,7 +125,11 @@ class SearchTutorsView extends StatelessWidget {
             id: levels[index].id,
             title: levels[index].name,
             isSelected: model.selectedLevel == levels[index].id,
-            onTap: (category) => model.setSelectedLevel(category),
+            onTap: (id) {
+              print(id);
+              model.setSelectedLevel(id);
+              model.searchResults();
+            },
           );
         },
       ),
