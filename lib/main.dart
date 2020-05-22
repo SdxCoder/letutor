@@ -7,7 +7,7 @@ void main() {
 
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context){
         return ModularApp(module: AppModule(),);
       },

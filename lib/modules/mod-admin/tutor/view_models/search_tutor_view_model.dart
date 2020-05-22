@@ -23,17 +23,21 @@ class SearchTutorViewModel extends BaseViewModel{
   StreamSubscription _subscription;
   void listenToUsers() {
     setBusy(true);
+    
     _subscription = _userService.listenToUsersRealTime().listen((usersData) {
       _tempList = Set<User>();
       List<User> updatedUsers = usersData;
+      //  print(updatedUsers.length);
       if (updatedUsers != null && updatedUsers.length > 0) {
         _users = updatedUsers;
         notifyListeners();
       }
-
-      tempList.addAll(updatedUsers);
+      _tempList.addAll(updatedUsers);
       setBusy(false);
     });
+    
+       
+   
   }
 
 
@@ -56,6 +60,7 @@ class SearchTutorViewModel extends BaseViewModel{
   }
 
   void searchResults(String query){
+    print(_tempList.length);
     _tempList = Set<User>();
     for(User user in _users){
       if(user.email.toLowerCase().contains(query.toLowerCase())){

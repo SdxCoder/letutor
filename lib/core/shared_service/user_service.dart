@@ -17,7 +17,7 @@ class UserService {
       if (usersSnapshot.documents.isNotEmpty) {
         var users = usersSnapshot.documents
             .map((snapshot) => User.fromJson(snapshot.data))
-            .where((mappedItem) => mappedItem.role != Role.admin)
+           .where((mappedItem) => mappedItem.role != Role.admin)
             .toList();
 
         // Add the posts onto the controller

@@ -36,7 +36,7 @@ class BookingDetailView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                SizedBox(
+                 SizedBox(
                   height: 16,
                 ),
                 Center(
@@ -74,7 +74,6 @@ class BookingDetailView extends StatelessWidget {
                     style: bodyText1.copyWith(color: lightBlackColor),
                   ),
                 ),
-
                 SizedBox(
                   height: 16,
                 ),
@@ -121,15 +120,12 @@ class BookingDetailView extends StatelessWidget {
                 SizedBox(
                   height: 16,
                 ),
-
                 InfoSection(
                   icon: Icons.date_range,
                   title: "Selected Date",
                   value: Text(
                     booking.slot.date.abbrDate,
-                    style: bodyText1.copyWith(
-                      color : lightBlackColor
-                    ),
+                    style: bodyText1.copyWith(color: lightBlackColor),
                   ),
                 ),
                 SizedBox(
@@ -154,7 +150,6 @@ class BookingDetailView extends StatelessWidget {
                     style: bodyText1.copyWith(color: Colors.blue),
                   ),
                 ),
-
                 SizedBox(
                   height: 16,
                 ),
@@ -169,7 +164,6 @@ class BookingDetailView extends StatelessWidget {
                             : Colors.blue),
                   ),
                 ),
-
                 SizedBox(
                   height: 16,
                 ),
