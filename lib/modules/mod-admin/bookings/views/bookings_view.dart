@@ -16,7 +16,7 @@ class BookingsView extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: buildAppBar(
-            title: Text("My Bookings",
+            title: Text("Bookings",
                 style: subtitle1.copyWith(color: Colors.black)),
             context: context,
             bottom: TabBar(

@@ -70,7 +70,7 @@ class Slot extends Equatable{
 
   Slot.fromJson(Map<String, dynamic> data)
       : availablityStatus = data['availablityStatus'],
-        date = data['date'].toDate(),
+        date = data['date']?.toDate(),
         timeSlot = data['timeSlot'];
 
   Map<String, dynamic> toJson() =>

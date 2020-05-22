@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,65 +9,20 @@ class UpcomingBooking extends StatelessWidget {
   const UpcomingBooking({Key key, this.model}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return (model.isBusy) ? 
-    Center(child: CircularProgressIndicator())
-    :
-    _upcomingBookings(context, model);
+    return (model.isBusy)
+        ? Center(child: CircularProgressIndicator())
+        : _upcomingBookings(context, model);
   }
 
-
   Widget _upcomingBookings(context, BookingsViewModel model) {
+    print("rebuilt");
 
-    final firstBooking = model.bookings.first;
-  
     return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: 10.0,
-        horizontal: 24.0,
-      ),
-      child: 
-      Column(
+      padding: EdgeInsets.all(16),
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: ScreenUtil().setSp(40)),
-            child: BookingCard(
-              booking: firstBooking,
-              actions: <Widget>[
-                Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      firstBooking.status,
-                      style: bodyText1.copyWith(color: Colors.blue),
-                    ))
-              ],
-              heroTag: appointmentsHeroTag,
-              role: model.user.role,
-              onTap: () {
-                String id = "1"; // This id is of unconfirmed booking
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BookingDetailView(
-                            heroTag: appointmentsHeroTag,
-                            booking: firstBooking,
-                            role: model.user.role,
-                          ),
-                      settings: RouteSettings(
-                          name: Routes.bookingDetail.replaceAll(":id", id))),
-                );
-              },
-            ),
-          ),
-          (model.bookings.length <= 1) ? Offstage():
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: ScreenUtil().setSp(20)),
-            child: Text("Next lessons",
-                style: subtitle1.copyWith(
-                  color: Color(0xFF7283B5),
-                )),
-          ),
           Expanded(
             child: Container(
               //  height: 300.0,
@@ -87,14 +40,16 @@ class UpcomingBooking extends StatelessWidget {
                   itemCount: model.bookings.length,
                   itemBuilder: (BuildContext context, int index) {
                     final booking = model.bookings[index];
-                    if(booking == firstBooking){
-                      return Offstage();
+                    if (index == 0) {
+                      return _bookingCard(context, booking);
                     }
                     return UpcomingBookingCard(
-                      avatarImage: model.user.role ==Role.tutor ? booking.user.photoUrl:  booking.tutor.photoUrl,
+                      avatarImage: model.user.role == Role.tutor
+                          ? booking.user.photoUrl
+                          : booking.tutor.photoUrl,
                       title: booking.user.name,
-                      subtitle: "${booking.slot.date.abbrDate} - ${booking.slot.timeSlot}",
-                    
+                      subtitle:
+                          "${booking.slot.date.abbrDate} - ${booking.slot.timeSlot}",
                       heroTag: index.toString(),
                       onTap: () {
                         String id = "1"; // This id is of unconfirmed booking
@@ -119,6 +74,50 @@ class UpcomingBooking extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _bookingCard(context, firstBooking) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        BookingCard(
+          booking: firstBooking,
+          actions: <Widget>[
+            Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  firstBooking.status,
+                  style: bodyText1.copyWith(color: Colors.blue),
+                ))
+          ],
+          heroTag: appointmentsHeroTag,
+          role: model.user.role,
+          onTap: () {
+            String id = "1"; // This id is of unconfirmed booking
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BookingDetailView(
+                        heroTag: appointmentsHeroTag,
+                        booking: firstBooking,
+                        role: model.user.role,
+                      ),
+                  settings: RouteSettings(
+                      name: Routes.bookingDetail.replaceAll(":id", id))),
+            );
+          },
+        ),
+        (model.bookings.length <= 1)
+            ? Offstage()
+            : Padding(
+                padding: EdgeInsets.symmetric(vertical: ScreenUtil().setSp(20)),
+                child: Text("Next lessons",
+                    style: subtitle1.copyWith(
+                      color: Color(0xFF7283B5),
+                    )),
+              ),
+      ],
     );
   }
 }

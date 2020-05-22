@@ -30,7 +30,7 @@ class TutorService {
 
   Future createTutor(Tutor tutor) async {
     try {
-      if (await _tutorExists(tutor) == true) return;
+
       await _tutorCollection.document(tutor.uid).setData(tutor.toObjectJson());
     } catch (e) {
       return e.message;
@@ -52,9 +52,9 @@ class TutorService {
   }
 
   
-  Future<bool> _tutorExists(Tutor tutor) async {
-    DocumentSnapshot snapshot =
-        await _tutorCollection.document(tutor.uid).get();
-    return snapshot.exists;
-  }
+  // Future<bool> _tutorExists(Tutor tutor) async {
+  //   DocumentSnapshot snapshot =
+  //       await _tutorCollection.document(tutor.uid).get();
+  //   return snapshot.exists;
+  // }
 }

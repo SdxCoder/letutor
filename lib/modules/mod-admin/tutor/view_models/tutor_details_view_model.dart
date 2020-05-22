@@ -2,7 +2,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:letutor/core/core.dart';
 
 import 'package:stacked/stacked.dart';
-import 'package:rxdart/rxdart.dart';
 
 class TutorDetailsViewModel extends BaseViewModel {
   final _userService = Modular.get<UserService>();

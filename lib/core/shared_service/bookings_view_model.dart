@@ -10,7 +10,6 @@ import 'booking_service.dart';
 import '../models/booking.dart';
 
 class BookingsViewModel extends BaseViewModel {
-  final _authService = Modular.get<AuthService>();
   final _bookingServie = Modular.get<BookingService>();
   final user = Modular.get<AuthService>().currentUser.user;
 
@@ -24,7 +23,7 @@ class BookingsViewModel extends BaseViewModel {
     _subscription =
         _bookingServie.listenToBookingsRealTimeByUser(flag).listen((data) {
       List<Booking> bookings = data;
-      if (bookings != null && bookings.length > 0) {
+      if (bookings != null) {
         _bookings = bookings;
         notifyListeners();
       }
@@ -38,7 +37,7 @@ class BookingsViewModel extends BaseViewModel {
     _subscription =
         _bookingServie.listenToBookingsRealTimeByTutor(flag).listen((data) {
       List<Booking> bookings = data;
-      if (bookings != null && bookings.length > 0) {
+      if (bookings != null) {
         _bookings = bookings;
         notifyListeners();
       }
@@ -46,12 +45,12 @@ class BookingsViewModel extends BaseViewModel {
     });
   }
 
-   void listenToBookings({bool flag = false}) {
+   void listenToBookings({bool flag}) {
     setBusy(true);
     _subscription =
         _bookingServie.listenToBookingsRealTime(flag).listen((data) {
       List<Booking> bookings = data;
-      if (bookings != null && bookings.length > 0) {
+      if (bookings != null) {
         _bookings = bookings;
         notifyListeners();
       }

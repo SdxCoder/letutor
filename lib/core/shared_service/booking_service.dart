@@ -7,80 +7,155 @@ import 'package:letutor/modules/mod-account/login/services/auth_service.dart';
 
 import '../core.dart';
 
-
 class BookingService {
   final _bookingCollection = Firestore.instance.collection("bookings");
   final _user = Modular.get<AuthService>().currentUser.user;
 
-  final StreamController<List<Booking>> _controller =
+  StreamController<List<Booking>> _controller =
       StreamController<List<Booking>>.broadcast();
 
-  Stream<List<Booking>> listenToBookingsRealTime(bool upcomingBookings,) {
-    // Register the handler for when the tutors data changes
-    _bookingCollection.snapshots().listen((snapshots) {
-      if (snapshots.documents.isNotEmpty) {
-        var bookings = snapshots.documents
-            .map((snapshot) => Booking.formJson(snapshot.data, id : snapshot.documentID))
-            .where((element){
-              if(upcomingBookings == true){
-                return element.status == BookingStatus.pending;
-              }
-              return element.status == BookingStatus.confirmed;
-            })
-            .toList();
-        // Add the tutors onto the controller
-        _controller.add(bookings);
-      }
-    });
+  StreamController<List<Booking>> _pastBookingController =
+      StreamController<List<Booking>>.broadcast();
 
-    // Return the stream underlying our _controller.
-    return _controller.stream;
+  Stream<List<Booking>> listenToBookingsRealTime(
+    bool upcomingBookings,
+  ) {
+    // Register the handler for when the tutors data changes
+    print(upcomingBookings);
+    if (upcomingBookings == true) {
+      print("upcoming");
+      _bookingCollection
+          .where('status', isEqualTo: BookingStatus.pending)
+          .snapshots()
+          .listen((snapshots) {
+        if (snapshots.documents.isNotEmpty) {
+          var bookings = snapshots.documents
+              .map((snapshot) =>
+                  Booking.formJson(snapshot.data, id: snapshot.documentID))
+              .toList();
+          // Add the tutors onto the controller
+          _controller.add(bookings);
+        } else {
+          _controller.add(List<Booking>());
+        }
+      });
+
+      // Return the stream underlying our _controller.
+      return _controller.stream;
+    } else {
+      _bookingCollection
+          .where('status', isEqualTo: BookingStatus.confirmed)
+          .snapshots()
+          .listen((snapshots) {
+        if (snapshots.documents.isNotEmpty) {
+          var bookings = snapshots.documents
+              .map((snapshot) =>
+                  Booking.formJson(snapshot.data, id: snapshot.documentID))
+              .toList();
+          // Add the tutors onto the controller
+          _pastBookingController.add(bookings);
+        } else {
+          _pastBookingController.add(List<Booking>());
+        }
+      });
+
+      // Return the stream underlying our _controller.
+      return _pastBookingController.stream;
+    }
   }
 
-
-  Stream<List<Booking>> listenToBookingsRealTimeByUser(bool upcomingBookings,) {
+  Stream<List<Booking>> listenToBookingsRealTimeByUser(
+    bool upcomingBookings,
+  ) {
     // Register the handler for when the tutors data changes
-    _bookingCollection.where("studentId", isEqualTo: _user.uid).snapshots().listen((snapshots) {
-      if (snapshots.documents.isNotEmpty) {
-        var bookings = snapshots.documents
-            .map((snapshot) => Booking.formJson(snapshot.data, id : snapshot.documentID))
-            .where((element){
-              if(upcomingBookings == true){
-                return element.status == BookingStatus.pending;
-              }
-              return element.status == BookingStatus.confirmed;
-            })
-            .toList();
-        // Add the tutors onto the controller
-        _controller.add(bookings);
-      }
-    });
+    if (upcomingBookings == true) {
+      _bookingCollection
+          .where("studentId", isEqualTo: _user.uid)
+          .where('status', isEqualTo: BookingStatus.pending)
+          .snapshots()
+          .listen((snapshots) {
+        if (snapshots.documents.isNotEmpty) {
+          var bookings = snapshots.documents
+              .map((snapshot) =>
+                  Booking.formJson(snapshot.data, id: snapshot.documentID))
+              .toList();
+          // Add the tutors onto the controller
+          _controller.add(bookings);
+        } else {
+          _controller.add(List<Booking>());
+        }
+      });
 
-    // Return the stream underlying our _controller.
-    return _controller.stream;
+      // Return the stream underlying our _controller.
+      return _controller.stream;
+    } else {
+      _bookingCollection
+          .where("studentId", isEqualTo: _user.uid)
+          .where('status', isEqualTo: BookingStatus.confirmed)
+          .snapshots()
+          .listen((snapshots) {
+        if (snapshots.documents.isNotEmpty) {
+          var bookings = snapshots.documents
+              .map((snapshot) =>
+                  Booking.formJson(snapshot.data, id: snapshot.documentID))
+              .toList();
+          // Add the tutors onto the controller
+          _pastBookingController.add(bookings);
+        } else {
+          _pastBookingController.add(List<Booking>());
+        }
+      });
+
+      // Return the stream underlying our _controller.
+      return _pastBookingController.stream;
+    }
   }
 
-
-  Stream<List<Booking>> listenToBookingsRealTimeByTutor(bool upcomingBookings,) {
+  Stream<List<Booking>> listenToBookingsRealTimeByTutor(
+    bool upcomingBookings,
+  ) {
     // Register the handler for when the tutors data changes
-    _bookingCollection.where("tutorId", isEqualTo: _user.uid).snapshots().listen((snapshots) {
-      if (snapshots.documents.isNotEmpty) {
-        var bookings = snapshots.documents
-            .map((snapshot) => Booking.formJson(snapshot.data, id : snapshot.documentID))
-            .where((element){
-              if(upcomingBookings == true){
-                return element.status == BookingStatus.pending;
-              }
-              return element.status == BookingStatus.confirmed;
-            })
-            .toList();
-        // Add the tutors onto the controller
-        _controller.add(bookings);
-      }
-    });
+    if (upcomingBookings == true) {
+      _bookingCollection
+          .where("tutorId", isEqualTo: _user.uid)
+          .where('status', isEqualTo:BookingStatus.pending)
+          .snapshots()
+          .listen((snapshots) {
+        if (snapshots.documents.isNotEmpty) {
+          var bookings = snapshots.documents
+              .map((snapshot) =>
+                  Booking.formJson(snapshot.data, id: snapshot.documentID))
+              .toList();
+          // Add the tutors onto the controller
+          _controller.add(bookings);
+        } else {
+          _controller.add(List<Booking>());
+        }
+      });
 
-    // Return the stream underlying our _controller.
-    return _controller.stream;
+      // Return the stream underlying our _controller.
+      return _controller.stream;
+    } else {
+       _bookingCollection
+          .where("tutorId", isEqualTo: _user.uid)
+          .where('status', isEqualTo:BookingStatus.confirmed)
+          .snapshots()
+          .listen((snapshots) {
+        if (snapshots.documents.isNotEmpty) {
+          var bookings = snapshots.documents
+              .map((snapshot) =>
+                  Booking.formJson(snapshot.data, id: snapshot.documentID))
+              .toList();
+          // Add the tutors onto the controller
+          _pastBookingController.add(bookings);
+        } else {
+          _pastBookingController.add(List<Booking>());
+        }
+      });
+
+      // Return the stream underlying our _controller.
+      return _pastBookingController.stream;
+    }
   }
 
   Future createBooking(Booking booking) async {
@@ -92,12 +167,9 @@ class BookingService {
     }
   }
 
-  Future updateBooking(String id, Map<String ,dynamic> map)async {
-     try {
-      await _bookingCollection
-          .document(id)
-          .updateData(map);
-
+  Future updateBooking(String id, Map<String, dynamic> map) async {
+    try {
+      await _bookingCollection.document(id).updateData(map);
     } catch (e) {
       if (e is PlatformException) {
         return e.message;
@@ -111,6 +183,4 @@ class BookingService {
     DocumentSnapshot snapshot = await _bookingCollection.document(id).get();
     return snapshot.exists;
   }
-
-  
 }

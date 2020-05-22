@@ -137,27 +137,33 @@ class AvailablityViewModel extends BaseViewModel {
   List<Slot> timeSlots = [
     Slot(
       timeSlot: "08am - 09am",
-      availablityStatus: SlotStatus.available
+      availablityStatus: SlotStatus.available,
+ 
     ),
      Slot(
       timeSlot: "09am - 10am",
-      availablityStatus: SlotStatus.available
+      availablityStatus: SlotStatus.available,
+    
     ),
      Slot(
       timeSlot: "10am - 11am",
-      availablityStatus: SlotStatus.available
+      availablityStatus: SlotStatus.available,
+
     ),
      Slot(
       timeSlot: "11am - 12am",
-      availablityStatus: SlotStatus.available
+      availablityStatus: SlotStatus.available,
+   
     ),
      Slot(
       timeSlot: "12am - 01pm",
-      availablityStatus: SlotStatus.available
+      availablityStatus: SlotStatus.available,
+ 
     ),
      Slot(
       timeSlot: "01pm - 02pm",
-      availablityStatus: SlotStatus.available
+      availablityStatus: SlotStatus.available,
+ 
     ),
      Slot(
       timeSlot: "02pm - 03pm",
