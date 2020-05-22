@@ -79,7 +79,7 @@ class TutorTile extends StatelessWidget {
                       Spacer(),
                       CircleAvatar(
                         radius: ScreenUtil().setSp(120),
-                        backgroundImage: NetworkImage(tutor.photoUrl),
+                        backgroundImage: NetworkImage(tutor.photoUrl ?? tutor.photoPlaceholder),
                       )
                     ],
                   ),

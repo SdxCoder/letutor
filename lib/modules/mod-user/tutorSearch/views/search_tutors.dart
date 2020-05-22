@@ -64,6 +64,7 @@ class SearchTutorsView extends StatelessWidget {
       physics: ClampingScrollPhysics(),
       itemBuilder: (context, index) {
         final tutor = model.tempList.elementAt(index);
+        print(tutor.name);
         return TutorTile(
           tutor: tutor,
           onTapBook: () {

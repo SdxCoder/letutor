@@ -27,7 +27,7 @@ class TutorProfileView extends StatelessWidget {
               Center(
                 child: CircleAvatar(
                   radius: ScreenUtil().setWidth(200),
-                  backgroundImage: NetworkImage(tutor.photoUrl),
+                  backgroundImage: NetworkImage(tutor.photoUrl ?? tutor.photoPlaceholder),
                 ),
               ),
               Center(

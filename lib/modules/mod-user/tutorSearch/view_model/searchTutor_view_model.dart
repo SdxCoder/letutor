@@ -25,7 +25,8 @@ class SearchTutorViewModel extends BaseViewModel {
         notifyListeners();
       }
 
-      tempList.addAll(tutors);
+      _tempList.addAll(tutors);
+      print("tutors" + tempList.length.toString());
       setBusy(false);
     });
   }

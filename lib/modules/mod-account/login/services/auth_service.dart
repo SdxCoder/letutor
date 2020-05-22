@@ -26,7 +26,7 @@ class AuthService {
             phoneNo: phoneNo,
             name: firstName + " " + lastName,
             role: Role.user,
-       
+            photoUrl: imageUrl,
             dob: dob,
             firstName: firstName,
             lastName: lastName,
