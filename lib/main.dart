@@ -2,11 +2,9 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:letutor/app_module.dart';
-import 'package:letutor/service/locator.dart';
-
 
 void main() {
-  setupLocator();
+
   runApp(
     DevicePreview(
       enabled: false,

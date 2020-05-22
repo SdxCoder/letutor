@@ -21,12 +21,12 @@ class FormValidationService {
   
   final phoneValidator = MultiValidator([
     _requiredValidator,
-    MinLengthValidator(10,
-      errorText: 'phone no is less than 10 digits long'),
-      MaxLengthValidator(12,
-      errorText: 'max 12 digits long in case of country code'),
-    PatternValidator(r'\(?\+[0-9]{1,3}\)? ?-?[0-9]{1,3} ?-?[0-9]{3,5} ?-?[0-9]{4}( ?-?[0-9]{3})? ?(\w{1,10}\s?\d{1,6})?',
-        errorText: 'No space or no characters allowed between digits')
+    MinLengthValidator(7,
+      errorText: 'phone no is less than 7 digits long'),
+      MaxLengthValidator(8,
+      errorText: 'phone no is more than 8 digits long'),
+    PatternValidator(r'^[0-9]*$',
+        errorText: 'No characters/space allowed')
   ]);
 
   final emailValidator = MultiValidator([

@@ -62,7 +62,14 @@ class AuthService {
 
       return authResult.user;
     } catch (e) {
-      print("Error : " + e.message);
+       print("Error : " + e.code);
+       if(e.code == 'ERROR_USER_NOT_FOUND'){
+         return 'There is no user record found corresponding to this email. Please enter the correct email.';
+       }
+
+       if(e.code == 'ERROR_WRONG_PASSWORD'){
+         return 'The paswword you entered is invalid.';
+       }
       return e.message;
     }
   }
@@ -103,7 +110,7 @@ class AuthService {
       return "Something went wrong. Try again";
     }
     catch (e) {
-      print("Error : " + e.message);
+      print("Error : " + e.code);
       return e.message;
     }
   }

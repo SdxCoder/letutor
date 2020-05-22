@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:letutor/core/core.dart';
 import 'package:letutor/core/shared_widgets/top_navbar.dart';
 import 'package:letutor/core/utils/colors.dart';
-import 'package:letutor/modules/mod-tutor/courses/view_model/availablity_view_model.dart';
+import 'package:letutor/modules/mod-tutor/availability/view_model/availablity_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class AvailablityView extends StatelessWidget {
@@ -227,7 +227,8 @@ class AvailablityView extends StatelessWidget {
         GridView.count(
           padding: EdgeInsets.zero,
           crossAxisCount: 3,
-          childAspectRatio: 2.1,
+          childAspectRatio: 2.7,
+          mainAxisSpacing: 4,
           shrinkWrap: true,
           children: model.timeSlots.map<Widget>((slot) {
             return TimeSlotTile(

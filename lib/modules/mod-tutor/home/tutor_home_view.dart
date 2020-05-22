@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:letutor/core/core.dart';
 import 'package:letutor/modules/mod-tutor/bookings_history/view/tutor_bookings_view.dart';
-import 'package:letutor/modules/mod-tutor/courses/view/availability_view.dart';
+import 'package:letutor/modules/mod-tutor/availability/view/availability_view.dart';
 
 
 class TutorHome extends StatefulWidget {

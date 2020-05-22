@@ -104,7 +104,7 @@ class BookedTimeSlot extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 width: 1.0,
-                color:  Colors.blue.withOpacity(0.5),
+                color:  Colors.red.withOpacity(0.5),
               ),
             ),
             child: 
@@ -112,7 +112,7 @@ class BookedTimeSlot extends StatelessWidget {
                   slot,
                   style: bodyText2.copyWith(
                       fontSize: ScreenUtil().setSp(30),
-                      color:  Colors.blue.withOpacity(0.5)),
+                      color:  Colors.red.withOpacity(0.5)),
                 ),
           );
   }
