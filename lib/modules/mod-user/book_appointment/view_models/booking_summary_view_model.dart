@@ -15,18 +15,16 @@ class BookingSummaryViewModel extends BaseViewModel {
     if (confirm != "true") return;
     setBusy(true);
     var result = await _service.createBooking(booking);
-    var updateSlotResult = await updateBookingStatus(booking.slot, booking.tutor);
+     await updateBookingStatus(booking.slot, booking.tutor);
     setBusy(false);
 
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     }
-    else if(updateSlotResult is String){
-      await showDialogBox(title: "Error", description: updateSlotResult);
-    } 
+    
     else {
       await showDialogBox(
-          title: "Success", description: "Availability updated");
+          title: "Success", description: "Your Booking has been made");
       Modular.to.pushNamedAndRemoveUntil(Routes.userHome, ModalRoute.withName(Routes.userHome));
     }
   }

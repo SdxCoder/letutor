@@ -25,6 +25,7 @@ class BookingsViewModel extends BaseViewModel {
       List<Booking> bookings = data;
       if (bookings != null) {
         _bookings = bookings;
+        _bookings.sort((a,b) => b.slot.date.compareTo(a.slot.date));
         notifyListeners();
       }
       
@@ -39,6 +40,7 @@ class BookingsViewModel extends BaseViewModel {
       List<Booking> bookings = data;
       if (bookings != null) {
         _bookings = bookings;
+        _bookings.sort((a,b) => b.slot.date.compareTo(a.slot.date));
         notifyListeners();
       }
       setBusy(false);
@@ -52,6 +54,7 @@ class BookingsViewModel extends BaseViewModel {
       List<Booking> bookings = data;
       if (bookings != null) {
         _bookings = bookings;
+        _bookings.sort((a,b) => b.slot.date.compareTo(a.slot.date));
         notifyListeners();
       }
       setBusy(false);

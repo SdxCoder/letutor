@@ -27,7 +27,19 @@ class SearchTutorView extends StatelessWidget {
               SizedBox(
                 height: 8,
               ),
-              TopNavBar(),
+              TopNavBar(title: 
+                [
+              Text(
+                'Find',
+                style: headline6.copyWith(
+                 
+                ),
+              ),
+              Text('User',
+                  style: headline5.copyWith(
+                      height: 1, fontWeight: FontWeight.bold)),
+            
+              ],),
               SizedBox(
                 height: 16,
               ),

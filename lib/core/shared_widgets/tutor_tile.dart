@@ -31,7 +31,6 @@ class TutorTile extends StatelessWidget {
           color: Colors.white,
           child: Container(
             width: sizingInfo.screenSize.width * 0.7,
-          
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -79,7 +78,8 @@ class TutorTile extends StatelessWidget {
                       Spacer(),
                       CircleAvatar(
                         radius: ScreenUtil().setSp(120),
-                        backgroundImage: NetworkImage(tutor.photoUrl ?? tutor.photoPlaceholder),
+                        backgroundImage: NetworkImage(
+                            tutor.photoUrl ?? tutor.photoPlaceholder),
                       )
                     ],
                   ),
@@ -102,25 +102,24 @@ class TutorTile extends StatelessWidget {
                     ? Offstage()
                     : Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Wrap(
-                          spacing: 8,
-
-                            children: [
-                              ...tutor.lessons[0].courses
-                                .map(
-                                  (course) => Text(
-                                    course.name,
-                                    style: bodyText1.copyWith(
-                                      height: 1,
-                                      color: lightBlackColor,
-                                    ),
-                                  ),
-                                ),
-                                Text("...more", style: bodyText1.copyWith(
-                                      height: 1,
-                                      color: Colors.blue,
-                                    ),)
-                                ]),
+                        child: Wrap(spacing: 8, children: [
+                          ...tutor.lessons[0].courses.map(
+                            (course) => Text(
+                              course.name,
+                              style: bodyText1.copyWith(
+                                height: 1,
+                                color: lightBlackColor,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "...more",
+                            style: bodyText1.copyWith(
+                              height: 1,
+                              color: Colors.blue,
+                            ),
+                          )
+                        ]),
                       ),
                 Spacer(),
                 GestureDetector(

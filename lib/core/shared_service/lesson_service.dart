@@ -20,14 +20,17 @@ class LessonService {
     try {
       var doc = await _lessonCollection.where("tutorId", isEqualTo: tutorId)
           .getDocuments();
+
+      print("lessons :" + doc.documents.length.toString());
      
       if (doc.documents.isNotEmpty) {
+
         return doc.documents
             .map((snapshot) => Lesson.fromJson(snapshot.data))
             .toList();
       }
       else{
-        return List<Lesson>(); // return emply list
+        return "You can't add your availability because admin didn't add any courses for you."; // return emply list
       }
       
     } catch (e) {

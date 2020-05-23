@@ -81,7 +81,7 @@ class BookingDetailView extends StatelessWidget {
                   icon: Icons.grade,
                   title: "Level",
                   value: Text(
-                    booking.course.name,
+                    booking.level.name,
                     style: bodyText1.copyWith(color: lightBlackColor),
                   ),
                 ),

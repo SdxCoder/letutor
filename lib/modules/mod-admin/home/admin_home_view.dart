@@ -26,6 +26,22 @@ class _AdminHomeState extends State<AdminHome> {
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
+        navItems: [
+           BottomNavigationBarItem(
+          title: Text(
+            'Search Users',
+            style: bodyText2,
+          ),
+          icon: Icon(Icons.people_outline),
+        ),
+        BottomNavigationBarItem(
+          title: Text(
+            'Bookings',
+            style: bodyText2,
+          ),
+          icon: Icon(Icons.calendar_today),
+        ),
+        ],
         onTap: (int index){
           setState(() {
             _currentIndex = index;

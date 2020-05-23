@@ -26,45 +26,52 @@ class AvailablityViewModel extends BaseViewModel {
   List<DateTime> alreadySelectedDates = [];
   List<Lesson> _lessons = [];
 
-  Future fetchLessons() async {
-    setBusy(true);
+  Future<bool> fetchLessons() async {
     var result = await _lessonService.fetchLessons(_currentUser.user.uid);
-    setBusy(false);
-     if(result is String){
-        await showSnackBar( desc: result);
-      }else{
-        _lessons = result;
-      }
+
+    if (result is String) {
+      await showDialogBox(title: "Unsuccessful", description: result);
+      _events.clear();
+      return false;
+    } else {
+      _lessons = result;
+      notifyListeners();
+      return true;
+    }
   }
 
   Future addAvailablity() async {
-    print("add availblity from view Model");
-    var confirm = await showActionDialogBox(title: "Reminder", description: "Do You want to add your time slots?");
-   print(confirm);
-   if(confirm != "true") return;
-      setBusy(true);
-      var result = await _tutorService.createTutor(Tutor(
+    var confirm = await showActionDialogBox(
+        title: "Reminder", description: "Do You want to add your time slots?");
+    if (confirm != "true") return;
+    setBusy(true);
+    if (await fetchLessons() == false) {
+      setBusy(false);
+      return;
+    }
+    
+    var result = await _tutorService.createTutor(Tutor(
         availableSlots: _events,
         lessons: _lessons,
         uid: _currentUser.user.uid,
-            email: _currentUser.user.email,
-            photoUrl: _currentUser.user.photoUrl,
-            phoneNo: _currentUser.user.phoneNo,
-            name: _currentUser.user.name,
-            role:  _currentUser.user.role,
-            dob: _currentUser.user.dob,
-            firstName: _currentUser.user.firstName,
-            lastName: _currentUser.user.lastName,
-            photoPlaceholder: _currentUser.user.photoPlaceholder
-      ));
-      setBusy(false);
-      if(result is String){
-        await showDialogBox(title: "Error", description: result);
-      }else{
-        await showDialogBox(title: "Success", description: "Availability updated");
-        _events.clear();
-        notifyListeners();
-      }
+        email: _currentUser.user.email,
+        photoUrl: _currentUser.user.photoUrl,
+        phoneNo: _currentUser.user.phoneNo,
+        name: _currentUser.user.name,
+        role: _currentUser.user.role,
+        dob: _currentUser.user.dob,
+        firstName: _currentUser.user.firstName,
+        lastName: _currentUser.user.lastName,
+        photoPlaceholder: _currentUser.user.photoPlaceholder));
+    setBusy(false);
+    if (result is String) {
+      await showDialogBox(title: "Error", description: result);
+    } else {
+      await showDialogBox(
+          title: "Success", description: "Availability updated");
+      _events.clear();
+      notifyListeners();
+    }
   }
 
   void recordSelectedDatesAndEvents() {
@@ -76,7 +83,7 @@ class AvailablityViewModel extends BaseViewModel {
     DateTime start = _selectedPeriod.start;
     for (int days = 0; days <= difference; days++) {
       alreadySelectedDates.add(start);
-      _events.addAll({start.toString() : slots});
+      _events.addAll({start.toString(): slots});
       start = start.add(Duration(days: 1));
       print(start);
     }
@@ -138,57 +145,32 @@ class AvailablityViewModel extends BaseViewModel {
     Slot(
       timeSlot: "08am - 09am",
       availablityStatus: SlotStatus.available,
- 
     ),
-     Slot(
+    Slot(
       timeSlot: "09am - 10am",
       availablityStatus: SlotStatus.available,
-    
     ),
-     Slot(
+    Slot(
       timeSlot: "10am - 11am",
       availablityStatus: SlotStatus.available,
-
     ),
-     Slot(
+    Slot(
       timeSlot: "11am - 12am",
       availablityStatus: SlotStatus.available,
-   
     ),
-     Slot(
+    Slot(
       timeSlot: "12am - 01pm",
       availablityStatus: SlotStatus.available,
- 
     ),
-     Slot(
+    Slot(
       timeSlot: "01pm - 02pm",
       availablityStatus: SlotStatus.available,
- 
     ),
-     Slot(
-      timeSlot: "02pm - 03pm",
-      availablityStatus: SlotStatus.available
-    ),
-     Slot(
-      timeSlot: "03pm - 04pm",
-      availablityStatus: SlotStatus.available
-    ),
-     Slot(
-      timeSlot: "04pm - 05pm",
-      availablityStatus: SlotStatus.available
-    ),
-     Slot(
-      timeSlot: "05pm - 06pm",
-      availablityStatus: SlotStatus.available
-    ),
-     Slot(
-      timeSlot: "06pm - 07pm",
-      availablityStatus: SlotStatus.available
-    ),
-     Slot(
-      timeSlot: "07pm - 08pm",
-      availablityStatus: SlotStatus.available
-    ),
-    
+    Slot(timeSlot: "02pm - 03pm", availablityStatus: SlotStatus.available),
+    Slot(timeSlot: "03pm - 04pm", availablityStatus: SlotStatus.available),
+    Slot(timeSlot: "04pm - 05pm", availablityStatus: SlotStatus.available),
+    Slot(timeSlot: "05pm - 06pm", availablityStatus: SlotStatus.available),
+    Slot(timeSlot: "06pm - 07pm", availablityStatus: SlotStatus.available),
+    Slot(timeSlot: "07pm - 08pm", availablityStatus: SlotStatus.available),
   ];
 }

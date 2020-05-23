@@ -91,11 +91,10 @@ class AuthService {
         User(
         uid: authResult.user.uid,
         email: authResult.user.email,
-        photoUrl: authResult.user.photoUrl ?? "",
+        photoUrl: authResult.user.photoUrl ?? imageUrl,
         phoneNo: authResult.user.phoneNumber ?? "",
         name: authResult.user.displayName ?? "",
         role:  Role.user,
-  
         dob: DateTime(2020).toUtc(),
         firstName: "",
         lastName: "",
@@ -131,7 +130,7 @@ class AuthService {
           await _userService.createUser(User(
             uid: authResult.user.uid,
             email: authResult.user.email,
-            photoUrl: authResult.user.photoUrl ?? "",
+            photoUrl: authResult.user.photoUrl ?? imageUrl,
             phoneNo: authResult.user.phoneNumber ?? "",
             name: authResult.user.displayName ?? "",
             role:  Role.user,

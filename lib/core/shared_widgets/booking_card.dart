@@ -96,7 +96,7 @@ class BookingCard extends StatelessWidget {
                             booking.tutor.name,
                             style: bodyText1.copyWith(
                               fontWeight: FontWeight.bold,
-                            height: 1
+                          
                           ),),
                           Text(
                              booking.course.name,

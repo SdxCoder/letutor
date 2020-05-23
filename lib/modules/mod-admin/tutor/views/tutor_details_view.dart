@@ -89,15 +89,7 @@ class TutorDetailsView extends StatelessWidget {
                         ),
                       ),
                       _changeRoleWidget(context, model),
-                      (user.role == Role.user)
-                          ? Offstage()
-                          : InfoSection(
-                              icon: Icons.calendar_today,
-                              title: "Booking Status",
-                              value: Text(
-                                "Confirmed",
-                                style: bodyText1.copyWith(color: Colors.blue),
-                              )),
+                     
                     ],
                   ),
                 ),
@@ -109,6 +101,7 @@ class TutorDetailsView extends StatelessWidget {
   Widget _changeRoleWidget(context, TutorDetailsViewModel model) {
     return InfoSection(
       icon: Icons.person,
+      secondaryIcon: (user.role == Role.tutor) ? Icon(Icons.check_circle,color: Colors.blue, size:ScreenUtil().setSp(45)) : null,
       title: "Role",
       value: (model.editUser && user.role == Role.user)
           ? Column(

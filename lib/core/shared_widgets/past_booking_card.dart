@@ -36,7 +36,7 @@ class PastBookingCard extends StatelessWidget {
                     children: <Widget>[
                       Text("Date",
                           style: bodyText2.copyWith(color: lightBlackColor)),
-                      Text("03 August 2020",
+                      Text(booking.slot.date.abbrDate,
                           style: bodyText2.copyWith(
                             height: 1,
                           )),

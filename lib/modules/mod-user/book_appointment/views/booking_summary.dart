@@ -20,7 +20,9 @@ class BookingSummaryView extends StatelessWidget {
             automaticallyImplyLeading: true),
 
       
-        body: Container(
+        body:(model.isBusy) ? 
+        Center(child: CircularProgressIndicator(),):
+         Container(
           padding: EdgeInsets.all(16),
           child: SingleChildScrollView(
             child: Column(
@@ -75,7 +77,7 @@ class BookingSummaryView extends StatelessWidget {
                   icon: Icons.grade,
                   title: "Level",
                   value: Text(
-                    booking.course.name,
+                    booking.level.name,
                     style: bodyText1.copyWith(
                       color : lightBlackColor
                     ),

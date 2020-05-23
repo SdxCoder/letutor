@@ -34,7 +34,7 @@ class _TutorHomeState extends State<TutorHome> {
         navItems: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           title: Text(
-            'Add Courses',
+            'Add Availability',
             style: bodyText2,
           ),
           icon: Icon(Icons.book),
