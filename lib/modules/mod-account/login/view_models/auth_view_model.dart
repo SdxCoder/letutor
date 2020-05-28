@@ -48,9 +48,9 @@ class AuthViewModel extends BaseViewModel {
   }
 
   Future signInWithGoogle() async {
-    setBusy(true);
+
     var result = await _authService.signInWithGoogle();
-    setBusy(false);
+
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {
@@ -59,9 +59,9 @@ class AuthViewModel extends BaseViewModel {
   }
 
   Future signInWithFacebook() async {
-    setBusy(true);
+
     var result = await _authService.signInWithFaceBook();
-    setBusy(false);
+  
     if (result is String) {
       await showDialogBox(title: "Error", description: result);
     } else {

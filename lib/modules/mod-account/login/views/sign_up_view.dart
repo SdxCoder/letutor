@@ -33,12 +33,34 @@ class _SignUpViewState extends State<SignUpView> {
   final _formKey = GlobalKey<FormState>();
   String _password;
   DateTime _dateTime;
+  FocusNode emailfocusNode;
+  FocusNode passfocusNode;
+  FocusNode rPassfocusNode;
+  FocusNode fNamefocusNode;
+  FocusNode lNamefocusNode;
+  FocusNode phoneNofocusNode;
+  @override
+  void initState() {
+    emailfocusNode = FocusNode();
+    passfocusNode = FocusNode();
+    rPassfocusNode = FocusNode();
+    fNamefocusNode = FocusNode();
+    lNamefocusNode = FocusNode();
+    phoneNofocusNode = FocusNode();
+    super.initState();
+  }
 
   @override
   void dispose() {
     emailController.dispose();
     passController.dispose();
     rPassController.dispose();
+    emailfocusNode.dispose();
+    passfocusNode.dispose();
+    rPassfocusNode.dispose();
+    fNamefocusNode.dispose();
+    lNamefocusNode.dispose();
+    phoneNofocusNode.dispose();
     super.dispose();
   }
 
@@ -64,14 +86,12 @@ class _SignUpViewState extends State<SignUpView> {
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 await model.signUpWithEmailAndPassword(
-                  email: emailController.text.trim(),
-                  password: passController.text.trim(),
-                  dob: _dateTime.toUtc(),
-                  firstName: fNameController.text.trim(),
-                  lastName: lNameController.text.trim(),
-                  phoneNo: phoneNoController.text.trim()
-                  
-                );
+                    email: emailController.text.trim(),
+                    password: passController.text.trim(),
+                    dob: _dateTime.toUtc(),
+                    firstName: fNameController.text.trim(),
+                    lastName: lNameController.text.trim(),
+                    phoneNo: phoneNoController.text.trim());
               }
             }),
         navigatorButton: Row(
@@ -111,14 +131,21 @@ class _SignUpViewState extends State<SignUpView> {
                   fontFamily: "Poppins-Medium",
                   fontSize: ScreenUtil().setSp(26))),
           TextFormField(
+            focusNode: fNamefocusNode,
             controller: fNameController,
             keyboardType: TextInputType.text,
-            validator: model.validationService.nameValidator,
+            validator: (v) {
+              String errorText = model.validationService.nameValidator.call(v);
+              if (errorText != null) {
+                fNamefocusNode.requestFocus();
+              }
+              return errorText;
+            },
             decoration: InputDecoration(
                 hintText: "First Name",
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
           ),
-           SizedBox(
+          SizedBox(
             height: ScreenUtil().setHeight(30),
           ),
           Text("Last Name",
@@ -126,9 +153,16 @@ class _SignUpViewState extends State<SignUpView> {
                   fontFamily: "Poppins-Medium",
                   fontSize: ScreenUtil().setSp(26))),
           TextFormField(
+            focusNode: lNamefocusNode,
             controller: lNameController,
-             keyboardType: TextInputType.text,
-            validator: model.validationService.nameValidator,
+            keyboardType: TextInputType.text,
+            validator: (v) {
+              String errorText = model.validationService.nameValidator.call(v);
+              if (errorText != null) {
+                lNamefocusNode.requestFocus();
+              }
+              return errorText;
+            },
             decoration: InputDecoration(
                 hintText: "Last Name",
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
@@ -141,8 +175,15 @@ class _SignUpViewState extends State<SignUpView> {
                   fontFamily: "Poppins-Medium",
                   fontSize: ScreenUtil().setSp(26))),
           TextFormField(
+            focusNode: emailfocusNode,
             controller: emailController,
-            validator: model.validationService.emailValidator,
+            validator: (v) {
+              String errorText = model.validationService.emailValidator.call(v);
+              if (errorText != null) {
+                emailfocusNode.requestFocus();
+              }
+              return errorText;
+            },
             decoration: InputDecoration(
                 hintText: "Email",
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
@@ -156,11 +197,18 @@ class _SignUpViewState extends State<SignUpView> {
                   fontSize: ScreenUtil().setSp(26))),
           TextFormField(
             obscureText: true,
+            focusNode: passfocusNode,
             controller: passController,
-            validator: model.validationService.passwordValidator,
+            validator: (v) {
+              String errorText =
+                  model.validationService.passwordValidator.call(v);
+              if (errorText != null) {
+                passfocusNode.requestFocus();
+              }
+              return errorText;
+            },
             onChanged: (val) {
               _password = val;
-             
             },
             decoration: InputDecoration(
                 hintText: "Password",
@@ -176,17 +224,24 @@ class _SignUpViewState extends State<SignUpView> {
           TextFormField(
             obscureText: true,
             controller: rPassController,
+            focusNode: rPassfocusNode,
             validator: (val) {
               print(val);
               print(_password);
-              return MatchValidator(errorText: 'passwords do not match')
-                  .validateMatch(val, _password);
+
+              String errorText =
+                  MatchValidator(errorText: 'passwords do not match')
+                      .validateMatch(val, _password);
+              if (errorText != null) {
+                rPassfocusNode.requestFocus();
+              }
+              return errorText;
             },
             decoration: InputDecoration(
                 hintText: "Re-Password",
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
           ),
-           SizedBox(
+          SizedBox(
             height: ScreenUtil().setHeight(30),
           ),
           Text("Phone No",
@@ -194,9 +249,17 @@ class _SignUpViewState extends State<SignUpView> {
                   fontFamily: "Poppins-Medium",
                   fontSize: ScreenUtil().setSp(26))),
           TextFormField(
+            focusNode: phoneNofocusNode,
             controller: phoneNoController,
             keyboardType: TextInputType.number,
-            validator: model.validationService.phoneValidator,
+             validator: (v) {
+              String errorText =
+                  model.validationService.phoneValidator.call(v);
+              if (errorText != null) {
+                phoneNofocusNode.requestFocus();
+              }
+              return errorText;
+            },
             decoration: InputDecoration(
                 hintText: "Phone No",
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
@@ -211,12 +274,13 @@ class _SignUpViewState extends State<SignUpView> {
                       fontFamily: "Poppins-Medium",
                       fontSize: ScreenUtil().setSp(26))),
               Spacer(),
-              FlatButton(onPressed: (){
-                _showDatePicker(model);
-              }, child: Text("Select"))
+              FlatButton(
+                  onPressed: () {
+                    _showDatePicker(model);
+                  },
+                  child: Text("Select"))
             ],
           ),
-         
           SizedBox(
             height: ScreenUtil().setHeight(35),
           ),
@@ -237,7 +301,7 @@ class _SignUpViewState extends State<SignUpView> {
       pickerTheme: DateTimePickerTheme(
         itemHeight: 50,
 
-        pickerHeight: MediaQuery.of(context).size.height*0.5,
+        pickerHeight: MediaQuery.of(context).size.height * 0.5,
         // title: Text("Select Date", style: Theme.of(context).textTheme.headline5.copyWith(
         //   color:Colors.black
         // ),),
@@ -256,12 +320,9 @@ class _SignUpViewState extends State<SignUpView> {
         print(dateTime.toString());
       },
       onConfirm: (dateTime, List<int> index) {
-        
-          setState(() {
-            _dateTime = dateTime;
-          });
-           
-       
+        setState(() {
+          _dateTime = dateTime;
+        });
       },
     );
   }

@@ -24,11 +24,13 @@ class _LoginViewState extends State<LoginView> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  
 
   @override
   void dispose() {
     emailController.dispose();
     passController.dispose();
+  
     super.dispose();
   }
 
@@ -96,9 +98,11 @@ class _LoginViewState extends State<LoginView> {
                     fontFamily: "Poppins-Medium",
                     fontSize: ScreenUtil().setSp(26))),
             TextFormField(
+      
               controller: emailController,
               validator: model.validationService.emailValidator,
               decoration: InputDecoration(
+              
                   hintText: "Email",
                   hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
             ),
