@@ -31,6 +31,23 @@ class SearchTutorViewModel extends BaseViewModel {
     });
   }
 
+  Future manageSlots() async {
+    for (var tutor in _tutorsList) {
+      List<DateTime> slots = [];
+      tutor.availableSlots?.entries?.forEach((slot) {
+        var date = DateTime.parse(slot.key);
+        slots.add(date);
+      });
+      
+      if (slots.isNotEmpty) {
+        slots.sort((a, b) => a.compareTo(b));
+        if (slots.last.compareTo(DateTime.now()) == -1) {
+          await _tutorService.updateTutorSlot(tutor.uid, {"slots": null});
+        }
+      }
+    }
+  }
+
   void searchResults() {
     _tempList = Set<Tutor>();
 

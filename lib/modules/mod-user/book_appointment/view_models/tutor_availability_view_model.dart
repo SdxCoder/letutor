@@ -9,13 +9,13 @@ class TutorAvailabilityViewModel extends BaseViewModel {
   List _selectedEvents = [];
   Slot _selectedSlot;
 
-  List get selectedEvents =>_selectedEvents;
+  List get selectedEvents => _selectedEvents;
 
   DateTime get selectedDate => _selectedDate;
   Map<DateTime, List<dynamic>> get events => _events;
   Slot get selectedSlot => _selectedSlot;
 
-  void updateBooking(){
+  void updateBooking() {
     _booking = Booking(
       level: _booking.level,
       course: _booking.course,
@@ -26,7 +26,7 @@ class TutorAvailabilityViewModel extends BaseViewModel {
       slot: _selectedSlot,
       studentId: _booking.user.uid,
       tutorId: _booking.tutor.uid,
-     // id: _booking.hashCode.toString()
+      // id: _booking.hashCode.toString()
     );
 
     Modular.to.pushNamed(Routes.bookingSummary, arguments: _booking);
@@ -36,22 +36,24 @@ class TutorAvailabilityViewModel extends BaseViewModel {
     var availbleSlots = _booking.tutor.availableSlots;
     availbleSlots.forEach((key, value) {
       print(value.toString());
-      Map<DateTime, List<dynamic>> map = <DateTime, List<dynamic>>{
-        DateTime.parse(key) : value
-      };
-      _events.addAll(map);
-      
+      var date = DateTime.parse(key);
+      if (date.compareTo(DateTime.now()) == 1) {
+        Map<DateTime, List<dynamic>> map = <DateTime, List<dynamic>>{
+          date: value
+        };
+        _events.addAll(map);
+      }
     });
     notifyListeners();
   }
-  void selectSlot(slot){
+
+  void selectSlot(slot) {
     //var s = Slot.fromJson(slot);
     print(_selectedDate.toString());
     _selectedSlot = Slot(
-      timeSlot: slot.timeSlot,
-      availablityStatus: slot.availablityStatus,
-      date: _selectedDate
-    );
+        timeSlot: slot.timeSlot,
+        availablityStatus: slot.availablityStatus,
+        date: _selectedDate);
     notifyListeners();
   }
 

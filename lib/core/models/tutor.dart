@@ -40,7 +40,7 @@ class Tutor extends User {
   Tutor.fromJson(Map<String, dynamic> json,)
       : 
     
-      availableSlots =  Map<String, List<dynamic>>.from(json["slots"]),
+      availableSlots =  json['slots'] == null ? null : Map<String, List<dynamic>>.from(json["slots"]),
         lessons =  json['lessons'].map<Lesson>((v) => Lesson.fromJson(v)).toList(),
         super(
             uid: json['uid'],

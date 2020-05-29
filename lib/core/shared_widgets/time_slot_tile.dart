@@ -98,7 +98,7 @@ class BookedTimeSlot extends StatelessWidget {
             padding: EdgeInsets.symmetric(
                 horizontal: ScreenUtil().setSp(10),
                 vertical: ScreenUtil().setSp(40)),
-           // margin: EdgeInsets.only(left: 8, bottom: 8),
+            margin: EdgeInsets.only( right: 8),
             decoration: BoxDecoration(
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(10),

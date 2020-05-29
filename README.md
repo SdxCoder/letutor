@@ -4,8 +4,27 @@
 
 ## To run
 
-1. Add Google.infolist file from firebase // iOS
-2. Add google-services.json file from firebase // Android
+### Firebase config
+1. Setup firebase project
+2. Add android app with identifier as of in manifest.xml - currently com.example.letutor, change  it to the one you want your published app id to be.
+3. Add android app with identifier as of in manifest.xml - currently com.letutor, on testFlight
+4. Add courses and levels collection with field as specified
+
+### Facebook Auth
+1. Enable facebook auth from firebase authentication options
+2. To setup facebook auth for android, follow following instructions
+   a- Setup app here https://developers.facebook.com/docs/facebook-login/android
+   b- Then follow instructions for android here https://pub.dev/packages/flutter_facebook_login
+3. To setup facebook auth for ios, follow following instructions
+   a- Setup app here https://developers.facebook.com/docs/facebook-login/ios
+   b- Then follow instructions for ios here https://pub.dev/packages/flutter_facebook_login
+4. Your facebook app secret and app id are required in the firebase facebook auth enabling option, make sure to add it there. You can find app id and secret here https://developers.facebook.com/apps on selecting the app u created
+
+
+### Google Auth
+1. To setup Google auth for android and ios, follow following instructions
+   a- https://pub.dev/packages/google_sign_in
+
 
 ## 1st Stage
 

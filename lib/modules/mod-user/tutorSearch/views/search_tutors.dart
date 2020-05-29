@@ -19,6 +19,7 @@ class SearchTutorsView extends StatelessWidget {
         model.setBusy(true);
         await model.fetchCourses();
         await model.fetchLevels();
+        await model.manageSlots();
         model.setBusy(false);
       },
       builder: (context, model, child) => Scaffold(

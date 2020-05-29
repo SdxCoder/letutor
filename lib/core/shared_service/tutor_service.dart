@@ -37,11 +37,25 @@ class TutorService {
     }
   }
 
-  Future updateTutor(Tutor tutor ) async {
+  Future updateTutor(Tutor tutor) async {
     try {
       await _tutorCollection
           .document(tutor.uid)
           .updateData(tutor.toJson());
+
+    } catch (e) {
+      if (e is PlatformException) {
+        return e.message;
+      }
+      return e.toString();
+    }
+  }
+
+   Future updateTutorSlot(String uid, Map<String, dynamic> map) async {
+    try {
+      await _tutorCollection
+          .document(uid)
+          .updateData(map);
 
     } catch (e) {
       if (e is PlatformException) {

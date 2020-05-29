@@ -27,7 +27,8 @@ class TutorProfileView extends StatelessWidget {
               Center(
                 child: CircleAvatar(
                   radius: ScreenUtil().setWidth(200),
-                  backgroundImage: NetworkImage(tutor.photoUrl ?? tutor.photoPlaceholder),
+                  backgroundImage:
+                      NetworkImage(tutor.photoUrl ?? tutor.photoPlaceholder),
                 ),
               ),
               Center(
@@ -91,24 +92,56 @@ class TutorProfileView extends StatelessWidget {
                         ],
                       ),
                     ),
-              InfoSection(
-                icon: Icons.access_time,
-                title: "Available Dates",
-                value: GridView.count(
-                  crossAxisCount: 3,
-                  childAspectRatio: 2.8,
-                  shrinkWrap: true,
-                  children: [
-                    ...tutor.availableSlots.entries.map(
-                      (slot) => Text(
-                        DateTime.parse(slot.key).abbrDate,
-                        style: bodyText2.copyWith(color: lightBlackColor),
+              (tutor.availableSlots == null)
+                  ? Offstage()
+                  : InfoSection(
+                      icon: Icons.access_time,
+                      title: "Available Dates",
+                      value:
+                      //  Wrap(
+                      //   runSpacing: 4,
+                      //   spacing: ScreenUtil().setSp(45),
+                      //   children: [
+                      //     ...tutor.availableSlots.entries.map(
+                      //       (slot) {
+                      //         var date = DateTime.parse(slot.key);
+                      //         if (date.compareTo(DateTime.now()) == -1) {
+                      //           return Offstage();
+                      //         }
+                      //         return Text(
+                      //           DateTime.parse(slot.key).abbrDate,
+                      //           style:
+                      //               bodyText2.copyWith(color: lightBlackColor),
+                      //         );
+                      //       },
+                      //     )
+                      //   ],
+                      // )
+
+                      GridView.count(
+                        physics: ClampingScrollPhysics(),
+                        crossAxisCount: 3,
+                        childAspectRatio: 2.8,
+                        shrinkWrap: true,
+                        children: [
+                          ...tutor.availableSlots.entries.map(
+                            (slot) {
+                              var date = DateTime.parse(slot.key);
+                              if(date.compareTo(DateTime.now()) == -1){
+                                return Text(
+                                DateTime.parse(slot.key).abbrDate,
+                                style: bodyText2.copyWith(color: Colors.red.withOpacity(0.2)),
+                              );
+                              }
+                              return Text(
+                                DateTime.parse(slot.key).abbrDate,
+                                style: bodyText2.copyWith(color: lightBlackColor),
+                              );
+                            },
+                          )
+                        ],
+                     ),
                       ),
-                    )
-                  ],
-                ),
-              ),
-              
             ],
           ),
         ),
