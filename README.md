@@ -9,7 +9,7 @@
 2. Add android app with identifier as of in manifest.xml - currently com.example.letutor, change  it to the one you want your published app id to be.
 3. Add android app with identifier as of in manifest.xml - currently com.letutor, on testFlight
 4. Add courses and levels collection with field as specified in model classes courses 
-https://github.com/SdxCoder/letutor/blob/master/lib/core/models/course.dart and levels https://github.com/SdxCoder/letutor/blob/master/lib/core/models/level.dart
+```letutor/blob/master/lib/core/models/course.dart``` and levels ```letutor/blob/master/lib/core/models/level.dart```
 
 
 
